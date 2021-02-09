@@ -1,0 +1,2 @@
+# cryptocurrency-centralisation-visualisation
+Visualizing centralization in cryptocurrencies
