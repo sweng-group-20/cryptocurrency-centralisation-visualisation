@@ -9,5 +9,6 @@ module.exports = {
   extends: ['airbnb-base', 'plugin:prettier/recommended'],
   rules: {
     'prefer-arrow-callback': 'error',
+    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
   },
 };
