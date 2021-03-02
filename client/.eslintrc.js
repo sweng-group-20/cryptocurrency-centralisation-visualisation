@@ -3,8 +3,8 @@ module.exports = {
     'airbnb',
     'airbnb/hooks',
     'plugin:prettier/recommended',
-    'prettier/prettier',
     'prettier',
+    'prettier/prettier',
   ],
   env: {
     browser: true,
