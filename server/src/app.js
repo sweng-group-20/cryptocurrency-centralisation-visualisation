@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
+const routes = require('./routes/index');
 const { notFoundError, errorHandler } = require('./middlewares');
 
 const app = express();
@@ -28,11 +29,16 @@ app.get('/', (_req, res) => {
   });
 });
 
+/**
+ * Add routes
+ */
+app.use('/api/v1', routes);
+
 app.use(notFoundError);
 app.use(errorHandler);
 
 const port = process.env.PORT || 4000;
-const host = process.env.HOST || '0.0.0.0';
+const host = process.env.HOST || 'localhost';
 
 /**
  * Start web server on port
