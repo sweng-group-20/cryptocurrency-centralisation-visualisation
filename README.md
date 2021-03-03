@@ -88,5 +88,5 @@ The local website is hosted on [`http://localhost:3000`](http://localhost:3000) 
 
 ## Authors
 
-1. Lexes Jan Mantiquilla (@lexesjan)
-2. Tim Kelly (@timotheekelly)
+1. Lexes Jan Mantiquilla ([@lexesjan](https://github.com/lexesjan))
+2. Tim Kelly ([@timotheekelly](https://github.com/timotheekelly))
