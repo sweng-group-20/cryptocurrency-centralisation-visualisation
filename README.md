@@ -90,3 +90,4 @@ The local website is hosted on [`http://localhost:3000`](http://localhost:3000) 
 
 1. Lexes Jan Mantiquilla ([@lexesjan](https://github.com/lexesjan))
 2. Tim Kelly ([@timotheekelly](https://github.com/timotheekelly))
+3. Aodhán Keane ([@aodhanocathain](https://github.com/aodhanocathain))
