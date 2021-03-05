@@ -6,3 +6,4 @@ Visualizing centralization in cryptocurrencies
 
 1. Lexes Jan Mantiquilla
 2. Tim Kelly
+3. Aodhán Keane
