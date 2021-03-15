@@ -1,6 +1,9 @@
 const express = require('express');
+const storageConstraint = require('./storage_constraint');
 
 const router = express.Router();
+
+router.use('/storage-constraint', storageConstraint);
 
 /**
  * Default response
@@ -8,7 +11,7 @@ const router = express.Router();
 router.get('/', (_req, res) => {
   res.status(200);
   res.json({
-    message: 'etherium endpoint',
+    message: 'bitcoin endpoint',
   });
 });
 
