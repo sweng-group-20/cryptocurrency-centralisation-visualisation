@@ -15,6 +15,9 @@ router.get('/', (_req, res) => {
   });
 });
 
+/**
+ * Add routes
+ */
 router.use('/application', application);
 router.use('/operational', operational);
 

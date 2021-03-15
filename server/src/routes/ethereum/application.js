@@ -1,7 +1,5 @@
 const express = require('express');
 
-const operational = require('./operational');
-
 const router = express.Router();
 
 /**
@@ -10,13 +8,8 @@ const router = express.Router();
 router.get('/', (_req, res) => {
   res.status(200);
   res.json({
-    message: 'ethereum endpoint',
+    message: 'application layer endpoint',
   });
 });
-
-/**
- * Add routes
- */
-router.use('/operational', operational);
 
 module.exports = router;
