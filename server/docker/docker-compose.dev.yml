@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  server:
+    build: dev.Dockerfile
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./package.json:/usr/src/app/package.json
+      - ./yarn.lock:/usr/src/app/yarn.lock
