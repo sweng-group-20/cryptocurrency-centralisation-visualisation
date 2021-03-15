@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --myorange: #FF6200;
+  --myblack: #141414;
+  --mywhite: #efefef;
+}

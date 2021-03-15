@@ -1,0 +1,23 @@
+.Hero {
+    min-height: 100vh;
+    background-color: var(--myblack);
+    color: var(--mywhite);
+}
+
+.main-section {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    width: 90%;
+    border-bottom: solid 0.5rem var(--myorange);
+    border-top: solid 0.5rem var(--myorange);
+    border-radius: 0.5rem;
+    padding: 15vh 10%;
+}
+
+.title {
+    font-size: 4rem;
+    width: 100%;
+}
