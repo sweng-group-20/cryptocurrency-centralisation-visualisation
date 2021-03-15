@@ -1,6 +1,6 @@
 const express = require('express');
 
-const storageConstraint = require('./storage_constraint');
+const operational = require('./operational');
 
 const router = express.Router();
 
@@ -14,6 +14,6 @@ router.get('/', (_req, res) => {
   });
 });
 
-router.use('/storage-constraint', storageConstraint);
+router.use('/operational', operational);
 
 module.exports = router;

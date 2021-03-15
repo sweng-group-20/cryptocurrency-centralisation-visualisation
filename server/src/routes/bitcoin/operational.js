@@ -3,10 +3,7 @@ const fetch = require('node-fetch');
 
 const router = express.Router();
 
-/**
- * Default response
- */
-router.get('/', async (_req, res) => {
+router.get('/storage-constraint', async (_req, res) => {
   const resp = await fetch(
     'https://charts.bitcoin.com/btc/api/chart/blockchain-size',
     { method: 'GET' }
