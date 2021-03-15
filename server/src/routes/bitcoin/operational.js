@@ -25,11 +25,14 @@ router.get('/storage-constraint', async (_req, res) => {
     const millis = 1000 * respJSON[i][0];
     const sizeNow = parseInt(respJSON[i][1], 10);
     const sizeBefore = parseInt(respJSON[i - compareInterval][1], 10);
-    data[0].data.push({ x: new Date(millis), y: sizeNow / sizeBefore });
+    data[0].data.push({
+      x: new Date(millis).toISOString().split('T')[0],
+      y: sizeNow / sizeBefore,
+    });
   }
   res.status(200);
   res.json({
-    message: data,
+    data,
   });
 });
 
