@@ -20,7 +20,7 @@ router.get('/storage-constraint', async (_req, res) => {
   );
   const respJSON = await resp.json();
   const compareInterval = 14; // days
-  const data = [{ id: 'Storage Constraint Rate Of Grwoth', data: [] }];
+  const data = [{ id: 'Bitcoin', data: [] }];
   for (let i = compareInterval; i < respJSON.length; i += 1) {
     const millis = 1000 * respJSON[i][0];
     const sizeNow = parseInt(respJSON[i][1], 10);
