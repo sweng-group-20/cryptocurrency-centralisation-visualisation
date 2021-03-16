@@ -6,9 +6,14 @@ module.exports = {
     node: true,
   },
   plugins: ['prettier'],
-  extends: ['airbnb-base', 'plugin:prettier/recommended'],
+  extends: [
+    'airbnb-base',
+    'plugin:prettier/recommended',
+    'plugin:eslint-comments/recommended',
+  ],
   rules: {
     'prefer-arrow-callback': 'error',
     'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    'eslint-comments/no-use': ['error', { allow: [] }],
   },
 };
