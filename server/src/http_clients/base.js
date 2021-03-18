@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 class BaseHttpClient {
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
