@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  server:
+    image: cryptocurrency-centralisation-visualisation-server
+    container_name: cryptocurrency-centralisation-visualisation-server
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    ports:
+      - '4000:4000'
+    environment:
+      - CORS_ORIGIN_URL=${CORS_ORIGIN_URL}
+      - NODE_ENV=production

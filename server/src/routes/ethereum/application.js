@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', (_req, res) => {
   res.status(200);
   res.json({
-    message: 'bitcoin endpoint',
+    message: 'application layer endpoint',
   });
 });
 
