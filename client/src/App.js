@@ -1,8 +1,8 @@
 import './App.css';
 import React from 'react';
-import Hero from './Pages/Hero';
-import About from './Pages/About';
-import Graphs from './Pages/GraphArea';
+import Hero from './pages/Hero';
+import About from './pages/About';
+import Graphs from './pages/GraphArea';
 
 function App() {
   return (
