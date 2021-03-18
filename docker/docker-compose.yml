@@ -28,8 +28,24 @@ services:
       - NODE_ENV=production
     networks:
       - network
+    
+  db:
+    image: postgres:13.1-alpine
+    container_name: cryptocurrency-centralisation-visualisation-database
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    networks:
+      - network
+    volumes:
+      - database_data:/var/lib/postgresql/data
+      - ../server/sql_scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 networks:
   network:
     name: cryptocurrency-centralisation-visualisation-network
     driver: bridge
+
+volumes:
+  database_data:
+    name: cryptocurrency-centralisation-visualisation-database-data
