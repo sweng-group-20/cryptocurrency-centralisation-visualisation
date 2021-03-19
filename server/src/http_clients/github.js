@@ -61,7 +61,6 @@ class GithubHttpClient extends BaseHttpClient {
     comments(first: 100) {
       nodes {
         databaseId
-        bodyText
         ...commentFields
       }
     }
