@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const GraphQLError = require('../errors/GraphQLError');
+const GraphQLError = require('../errors');
 
 const BaseHttpClient = require('./base');
 
