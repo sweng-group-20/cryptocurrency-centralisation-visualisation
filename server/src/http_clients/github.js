@@ -61,6 +61,7 @@ class GithubHttpClient extends BaseHttpClient {
     comments(first: 100) {
       nodes {
         databaseId
+        bodyText
         ...commentFields
       }
     }
@@ -69,8 +70,6 @@ class GithubHttpClient extends BaseHttpClient {
     query ($repoOwner: String!, $repoName:String!, $pullRequestNumber: Int!) {
       repository(owner: $repoOwner, name: $repoName) {
         pullRequest(number: $pullRequestNumber) {
-          databaseId
-          ...commentFields
           ${commentsQuery}
           reviewThreads(first: 100) {
             nodes {
@@ -79,8 +78,6 @@ class GithubHttpClient extends BaseHttpClient {
           }
           reviews(first: 100) {
             nodes {
-              databaseId
-              ...commentFields
               ${commentsQuery}
             }
           }
@@ -114,37 +111,17 @@ class GithubHttpClient extends BaseHttpClient {
     const { data } = respJson;
     const { rateLimit } = data;
     const { pullRequest } = data.repository;
-    const {
-      databaseId,
-      createdAt,
-      author,
-      comments,
-      reviewThreads,
-      reviews,
-    } = pullRequest;
-
-    let allCommentNodes = [
-      ...comments.nodes,
-      {
-        databaseId,
-        createdAt,
-        author,
-      },
-    ];
+    const { comments, reviewThreads, reviews } = pullRequest;
+    let allCommentNodes = [...comments.nodes];
     reviewThreads.nodes.forEach(({ comments: reviewComments }) => {
       reviewComments.nodes.forEach((comment) => allCommentNodes.push(comment));
     });
     reviews.nodes.forEach(
-      ({
-        databaseId: reviewCommentDatabaseId,
-        createdAt: reviewCommentCreatedAt,
-        author: reviewCommentAuthor,
-        comments: reviewComments,
-      }) => {
+      ({ databaseId, createdAt, author, comments: reviewComments }) => {
         allCommentNodes.push({
-          databaseId: reviewCommentDatabaseId,
-          createdAt: reviewCommentCreatedAt,
-          author: reviewCommentAuthor,
+          databaseId,
+          createdAt,
+          author,
         });
         reviewComments.nodes.forEach((comment) => {
           allCommentNodes.push(comment);
