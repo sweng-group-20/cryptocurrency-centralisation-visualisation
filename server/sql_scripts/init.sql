@@ -13,8 +13,11 @@ CREATE TABLE issues_and_pull_requests (
   author_login varchar(39),
   issue_type varchar(5),
   parent_repo bigint,
+  issue_number int,
+  issue_state varchar(6),
   PRIMARY KEY (database_id),
-  CONSTRAINT check_issue_type CHECK (issue_type IN ('pr', 'issue')),
+  CONSTRAINT check_issue_type CHECK (issue_type IN ('PR', 'ISSUE')),
+  CONSTRAINT check_issue_state CHECK (issue_state IN ('OPEN', 'CLOSED', 'MERGED')),
   CONSTRAINT fk_repository FOREIGN KEY (parent_repo) REFERENCES respositories (database_id)
 );
 
