@@ -1,8 +1,9 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import './CryptoNav.css';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import "./CryptoNav.css";
 
 function CryptoNav() {
+
   return (
     <>
       <nav className="navbar">

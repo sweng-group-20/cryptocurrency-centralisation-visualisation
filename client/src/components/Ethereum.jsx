@@ -1,6 +1,5 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
-import Cryptocurrency from './Cryptocurrency'
+import Cryptocurrency from './CryptocurrencyData'
 import '../App.css';
 
 function Ethereum() {

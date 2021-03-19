@@ -1,11 +1,12 @@
 import React from 'react';
-import Cryptocurrency from './Cryptocurrency';
+import CryptocurrencyData from './CryptocurrencyData'
+import './Bitcoin.css'
 import '../App.css';
 
 function Bitcoin() {
   return (
     <div className="graph-content-container">
-      <Cryptocurrency name="Bitcoin" />
+      <CryptocurrencyData name='Bitcoin'/>
     </div>
   );
 }
