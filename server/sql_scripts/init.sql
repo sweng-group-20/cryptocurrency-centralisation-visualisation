@@ -12,21 +12,21 @@ CREATE TABLE issues_and_pull_requests (
   database_id bigint UNIQUE NOT NULL,
   author_login varchar(39),
   issue_type varchar(5),
-  parent_repo bigint,
+  parent_repo_id bigint,
   issue_number int,
   issue_state varchar(6),
   PRIMARY KEY (database_id),
   CONSTRAINT check_issue_type CHECK (issue_type IN ('PR', 'ISSUE')),
   CONSTRAINT check_issue_state CHECK (issue_state IN ('OPEN', 'CLOSED', 'MERGED')),
-  CONSTRAINT fk_repository FOREIGN KEY (parent_repo) REFERENCES respositories (database_id)
+  CONSTRAINT fk_repository FOREIGN KEY (parent_repo_id) REFERENCES respositories (database_id)
 );
 
 CREATE TABLE comments (
   database_id bigint UNIQUE NOT NULL,
   created_at timestamp NOT NULL,
   author_login varchar(39),
-  parent_issue bigint,
+  parent_issue_id bigint,
   PRIMARY KEY (database_id),
-  CONSTRAINT fk_parent_issue FOREIGN KEY (parent_issue) REFERENCES issues_and_pull_requests (database_id)
+  CONSTRAINT fk_parent_issue FOREIGN KEY (parent_issue_id) REFERENCES issues_and_pull_requests (database_id)
 );
 

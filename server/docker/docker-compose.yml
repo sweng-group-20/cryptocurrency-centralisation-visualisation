@@ -24,7 +24,7 @@ services:
       - network
     volumes:
       - database_data:/var/lib/postgresql/data
-      - ./server/sql_scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ../sql_scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 networks:
   network:
