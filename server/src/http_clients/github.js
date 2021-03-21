@@ -137,19 +137,19 @@ class GithubHttpClient extends BaseHttpClient {
    * Retrieves a list of pull request numbers
    * @param {string} repoOwner Name of the repository owner
    * @param {string} repoName Name of the repository
-   * @param {number} iterationLimit Limit of iterations during pagenation
+   * @param {number} pullRequestsLimit Number of pull requests to retrieve the number of
    * @param {string} startCursor Last synced cursor
    */
   async getPullRequestNumbers(
     repoOwner,
     repoName,
-    iterationLimit,
+    pullRequestsLimit,
     startCursor
   ) {
     const query = `
-      query ($repoOwner: String!, $repoName: String!, $cursor: String) {
+      query ($repoOwner: String!, $repoName: String!, $first: Int!, $cursor: String) {
         repository(owner: $repoOwner, name: $repoName) {
-          pullRequests(first: 100, after: $cursor) {
+          pullRequests(first: $first, after: $cursor) {
             nodes {
               number
             }
@@ -177,9 +177,17 @@ class GithubHttpClient extends BaseHttpClient {
       cost: 0,
     };
 
-    let iterations = 0;
+    let numberOfPullRequestsRetrieved = 0;
     let hasNextPage = true;
-    while (hasNextPage && iterations < iterationLimit) {
+    while (hasNextPage && numberOfPullRequestsRetrieved < pullRequestsLimit) {
+      const numberOfPullRequestsRemaining =
+        pullRequestsLimit - numberOfPullRequestsRetrieved;
+      const numberOfPullRequestsToGet =
+        numberOfPullRequestsRemaining < 100
+          ? numberOfPullRequestsRemaining
+          : 100;
+      variables.first = numberOfPullRequestsToGet;
+
       // eslint-disable-next-line no-await-in-loop
       const resp = await this.graphqlRequest(query, variables);
       // eslint-disable-next-line no-await-in-loop
@@ -200,7 +208,7 @@ class GithubHttpClient extends BaseHttpClient {
       hasNextPage = pageInfo.hasNextPage;
       variables.cursor = pageInfo.endCursor;
 
-      iterations += 1;
+      numberOfPullRequestsRetrieved += pullRequests.nodes.length;
     }
 
     return {
