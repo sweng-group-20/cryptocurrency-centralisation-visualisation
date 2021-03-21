@@ -30,6 +30,8 @@ services:
       - GITHUB_TOKEN=${GITHUB_TOKEN}
     networks:
       - network
+    depends_on:
+      - db
     
   db:
     image: postgres:13.1-alpine
