@@ -14,17 +14,17 @@ class BaseHttpClient {
    * @param {Record<string, string>} params Url Search paramers to add
    * @returns
    */
-  request(route, method, body, headers = new Headers(), params = {}) {
+  request(route, method, body, headers, params = {}) {
     const url = new URL(`${this.baseUrl}${route}`);
     Object.entries(params).forEach(([key, value]) => {
       url.searchParams.append(key, value);
     });
     const options = {
       method,
-      headers,
+      headers: new fetch.Headers(headers),
     };
     if (method === 'POST' && body) {
-      options.headers.append('Content-Type', 'application/json');
+      options.headers.set('Content-Type', 'application/json');
       options.body = body;
     }
     return fetch(url.toString(), options);

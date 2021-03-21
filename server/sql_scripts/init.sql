@@ -1,16 +1,17 @@
 CREATE DATABASE db;
 
 \c db;
-CREATE TABLE respositories (
+CREATE TABLE repositories (
   database_id bigint UNIQUE NOT NULL,
   repo_owner varchar(39) NOT NULL,
   repo_name varchar(100) NOT NULL,
+  pull_request_cursor varchar(60),
+  issue_cursor varchar(60),
   PRIMARY KEY (database_id)
 );
 
 CREATE TABLE issues_and_pull_requests (
   database_id bigint UNIQUE NOT NULL,
-  author_login varchar(39),
   issue_type varchar(5),
   parent_repo_id bigint,
   issue_number int,
@@ -18,7 +19,7 @@ CREATE TABLE issues_and_pull_requests (
   PRIMARY KEY (database_id),
   CONSTRAINT check_issue_type CHECK (issue_type IN ('PR', 'ISSUE')),
   CONSTRAINT check_issue_state CHECK (issue_state IN ('OPEN', 'CLOSED', 'MERGED')),
-  CONSTRAINT fk_repository FOREIGN KEY (parent_repo_id) REFERENCES respositories (database_id)
+  CONSTRAINT fk_repository FOREIGN KEY (parent_repo_id) REFERENCES repositories (database_id)
 );
 
 CREATE TABLE comments (

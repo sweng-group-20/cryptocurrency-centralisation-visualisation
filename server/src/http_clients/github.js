@@ -7,7 +7,7 @@ class GithubHttpClient extends BaseHttpClient {
   constructor() {
     super('https://api.github.com');
     this.headers = new fetch.Headers();
-    this.headers.append('Authorization', `Bearer ${process.env.GITHUB_TOKEN}`);
+    this.headers.set('Authorization', `Bearer ${process.env.GITHUB_TOKEN}`);
   }
 
   /**
@@ -46,6 +46,8 @@ class GithubHttpClient extends BaseHttpClient {
           databaseId
           pullRequest(number: $pullRequestNumber) {
             databaseId
+            number
+            state
             ${commentsQuery}
             reviewThreads(first: 100) {
               nodes {
@@ -91,23 +93,18 @@ class GithubHttpClient extends BaseHttpClient {
       comments,
       reviewThreads,
       reviews,
+      number,
+      state,
       databaseId: pullRequestDatabaseId,
     } = pullRequest;
     let allCommentNodes = [...comments.nodes];
-    reviewThreads.nodes.forEach(({ comments: reviewComments }) => {
-      reviewComments.nodes.forEach((comment) => allCommentNodes.push(comment));
-    });
-    reviews.nodes.forEach(
-      ({ databaseId, createdAt, author, comments: reviewComments }) => {
-        allCommentNodes.push({
-          databaseId,
-          createdAt,
-          author,
-        });
-        reviewComments.nodes.forEach((comment) => {
-          allCommentNodes.push(comment);
-        });
-      }
+    reviewThreads.nodes.forEach(({ comments: reviewComments }) =>
+      reviewComments.nodes.forEach((comment) => allCommentNodes.push(comment))
+    );
+    reviews.nodes.forEach(({ comments: reviewComments }) =>
+      reviewComments.nodes.forEach((comment) => {
+        allCommentNodes.push(comment);
+      })
     );
 
     const set = new Set();
@@ -124,6 +121,8 @@ class GithubHttpClient extends BaseHttpClient {
       repository: {
         databaseId: repoDatabaseId,
         pullRequest: {
+          number,
+          state,
           databaseId: pullRequestDatabaseId,
           comments: {
             nodes: allCommentNodes,
@@ -209,8 +208,9 @@ class GithubHttpClient extends BaseHttpClient {
         pullRequests: {
           nodes,
         },
-        rateLimit,
+        endCursor: variables.cursor,
       },
+      rateLimit,
     };
   }
 }
