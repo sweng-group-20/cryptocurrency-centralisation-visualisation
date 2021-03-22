@@ -2,8 +2,12 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
+const cron = require('node-cron');
+
 const routes = require('./routes/index');
 const { notFoundError, errorHandler } = require('./middlewares');
+const { syncDatabase } = require('./graph_data/github_comments');
+const logger = require('./logger');
 
 const app = express();
 
@@ -44,6 +48,16 @@ const host = process.env.HOST || 'localhost';
  * Start web server on port
  */
 app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Listening at http://${host}:${port}`);
+  logger.info(`Listening at http://${host}:${port}`);
+});
+
+/**
+ * Sync repositories every 2 hours
+ */
+cron.schedule('0 */2 * * *', () => {
+  const repoOwner = 'bitcoin';
+  const repoName = 'bitcoin';
+
+  logger.info(`Syncing repository github.com/${repoOwner}/${repoName}`);
+  syncDatabase(repoOwner, repoName);
 });
