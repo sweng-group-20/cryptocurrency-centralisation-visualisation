@@ -1,9 +1,10 @@
 const fetch = require('node-fetch');
-const GraphQLError = require('../errors');
+const GitHubError = require('../errors/GitHubError');
+const GraphQLError = require('../errors/GraphQLError');
 
 const BaseHttpClient = require('./base');
 
-class GithubHttpClient extends BaseHttpClient {
+class GitHubHttpClient extends BaseHttpClient {
   constructor() {
     super('https://api.github.com');
     this.headers = new fetch.Headers();
@@ -84,6 +85,9 @@ class GithubHttpClient extends BaseHttpClient {
     const respJson = await resp.json();
     if (respJson.errors) {
       throw new GraphQLError(JSON.stringify(respJson.errors));
+    }
+    if (respJson.message) {
+      throw new GitHubError(JSON.stringify(respJson));
     }
 
     const { data } = respJson;
@@ -194,6 +198,9 @@ class GithubHttpClient extends BaseHttpClient {
       if (respJson.errors) {
         throw new GraphQLError(JSON.stringify(respJson.errors));
       }
+      if (respJson.message) {
+        throw new GitHubError(JSON.stringify(respJson));
+      }
 
       const { rateLimit, repository: issueRepository } = respJson.data;
       const { cost, remaining } = rateLimit;
@@ -215,7 +222,7 @@ class GithubHttpClient extends BaseHttpClient {
       repository.rateLimit.cost += cost;
     }
 
-    return repository;
+    return { repository };
   }
 
   /**
@@ -269,7 +276,7 @@ class GithubHttpClient extends BaseHttpClient {
 
     variables.states = states;
 
-    const pullRequestNodes = [];
+    const nodes = [];
     const rateLimit = {
       remaining: null,
       cost: 0,
@@ -289,30 +296,33 @@ class GithubHttpClient extends BaseHttpClient {
       if (respJson.errors) {
         throw new GraphQLError(JSON.stringify(respJson.errors));
       }
+      if (respJson.message) {
+        throw new GitHubError(JSON.stringify(respJson));
+      }
 
       const { rateLimit: currentRateLimit, repository } = respJson.data;
       let pageInfo = null;
-      let typeNodes = null;
+      let issueOrPullRequestNodes = null;
 
       if (type === 'pr') {
         const { pullRequests } = repository;
         pageInfo = pullRequests.pageInfo;
-        typeNodes = pullRequests.nodes;
+        issueOrPullRequestNodes = pullRequests.nodes;
       } else {
         const { issues } = repository;
         pageInfo = issues.pageInfo;
-        typeNodes = issues;
+        issueOrPullRequestNodes = issues.nodes;
       }
 
       rateLimit.remaining = currentRateLimit.remaining;
       rateLimit.cost += currentRateLimit.cost;
 
-      typeNodes.forEach((node) => pullRequestNodes.push(node));
+      issueOrPullRequestNodes.forEach((node) => nodes.push(node));
 
       hasNextPage = pageInfo.hasNextPage;
       variables.cursor = pageInfo.endCursor;
 
-      numberRetrieved += typeNodes.length;
+      numberRetrieved += issueOrPullRequestNodes.length;
     }
 
     const response = {
@@ -323,50 +333,41 @@ class GithubHttpClient extends BaseHttpClient {
     };
 
     if (type === 'pr') {
-      response.repository.pullRequests = { nodes: pullRequestNodes };
+      response.repository.pullRequests = { nodes };
     } else {
-      response.repository.issues = { nodes: pullRequestNodes };
+      response.repository.issues = { nodes };
     }
 
     return response;
   }
 
   /**
-   * Retrieves a list of pull request numbers
-   * @param {string} repoOwner Name of the repository owner
-   * @param {string} repoName Name of the repository
-   * @param {number} pullRequestsLimit Maximum number of pull requests to retrieve the number of
-   * @param {string} startCursor Last synced cursor
+   * Returns the rate limit
    */
-  getPullRequestNumbers(repoOwner, repoName, pullRequestsLimit, startCursor) {
-    return this.getIssueOrPullRequestNumbers(
-      'pr',
-      repoOwner,
-      repoName,
-      pullRequestsLimit,
-      startCursor
-    );
-  }
+  async getRateLimit() {
+    const query = `
+      query {
+        rateLimit {
+          remaining
+          resetAt
+        }
+      }
+    `;
 
-  /**
-   * Retrieves a list of issue numbers
-   * @param {string} repoOwner Name of the repository owner
-   * @param {string} repoName Name of the repository
-   * @param {number} issuesLimit Maximum number of issues to retrieve the number of
-   * @param {string} startCursor Last synced cursor
-   */
-  getIssueNumbers(repoOwner, repoName, issuesLimit, startCursor) {
-    return this.getIssueOrPullRequestNumbers(
-      'issue',
-      repoOwner,
-      repoName,
-      issuesLimit,
-      startCursor
-    );
+    const resp = await this.graphqlRequest(query);
+    const respJson = await resp.json();
+    if (respJson.errors) {
+      throw new GraphQLError(JSON.stringify(respJson.errors));
+    }
+    if (respJson.message) {
+      throw new GitHubError(JSON.stringify(respJson));
+    }
+
+    return respJson.data;
   }
 }
 
-const instance = new GithubHttpClient();
+const instance = new GitHubHttpClient();
 Object.freeze(instance);
 
 module.exports = instance;

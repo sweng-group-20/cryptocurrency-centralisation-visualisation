@@ -1,65 +1,72 @@
 const db = require('../db');
-const githubHttpClient = require('../http_clients/github');
+const gitHubHttpClient = require('../http_clients/github');
 
 /**
- * Syncs the local database pull request data with GitHub
+ * Syncs local database repository issues or pull requests with GitHub
+ * @param {'pr' | 'issue'} type Type to sync
  * @param {string} repoOwner Name of the repository owner
  * @param {string} repoName Name of the repository
- * @param {number} pullRequestLimit Limit of the number pull requests to retrieve
+ * @param {number} pullRequestLimit Limit of the number issues or pull requests to retrieve
+ * @param {string} startCursor
  */
-const syncDatabaseRepositoryPullRequests = async (
+const syncDatabaseRepositoryIssuesOrPullRequests = async (
+  type,
   repoOwner,
   repoName,
-  pullRequestLimit
+  startCursor
 ) => {
-  const { rows } = await db.query(
-    `
-    SELECT
-      pull_request_cursor
-    FROM
-      repositories
-    WHERE
-      repo_owner = $1 AND repo_name = $2;
-    `,
-    [repoOwner, repoName]
-  );
-
-  let pullRequestCursor = null;
-  if (rows.length > 0) {
-    pullRequestCursor = rows[0].pull_request_cursor;
+  const rateLimitResp = await gitHubHttpClient.getRateLimit();
+  const { remaining } = rateLimitResp.rateLimit;
+  if (remaining <= 50) {
+    return;
   }
+  const limit = Math.floor((remaining - 50) / 2);
 
-  const {
-    repository: pullRequestNumbersRepository,
-  } = await githubHttpClient.getPullRequestNumbers(
+  const getIssueOrPullRequestNumbersResponse = await gitHubHttpClient.getIssueOrPullRequestNumbers(
+    type,
     repoOwner,
     repoName,
-    pullRequestLimit,
-    pullRequestCursor
+    limit,
+    startCursor
   );
 
-  const updatedPullRequestCursor = pullRequestNumbersRepository.endCursor;
+  const updatedCursor =
+    getIssueOrPullRequestNumbersResponse.repository.endCursor;
 
-  const getPullRequestCommentsResponses = await Promise.all(
-    pullRequestNumbersRepository.pullRequests.nodes.map(
-      ({ number: pullRequestNumber }) =>
-        githubHttpClient.getPullRequestComments(
-          repoOwner,
-          repoName,
-          pullRequestNumber
-        )
-    )
-  );
+  let getIssueOrPullRequestCommentsResponse = null;
+  if (type === 'pr') {
+    getIssueOrPullRequestCommentsResponse = await Promise.all(
+      getIssueOrPullRequestNumbersResponse.repository.pullRequests.nodes.map(
+        ({ number: pullRequestNumber }) =>
+          gitHubHttpClient.getPullRequestComments(
+            repoOwner,
+            repoName,
+            pullRequestNumber
+          )
+      )
+    );
+  } else {
+    getIssueOrPullRequestCommentsResponse = await Promise.all(
+      getIssueOrPullRequestNumbersResponse.repository.issues.nodes.map(
+        ({ number: issueNumber }) =>
+          gitHubHttpClient.getIssueComments(repoOwner, repoName, issueNumber)
+      )
+    );
+  }
 
-  const repository = getPullRequestCommentsResponses.reduce(
+  const repository = getIssueOrPullRequestCommentsResponse.reduce(
     (acc, response) => {
-      const { databaseId, pullRequest } = response.repository;
+      const { databaseId, pullRequest, issue } = response.repository;
       acc.databaseId = databaseId;
-      acc.pullRequests.push(pullRequest);
+      if (type === 'pr') {
+        acc.issuesOrPullRequests.push(pullRequest);
+      } else {
+        acc.issuesOrPullRequests.push(issue);
+      }
 
       return acc;
     },
-    { databaseId: 0, pullRequests: [] }
+    { databaseId: 0, issuesOrPullRequests: [] }
   );
 
   await db.query(
@@ -68,41 +75,41 @@ const syncDatabaseRepositoryPullRequests = async (
       VALUES ($1, $2, $3, $4)
     ON CONFLICT (database_id)
       DO UPDATE SET
-        pull_request_cursor = $4;
+        ${type === 'pr' ? 'pull_request' : 'issue'}_cursor = $4;
     `,
-    [repository.databaseId, repoName, repoOwner, updatedPullRequestCursor]
+    [repository.databaseId, repoName, repoOwner, updatedCursor]
   );
 
   Promise.all(
-    repository.pullRequests.map(async (pullRequest) => {
+    repository.issuesOrPullRequests.map(async (issueOrPullRequest) => {
       await db.query(
         `
-        INSERT INTO issues_and_pull_requests (database_id, issue_type, parent_repo_id, issue_number, issue_state)
-          VALUES ($1, $2, $3, $4, $5)
-        ON CONFLICT
-          DO NOTHING;
-        `,
-        [
-          pullRequest.databaseId,
-          'PR',
-          repository.databaseId,
-          pullRequest.number,
-          pullRequest.state,
-        ]
-      );
-      return pullRequest.comments.nodes.map((comment) =>
-        db.query(
-          `
-          INSERT INTO comments (database_id, created_at, author_login, parent_issue_id)
-            VALUES ($1, $2, $3, $4)
+          INSERT INTO issues_and_pull_requests (database_id, issue_type, parent_repo_id, issue_number, issue_state)
+            VALUES ($1, $2, $3, $4, $5)
           ON CONFLICT
             DO NOTHING;
           `,
+        [
+          issueOrPullRequest.databaseId,
+          type.toUpperCase(),
+          repository.databaseId,
+          issueOrPullRequest.number,
+          issueOrPullRequest.state,
+        ]
+      );
+      return issueOrPullRequest.comments.nodes.map((comment) =>
+        db.query(
+          `
+            INSERT INTO comments (database_id, created_at, author_login, parent_issue_id)
+              VALUES ($1, $2, $3, $4)
+            ON CONFLICT
+              DO NOTHING;
+            `,
           [
             comment.databaseId,
             comment.createdAt,
             comment.author?.login,
-            pullRequest.databaseId,
+            issueOrPullRequest.databaseId,
           ]
         )
       );
@@ -114,9 +121,40 @@ const syncDatabaseRepositoryPullRequests = async (
  * Syncs the local database with GitHub
  * @param {string} repoOwner Name of the repository owner
  * @param {string} repoName Name of the repository
- * @param {number} pullRequestLimit Limit of the number pull requests to retrieve
  */
-const syncDatabase = (repoOwner, repoName, pullRequestLimit) =>
-  syncDatabaseRepositoryPullRequests(repoOwner, repoName, pullRequestLimit);
+const syncDatabase = async (repoOwner, repoName) => {
+  const { rows } = await db.query(
+    `
+    SELECT
+      issue_cursor, pull_request_cursor
+    FROM
+      repositories
+    WHERE
+      repo_owner = $1 AND repo_name = $2;
+    `,
+    [repoOwner, repoName]
+  );
+
+  let issueCursor = null;
+  let pullRequestCursor = null;
+  if (rows.length > 0) {
+    issueCursor = rows[0].issue_cursor;
+    pullRequestCursor = rows[0].pull_request_cursor;
+  }
+
+  await syncDatabaseRepositoryIssuesOrPullRequests(
+    'issue',
+    repoOwner,
+    repoName,
+    issueCursor
+  );
+
+  syncDatabaseRepositoryIssuesOrPullRequests(
+    'pr',
+    repoOwner,
+    repoName,
+    pullRequestCursor
+  );
+};
 
 module.exports = { syncDatabase };
