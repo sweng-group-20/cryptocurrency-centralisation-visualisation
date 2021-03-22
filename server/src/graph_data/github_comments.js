@@ -1,3 +1,5 @@
+const pLimit = require('p-limit');
+
 const db = require('../db');
 const gitHubHttpClient = require('../http_clients/github');
 
@@ -33,15 +35,19 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
   const updatedCursor =
     getIssueOrPullRequestNumbersResponse.repository.endCursor;
 
+  const limitPromise = pLimit(10);
+
   let getIssueOrPullRequestCommentsResponse = null;
   if (type === 'pr') {
     getIssueOrPullRequestCommentsResponse = await Promise.all(
       getIssueOrPullRequestNumbersResponse.repository.pullRequests.nodes.map(
         ({ number: pullRequestNumber }) =>
-          gitHubHttpClient.getPullRequestComments(
-            repoOwner,
-            repoName,
-            pullRequestNumber
+          limitPromise(() =>
+            gitHubHttpClient.getPullRequestComments(
+              repoOwner,
+              repoName,
+              pullRequestNumber
+            )
           )
       )
     );
@@ -49,7 +55,9 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
     getIssueOrPullRequestCommentsResponse = await Promise.all(
       getIssueOrPullRequestNumbersResponse.repository.issues.nodes.map(
         ({ number: issueNumber }) =>
-          gitHubHttpClient.getIssueComments(repoOwner, repoName, issueNumber)
+          limitPromise(() =>
+            gitHubHttpClient.getIssueComments(repoOwner, repoName, issueNumber)
+          )
       )
     );
   }
@@ -84,11 +92,11 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
     repository.issuesOrPullRequests.map(async (issueOrPullRequest) => {
       await db.query(
         `
-          INSERT INTO issues_and_pull_requests (database_id, issue_type, parent_repo_id, issue_number, issue_state)
-            VALUES ($1, $2, $3, $4, $5)
-          ON CONFLICT
-            DO NOTHING;
-          `,
+        INSERT INTO issues_and_pull_requests (database_id, issue_type, parent_repo_id, issue_number, issue_state)
+          VALUES ($1, $2, $3, $4, $5)
+        ON CONFLICT
+          DO NOTHING;
+        `,
         [
           issueOrPullRequest.databaseId,
           type.toUpperCase(),
@@ -100,11 +108,11 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
       return issueOrPullRequest.comments.nodes.map((comment) =>
         db.query(
           `
-            INSERT INTO comments (database_id, created_at, author_login, parent_issue_id)
-              VALUES ($1, $2, $3, $4)
-            ON CONFLICT
-              DO NOTHING;
-            `,
+          INSERT INTO comments (database_id, created_at, author_login, parent_issue_id)
+            VALUES ($1, $2, $3, $4)
+          ON CONFLICT
+            DO NOTHING;
+          `,
           [
             comment.databaseId,
             comment.createdAt,

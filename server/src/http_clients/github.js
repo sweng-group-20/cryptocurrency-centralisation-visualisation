@@ -83,11 +83,11 @@ class GitHubHttpClient extends BaseHttpClient {
 
     const resp = await this.graphqlRequest(query, variables);
     const respJson = await resp.json();
+    if (!resp.ok) {
+      throw new GitHubError(JSON.stringify(respJson));
+    }
     if (respJson.errors) {
       throw new GraphQLError(JSON.stringify(respJson.errors));
-    }
-    if (respJson.message) {
-      throw new GitHubError(JSON.stringify(respJson));
     }
 
     const { data } = respJson;
@@ -195,11 +195,11 @@ class GitHubHttpClient extends BaseHttpClient {
       const resp = await this.graphqlRequest(query, variables);
       // eslint-disable-next-line no-await-in-loop
       const respJson = await resp.json();
+      if (!resp.ok) {
+        throw new GitHubError(JSON.stringify(respJson));
+      }
       if (respJson.errors) {
         throw new GraphQLError(JSON.stringify(respJson.errors));
-      }
-      if (respJson.message) {
-        throw new GitHubError(JSON.stringify(respJson));
       }
 
       const { rateLimit, repository: issueRepository } = respJson.data;
@@ -230,7 +230,7 @@ class GitHubHttpClient extends BaseHttpClient {
    * @param {'pr' | 'issue'} type Type to retrieve numbers from
    * @param {string} repoOwner Name of the repository owner
    * @param {string} repoName Name of the repository
-   * @param {number} pullRequestsLimit Number of pull requests to retrieve the number of
+   * @param {number} limit Number of issues or pull requests to retrieve the number of
    * @param {string} startCursor Last synced cursor
    */
   async getIssueOrPullRequestNumbers(
@@ -293,11 +293,11 @@ class GitHubHttpClient extends BaseHttpClient {
       const resp = await this.graphqlRequest(query, variables);
       // eslint-disable-next-line no-await-in-loop
       const respJson = await resp.json();
+      if (!resp.ok) {
+        throw new GitHubError(JSON.stringify(respJson));
+      }
       if (respJson.errors) {
         throw new GraphQLError(JSON.stringify(respJson.errors));
-      }
-      if (respJson.message) {
-        throw new GitHubError(JSON.stringify(respJson));
       }
 
       const { rateLimit: currentRateLimit, repository } = respJson.data;
@@ -356,11 +356,11 @@ class GitHubHttpClient extends BaseHttpClient {
 
     const resp = await this.graphqlRequest(query);
     const respJson = await resp.json();
+    if (!resp.ok) {
+      throw new GitHubError(JSON.stringify(respJson));
+    }
     if (respJson.errors) {
       throw new GraphQLError(JSON.stringify(respJson.errors));
-    }
-    if (respJson.message) {
-      throw new GitHubError(JSON.stringify(respJson));
     }
 
     return respJson.data;
