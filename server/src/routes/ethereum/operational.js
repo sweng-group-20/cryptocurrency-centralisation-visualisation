@@ -41,20 +41,17 @@ router.get('/storage-constraint', async (_req, res) => {
   const respText = await resp.json();
   const points = respText.data;
   const compareInterval = 14;
-  // eslint-disable-next-line no-empty-pattern
-  const calculatePlotPoints = ({}, index, array) => {
+  const calculatePlotPoints = ({ date, 'sum(size)': blockChainSize }, index, array) => {
     if (index < compareInterval) {
       return {};
     }
     return {
-      x: array[index].date,
-      y:
-        parseInt(array[index]['sum(size)'], 10) /
-        parseInt(array[index - compareInterval]['sum(size)'], 10),
+      x: date,
+      y: blockChainSize / array[index - compareInterval]['sum(size)'],
     };
   };
 
-  const EthereumPlotPoints = points
+  const ethereumPlotPoints = points
     .map(calculatePlotPoints)
     .slice(compareInterval);
 

@@ -38,8 +38,8 @@ router.get('/storage-constraint', async (_req, res) => {
   const compareInterval = 14; // days
   const data = [{ id: 'Bitcoin', data: [] }];
   for (let i = compareInterval; i < respData.length; i += 1) {
-    const sizeNow = parseInt(respData[i]['sum(size)'], 10);
-    const sizeBefore = parseInt(respData[i - compareInterval]['sum(size)'], 10);
+    const sizeNow = respData[i]['sum(size)'];
+    const sizeBefore = respData[i - compareInterval]['sum(size)'];
     data[0].data.push({
       x: respData[i].date,
       y: sizeNow / sizeBefore,
