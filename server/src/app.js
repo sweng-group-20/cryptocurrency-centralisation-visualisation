@@ -4,7 +4,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const cron = require('node-cron');
 
-const routes = require('./routes/index');
+const routes = require('./routes');
 const { notFoundError, errorHandler } = require('./middlewares');
 const { syncDatabase } = require('./graph_data/github_comments');
 const logger = require('./logger');
@@ -54,10 +54,14 @@ app.listen(port, () => {
 /**
  * Sync repositories every 2 hours
  */
-cron.schedule('0 */2 * * *', () => {
+cron.schedule('0 */2 * * *', async () => {
   const repoOwner = 'bitcoin';
   const repoName = 'bitcoin';
 
   logger.info(`Syncing repository github.com/${repoOwner}/${repoName}`);
-  syncDatabase(repoOwner, repoName);
+  try {
+    await syncDatabase(repoOwner, repoName);
+  } catch (err) {
+    logger.error({ err }, '[syncDatabase]');
+  }
 });
