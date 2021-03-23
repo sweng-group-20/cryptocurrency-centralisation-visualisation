@@ -13,10 +13,8 @@ const options = {
   },
   apis: [
     './src/app.js',
-    './src/routes/bitcoin/operational.js',
-    './src/routes/bitcoin/application.js',
-    './src/routes/ethereum/operational.js',
-    './src/routes/ethereum/application.js',
+    './src/routes/bitcoin/*.js',
+    './src/routes/ethereum/*.js',
   ],
 };
 
