@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
-const apidocs = require('./routes/api_docs.js');
+const apidocs = require('./routes/api_docs');
 const routes = require('./routes/index');
 const { notFoundError, errorHandler } = require('./middlewares');
 
