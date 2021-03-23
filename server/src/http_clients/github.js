@@ -1,4 +1,3 @@
-const fetch = require('node-fetch');
 const GitHubError = require('../errors/GitHubError');
 const GraphQLError = require('../errors/GraphQLError');
 
@@ -7,8 +6,10 @@ const BaseHttpClient = require('./base');
 class GitHubHttpClient extends BaseHttpClient {
   constructor() {
     super('https://api.github.com');
-    this.headers = new fetch.Headers();
-    this.headers.set('Authorization', `Bearer ${process.env.GITHUB_TOKEN}`);
+    this.options.headers.set(
+      'Authorization',
+      `Bearer ${process.env.GITHUB_TOKEN}`
+    );
   }
 
   /**
@@ -23,7 +24,7 @@ class GitHubHttpClient extends BaseHttpClient {
       variables,
     });
 
-    return this.request('/graphql', 'POST', body, this.headers);
+    return this.request('/graphql', 'POST', body);
   }
 
   /**

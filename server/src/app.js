@@ -63,12 +63,15 @@ app.listen(port, () => {
  * Sync repositories every 2 hours
  */
 cron.schedule('0 */2 * * *', async () => {
-  const repoOwner = 'bitcoin';
-  const repoName = 'bitcoin';
-
-  logger.info(`Syncing repository github.com/${repoOwner}/${repoName}`);
   try {
+    const repoOwner = 'bitcoin';
+    const repoName = 'bitcoin';
+
+    logger.info(`Syncing repository github.com/${repoOwner}/${repoName}`);
     await syncDatabase(repoOwner, repoName);
+    logger.info(
+      `Sync repository github.com/${repoOwner}/${repoName} completed`
+    );
   } catch (err) {
     logger.error({ err }, '[syncDatabase]');
   }

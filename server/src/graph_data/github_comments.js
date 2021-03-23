@@ -35,7 +35,7 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
   const updatedCursor =
     getIssueOrPullRequestNumbersResponse.repository.endCursor;
 
-  const limitPromise = pLimit(10);
+  const limitPromise = pLimit(3);
 
   let getIssueOrPullRequestCommentsResponse = null;
   if (type === 'pr') {
