@@ -41,7 +41,11 @@ router.get('/storage-constraint', async (_req, res) => {
   const respText = await resp.json();
   const points = respText.data;
   const compareInterval = 14;
-  const calculatePlotPoints = ({ date, 'sum(size)': blockChainSize }, index, array) => {
+  const calculatePlotPoints = (
+    { date, 'sum(size)': blockChainSize },
+    index,
+    array
+  ) => {
     if (index < compareInterval) {
       return {};
     }
@@ -60,7 +64,7 @@ router.get('/storage-constraint', async (_req, res) => {
     data: [
       {
         id: 'Ethereum',
-        data: EthereumPlotPoints,
+        data: ethereumPlotPoints,
       },
     ],
   });
