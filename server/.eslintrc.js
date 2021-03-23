@@ -14,6 +14,9 @@ module.exports = {
   rules: {
     'prefer-arrow-callback': 'error',
     'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-    'eslint-comments/no-use': ['error', { allow: [] }],
+    'eslint-comments/no-use': [
+      'error',
+      { allow: ['eslint-disable-next-line'] },
+    ],
   },
 };

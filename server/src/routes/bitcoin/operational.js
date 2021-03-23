@@ -4,7 +4,13 @@ const fetch = require('node-fetch');
 const router = express.Router();
 
 /**
- * Default response
+ * @swagger
+ * /api/v1/bitcoin/operational/:
+ *  get:
+ *      description: Basic message for bitcoin operational endpoint
+ *      responses:
+ *          200:
+ *              description: Successful response
  */
 router.get('/', (_req, res) => {
   res.status(200);
@@ -13,6 +19,15 @@ router.get('/', (_req, res) => {
   });
 });
 
+/**
+ * @swagger
+ * /api/v1/bitcoin/operational/storage-constraint:
+ *  get:
+ *      description: Returns data points for the storage constraint factor in the operational layer for bitcoin (takes a while to test!)
+ *      responses:
+ *          200:
+ *              description: Successful response
+ */
 router.get('/storage-constraint', async (_req, res) => {
   const resp = await fetch(
     'https://charts.bitcoin.com/btc/api/chart/blockchain-size',
