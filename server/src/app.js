@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
+const apidocs = require('./routes/api-docs');
 const routes = require('./routes/index');
 const { notFoundError, errorHandler } = require('./middlewares');
 
@@ -20,7 +21,13 @@ app.use(
 app.use(express.json());
 
 /**
- * Hello world response
+ * @swagger
+ * /:
+ *  get:
+ *      description: Hello World Response
+ *      responses:
+ *          200:
+ *              description: Successful response
  */
 app.get('/', (_req, res) => {
   res.status(200);
@@ -32,6 +39,7 @@ app.get('/', (_req, res) => {
 /**
  * Add routes
  */
+app.use('/api-docs', apidocs);
 app.use('/api/v1', routes);
 
 app.use(notFoundError);
