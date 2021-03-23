@@ -22,7 +22,7 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
   if (remaining <= 50) {
     return;
   }
-  const limit = Math.floor((remaining - 50) / 2);
+  const limit = Math.floor(remaining - 50);
 
   const getIssueOrPullRequestNumbersResponse = await gitHubHttpClient.getIssueOrPullRequestNumbers(
     type,
@@ -160,7 +160,7 @@ const syncDatabase = async (repoOwner, repoName) => {
     issueCursor
   );
 
-  syncDatabaseRepositoryIssuesOrPullRequests(
+  return syncDatabaseRepositoryIssuesOrPullRequests(
     'pr',
     repoOwner,
     repoName,
