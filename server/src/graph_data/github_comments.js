@@ -77,16 +77,19 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
     { databaseId: 0, issuesOrPullRequests: [] }
   );
 
-  await db.query(
-    `
-    INSERT INTO repositories (database_id, repo_name, repo_owner, pull_request_cursor)
-      VALUES ($1, $2, $3, $4)
-    ON CONFLICT (database_id)
-      DO UPDATE SET
-        ${type === 'pr' ? 'pull_request' : 'issue'}_cursor = $4;
-    `,
-    [repository.databaseId, repoName, repoOwner, updatedCursor]
-  );
+  if (updatedCursor != null) {
+    const cursor = `${type === 'pr' ? 'pull_request' : 'issue'}_cursor`;
+    await db.query(
+      `
+      INSERT INTO repositories (database_id, repo_name, repo_owner, ${cursor})
+        VALUES ($1, $2, $3, $4)
+      ON CONFLICT (database_id)
+        DO UPDATE SET
+          ${cursor} = $4;
+      `,
+      [repository.databaseId, repoName, repoOwner, updatedCursor]
+    );
+  }
 
   Promise.all(
     repository.issuesOrPullRequests.map(async (issueOrPullRequest) => {
