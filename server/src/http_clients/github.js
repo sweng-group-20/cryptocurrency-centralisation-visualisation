@@ -33,31 +33,30 @@ class GitHubHttpClient extends BaseHttpClient {
    * @param {number} pullRequestNumber Pull request number
    */
   async getPullRequestComments(repoOwner, repoName, pullRequestNumber) {
-    const commentsQuery = `
-      comments(first: 100) {
-        nodes {
-          databaseId
-          ...commentFields
-        }
-      }
-    `;
     const query = `
-      query ($repoOwner: String!, $repoName:String!, $pullRequestNumber: Int!) {
+      query ($repoOwner: String!, $repoName: String!, $pullRequestNumber: Int!) {
         repository(owner: $repoOwner, name: $repoName) {
           databaseId
           pullRequest(number: $pullRequestNumber) {
             databaseId
             number
             state
-            ${commentsQuery}
-            reviewThreads(first: 100) {
+            comments(first: 100) {
               nodes {
-                ${commentsQuery}
+                databaseId
+                ...commentFields
               }
             }
             reviews(first: 100) {
               nodes {
-                ${commentsQuery}
+                databaseId
+                ...commentFields
+                comments(first: 100) {
+                  nodes {
+                    databaseId
+                    ...commentFields
+                  }
+                }
               }
             }
           }
@@ -70,6 +69,7 @@ class GitHubHttpClient extends BaseHttpClient {
 
       fragment commentFields on Comment {
         createdAt
+        body
         author {
           login
         }
@@ -95,31 +95,28 @@ class GitHubHttpClient extends BaseHttpClient {
     const { pullRequest, databaseId: repoDatabaseId } = data.repository;
     const {
       comments,
-      reviewThreads,
       reviews,
       number,
       state,
       databaseId: pullRequestDatabaseId,
     } = pullRequest;
-    let allCommentNodes = [...comments.nodes];
-    reviewThreads.nodes.forEach(({ comments: reviewComments }) =>
-      reviewComments.nodes.forEach((comment) => allCommentNodes.push(comment))
-    );
-    reviews.nodes.forEach(({ comments: reviewComments }) =>
-      reviewComments.nodes.forEach((comment) => {
-        allCommentNodes.push(comment);
-      })
-    );
-
-    const set = new Set();
-    allCommentNodes = allCommentNodes.filter(
-      ({ databaseId: commentDatabaseId }) => {
-        const hasDuplicate = set.has(commentDatabaseId);
-        set.add(commentDatabaseId);
-
-        return !hasDuplicate;
+    const allCommentNodes = [...comments.nodes];
+    reviews.nodes.forEach(
+      ({ databaseId, createdAt, body, author, comments: reviewComments }) => {
+        allCommentNodes.push({ databaseId, createdAt, body, author });
+        reviewComments.nodes.forEach((comment) => {
+          allCommentNodes.push(comment);
+        });
       }
     );
+
+    const filteredCommentNodes = allCommentNodes
+      .filter(({ body }) => body.length > 0)
+      .map(({ databaseId, createdAt, author }) => ({
+        databaseId,
+        createdAt,
+        author,
+      }));
 
     return {
       repository: {
@@ -129,7 +126,7 @@ class GitHubHttpClient extends BaseHttpClient {
           state,
           databaseId: pullRequestDatabaseId,
           comments: {
-            nodes: allCommentNodes,
+            nodes: filteredCommentNodes,
           },
         },
       },
