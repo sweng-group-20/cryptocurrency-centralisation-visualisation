@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const cron = require('node-cron');
 
 const routes = require('./routes');
+const apidocs = require('./routes/api_docs');
 const { notFoundError, errorHandler } = require('./middlewares');
 const { syncDatabase } = require('./graph_data/github_comments');
 const logger = require('./logger');
@@ -24,7 +25,13 @@ app.use(
 app.use(express.json());
 
 /**
- * Hello world response
+ * @swagger
+ * /:
+ *  get:
+ *      description: Hello World Response
+ *      responses:
+ *          200:
+ *              description: Successful response
  */
 app.get('/', (_req, res) => {
   res.status(200);
@@ -36,6 +43,7 @@ app.get('/', (_req, res) => {
 /**
  * Add routes
  */
+app.use('/api-docs', apidocs);
 app.use('/api/v1', routes);
 
 app.use(notFoundError);

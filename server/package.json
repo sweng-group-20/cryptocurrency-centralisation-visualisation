@@ -17,7 +17,9 @@
     "node-fetch": "^2.6.1",
     "p-limit": "^3.1.0",
     "pg": "^8.5.1",
-    "pino": "^6.11.2"
+    "pino": "^6.11.2",
+    "swagger-jsdoc": "6.0.0",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "eslint": "^7.21.0",
