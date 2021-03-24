@@ -3,43 +3,75 @@ import classnames from 'classnames';
 import ResponsiveLineCanvas from '../components/ResponsiveLineCanvas';
 
 const GraphPage = () => {
-  const [ethereum, setEthereum] = useState([]);
-  const [bitcoin, setBitcoin] = useState([]);
+  const [bitcoinSC, setBitcoinSC] = useState([]);
+  const [bitcoinRCC, setBitcoinRCC] = useState([]);
+  const [ethereumSC, setEthereumSC] = useState([]);
+  const [ethereumRCC, setEthereumRCC] = useState([]);
 
   useEffect(() => {
     (async () => {
-      const bitcoinResp = await fetch(
+      const bitcoinSCResp = await fetch(
         'http://localhost:4000/api/v1/bitcoin/operational/storage-constraint',
         { method: 'GET' }
       );
-      const bitcoinJson = await bitcoinResp.json();
-      const { data: bitcoinData } = bitcoinJson;
-      setBitcoin(bitcoinData);
+      const bitcoinSCJson = await bitcoinSCResp.json();
+      const { data: bitcoinSCData } = bitcoinSCJson;
+      setBitcoinSC(bitcoinSCData);
 
-      const ethereumResp = await fetch(
+      const bitcoinRCCResp = await fetch(
+        'http://localhost:4000/api/v1/bitcoin/application/reference-client-concentration',
+        { method: 'GET' }
+      );
+      const bitcoinRCCJson = await bitcoinRCCResp.json();
+      const { data: bitcoinRCCData } = bitcoinRCCJson;
+      setBitcoinRCC(bitcoinRCCData);
+
+      const ethereumSCResp = await fetch(
         'http://localhost:4000/api/v1/ethereum/operational/storage-constraint',
         { method: 'GET' }
       );
-      const ethereumJson = await ethereumResp.json();
-      const { data: ethereumData } = ethereumJson;
-      setEthereum(ethereumData);
+      const ethereumSCJson = await ethereumSCResp.json();
+      const { data: ethereumSCData } = ethereumSCJson;
+      setEthereumSC(ethereumSCData);
+
+      const ethereumRCCResp = await fetch(
+        'http://localhost:4000/api/v1/ethereum/application/reference-client-concentration',
+        { method: 'GET' }
+      );
+      const ethereumRCCJson = await ethereumRCCResp.json();
+      const { data: ethereumRCCData } = ethereumRCCJson;
+      setEthereumRCC(ethereumRCCData);
     })();
-  }, [setBitcoin, setEthereum]);
+  }, [setBitcoinSC, setBitcoinRCC, setEthereumSC, setEthereumRCC]);
 
   return (
     <div>
       <div className={classnames('w-screen', 'h-screen')}>
         <ResponsiveLineCanvas
-          data={ethereum}
+          data={bitcoinSC}
           xAxisLabel="Time"
           yAxisLabel="Ratio of Growth"
         />
       </div>
       <div className={classnames('w-screen', 'h-screen')}>
         <ResponsiveLineCanvas
-          data={bitcoin}
+          data={bitcoinRCC}
+          xAxisLabel="Time"
+          yAxisLabel="Satoshi Index"
+        />
+      </div>
+      <div className={classnames('w-screen', 'h-screen')}>
+        <ResponsiveLineCanvas
+          data={ethereumSC}
           xAxisLabel="Time"
           yAxisLabel="Ratio of Growth"
+        />
+      </div>
+      <div className={classnames('w-screen', 'h-screen')}>
+        <ResponsiveLineCanvas
+          data={ethereumRCC}
+          xAxisLabel="Time"
+          yAxisLabel="Satoshi Index"
         />
       </div>
     </div>
