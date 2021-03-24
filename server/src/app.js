@@ -64,12 +64,20 @@ app.listen(port, () => {
  */
 cron.schedule('0 */2 * * *', async () => {
   try {
-    const repoOwner = 'bitcoin';
-    const repoName = 'bitcoin';
+    const repos = [
+      { repoOwner: 'bitcoin', repoName: 'bitcoin' },
+      { repoOwner: 'ethereum', repoName: 'go-ethereum' },
+    ];
 
-    logger.info(`Syncing repository github.com/${repoOwner}/${repoName}`);
-    await syncDatabase(repoOwner, repoName);
-    logger.info(`Sync repository github.com/${repoOwner}/${repoName} complete`);
+    await Promise.all(
+      repos.map(async ({ repoOwner, repoName }) => {
+        logger.info(`Syncing repository github.com/${repoOwner}/${repoName}`);
+        await syncDatabase(repoOwner, repoName);
+        logger.info(
+          `Sync repository github.com/${repoOwner}/${repoName} complete`
+        );
+      })
+    );
   } catch (err) {
     logger.error({ err }, '[syncDatabase]');
   }
