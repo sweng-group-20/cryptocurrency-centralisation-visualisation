@@ -282,6 +282,12 @@ class GitHubHttpClient extends BaseHttpClient {
     };
   }
 
+  /**
+   * Retrieves all the comments of an issue
+   * @param {string} repoOwner Name of the repository owner
+   * @param {string} repoName Name of the repository
+   * @param {number} issueNumber Issue number
+   */
   async getIssueComments(repoOwner, repoName, issueNumber) {
     const query = `
       query ($repoOwner: String!, $repoName: String!, $issueNumber: Int!, $cursor: String) {
@@ -372,7 +378,7 @@ class GitHubHttpClient extends BaseHttpClient {
 
   /**
    * Retrieves a list of issue or pull request numbers
-   * @param {'pr' | 'issue'} type Type to retrieve numbers from
+   * @param {'pullRequests' | 'issues'} type Type to retrieve numbers from
    * @param {string} repoOwner Name of the repository owner
    * @param {string} repoName Name of the repository
    * @param {number} limit Number of issues or pull requests to retrieve the number of
@@ -387,12 +393,10 @@ class GitHubHttpClient extends BaseHttpClient {
   ) {
     const query = `
       query ($repoOwner: String!, $repoName: String!, $first: Int!, $cursor: String, $states: [${
-        type === 'pr' ? 'PullRequestState!' : 'IssueState!'
+        type === 'pullRequests' ? 'PullRequestState!' : 'IssueState!'
       }]) {
         repository(owner: $repoOwner, name: $repoName) {
-          ${
-            type === 'pr' ? 'pullRequests' : 'issues'
-          }(first: $first, after: $cursor, states: $states) {
+          ${type}(first: $first, after: $cursor, states: $states) {
             nodes {
               number
             }
@@ -415,7 +419,7 @@ class GitHubHttpClient extends BaseHttpClient {
     };
 
     const states = ['CLOSED'];
-    if (type === 'pr') {
+    if (type === 'pullRequests') {
       states.push('MERGED');
     }
 
@@ -449,15 +453,8 @@ class GitHubHttpClient extends BaseHttpClient {
       let pageInfo = null;
       let issueOrPullRequestNodes = null;
 
-      if (type === 'pr') {
-        const { pullRequests } = repository;
-        pageInfo = pullRequests.pageInfo;
-        issueOrPullRequestNodes = pullRequests.nodes;
-      } else {
-        const { issues } = repository;
-        pageInfo = issues.pageInfo;
-        issueOrPullRequestNodes = issues.nodes;
-      }
+      pageInfo = repository[type].pageInfo;
+      issueOrPullRequestNodes = repository[type].nodes;
 
       rateLimit.remaining = currentRateLimit.remaining;
       rateLimit.cost += currentRateLimit.cost;
@@ -472,16 +469,11 @@ class GitHubHttpClient extends BaseHttpClient {
 
     const response = {
       repository: {
+        [type]: { nodes },
         endCursor: variables.cursor,
       },
       rateLimit,
     };
-
-    if (type === 'pr') {
-      response.repository.pullRequests = { nodes };
-    } else {
-      response.repository.issues = { nodes };
-    }
 
     return response;
   }

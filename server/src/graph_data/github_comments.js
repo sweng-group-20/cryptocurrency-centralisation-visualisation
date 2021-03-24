@@ -5,7 +5,7 @@ const gitHubHttpClient = require('../http_clients/github');
 
 /**
  * Syncs local database repository issues or pull requests with GitHub
- * @param {'pr' | 'issue'} type Type to sync
+ * @param {'pullRequests' | 'issues'} type Type to sync
  * @param {string} repoOwner Name of the repository owner
  * @param {string} repoName Name of the repository
  * @param {number} pullRequestLimit Limit of the number issues or pull requests to retrieve
@@ -37,40 +37,28 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
 
   const limitPromise = pLimit(3);
 
-  let getIssueOrPullRequestCommentsResponse = null;
-  if (type === 'pr') {
-    getIssueOrPullRequestCommentsResponse = await Promise.all(
-      getIssueOrPullRequestNumbersResponse.repository.pullRequests.nodes.map(
-        ({ number: pullRequestNumber }) =>
-          limitPromise(() =>
-            gitHubHttpClient.getPullRequestComments(
+  const getIssueOrPullRequestCommentsResponse = await Promise.all(
+    getIssueOrPullRequestNumbersResponse.repository[type].nodes.map(
+      ({ number }) =>
+        limitPromise(() => {
+          if (type === 'pullRequests') {
+            return gitHubHttpClient.getPullRequestComments(
               repoOwner,
               repoName,
-              pullRequestNumber
-            )
-          )
-      )
-    );
-  } else {
-    getIssueOrPullRequestCommentsResponse = await Promise.all(
-      getIssueOrPullRequestNumbersResponse.repository.issues.nodes.map(
-        ({ number: issueNumber }) =>
-          limitPromise(() =>
-            gitHubHttpClient.getIssueComments(repoOwner, repoName, issueNumber)
-          )
-      )
-    );
-  }
+              number
+            );
+          }
+          return gitHubHttpClient.getIssueComments(repoOwner, repoName, number);
+        })
+    )
+  );
 
   const repository = getIssueOrPullRequestCommentsResponse.reduce(
     (acc, response) => {
-      const { databaseId, pullRequest, issue } = response.repository;
-      acc.databaseId = databaseId;
-      if (type === 'pr') {
-        acc.issuesOrPullRequests.push(pullRequest);
-      } else {
-        acc.issuesOrPullRequests.push(issue);
-      }
+      const { repository: currentRepository } = response;
+      acc.databaseId = currentRepository.databaseId;
+      const typeSingular = type.slice(0, -1);
+      acc.issuesOrPullRequests.push(currentRepository[typeSingular]);
 
       return acc;
     },
@@ -78,7 +66,9 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
   );
 
   if (updatedCursor != null) {
-    const cursor = `${type === 'pr' ? 'pull_request' : 'issue'}_cursor`;
+    const cursor = `${
+      type === 'pullRequests' ? 'pull_request' : 'issue'
+    }_cursor`;
     await db.query(
       `
       INSERT INTO repositories (database_id, repo_name, repo_owner, ${cursor})
@@ -102,7 +92,7 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
         `,
         [
           issueOrPullRequest.databaseId,
-          type.toUpperCase(),
+          type === 'pullRequests' ? 'PR' : 'ISSUE',
           repository.databaseId,
           issueOrPullRequest.number,
           issueOrPullRequest.state,
@@ -154,14 +144,14 @@ const syncDatabase = async (repoOwner, repoName) => {
   }
 
   await syncDatabaseRepositoryIssuesOrPullRequests(
-    'issue',
+    'issues',
     repoOwner,
     repoName,
     issueCursor
   );
 
   return syncDatabaseRepositoryIssuesOrPullRequests(
-    'pr',
+    'pullRequests',
     repoOwner,
     repoName,
     pullRequestCursor
