@@ -22,7 +22,7 @@ You will need to have installed:
    ```
    cd cryptocurrency-centralisation-visualisation
    ```
-3. Copy `.env_example` to `./docker/.env` and change `CORS_ORIGIN_URL`
+3. Copy `.env_example` to `./docker/.env` and change `CORS_ORIGIN_URL`, `POSTGRES_PASSWORD` and `GITHUB_TOKEN`
 4. Run the start script using `./docker/start_dev.sh` if on linux or `./docker/start_dev.ps1` if on windows. If the script does not work use the following command
    ```
    docker-compose -f ./docker-compose.yml -f ./docker-compose.dev.yml up -d --build
@@ -75,3 +75,4 @@ The local website is hosted on [`http://localhost:3000`](http://localhost:3000) 
 1. Lexes Jan Mantiquilla ([@lexesjan](https://github.com/lexesjan))
 2. Tim Kelly ([@timotheekelly](https://github.com/timotheekelly))
 3. Aodhán Keane ([@aodhanocathain](https://github.com/aodhanocathain))
+4. Stephen Davis ([@SteDavis20](https://github.com/SteDavis20))

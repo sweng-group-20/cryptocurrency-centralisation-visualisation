@@ -2,8 +2,13 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
-const routes = require('./routes/index');
+const cron = require('node-cron');
+
+const routes = require('./routes');
+const apidocs = require('./routes/api_docs');
 const { notFoundError, errorHandler } = require('./middlewares');
+const { syncDatabase } = require('./graph_data/github_comments');
+const logger = require('./logger');
 
 const app = express();
 
@@ -20,7 +25,13 @@ app.use(
 app.use(express.json());
 
 /**
- * Hello world response
+ * @swagger
+ * /:
+ *  get:
+ *      description: Hello World Response
+ *      responses:
+ *          200:
+ *              description: Successful response
  */
 app.get('/', (_req, res) => {
   res.status(200);
@@ -32,6 +43,7 @@ app.get('/', (_req, res) => {
 /**
  * Add routes
  */
+app.use('/api-docs', apidocs);
 app.use('/api/v1', routes);
 
 app.use(notFoundError);
@@ -44,6 +56,21 @@ const host = process.env.HOST || 'localhost';
  * Start web server on port
  */
 app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Listening at http://${host}:${port}`);
+  logger.info(`Listening at http://${host}:${port}`);
+});
+
+/**
+ * Sync repositories every 2 hours
+ */
+cron.schedule('0 */2 * * *', async () => {
+  try {
+    const repoOwner = 'bitcoin';
+    const repoName = 'bitcoin';
+
+    logger.info(`Syncing repository github.com/${repoOwner}/${repoName}`);
+    await syncDatabase(repoOwner, repoName);
+    logger.info(`Sync repository github.com/${repoOwner}/${repoName} complete`);
+  } catch (err) {
+    logger.error({ err }, '[syncDatabase]');
+  }
 });
