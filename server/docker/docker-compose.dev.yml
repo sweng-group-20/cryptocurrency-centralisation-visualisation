@@ -5,6 +5,7 @@ services:
       dockerfile: dev.Dockerfile
     environment:
       - NODE_ENV=development
+      - LOG_LEVEL=debug
     volumes:
       - ../src:/usr/src/app/src
       - ../package.json:/usr/src/app/package.json

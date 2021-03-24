@@ -34,7 +34,7 @@
   },
   "scripts": {
     "start": "node src/app.js",
-    "start:dev": "nodemon src/app.js | pino-pretty",
+    "start:dev": "nodemon src/app.js | pino-pretty --colorize --translateTime",
     "test": "craco test"
   }
 }
