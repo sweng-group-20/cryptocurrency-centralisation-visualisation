@@ -69,9 +69,7 @@ cron.schedule('0 */2 * * *', async () => {
 
     logger.info(`Syncing repository github.com/${repoOwner}/${repoName}`);
     await syncDatabase(repoOwner, repoName);
-    logger.info(
-      `Sync repository github.com/${repoOwner}/${repoName} completed`
-    );
+    logger.info(`Sync repository github.com/${repoOwner}/${repoName} complete`);
   } catch (err) {
     logger.error({ err }, '[syncDatabase]');
   }
