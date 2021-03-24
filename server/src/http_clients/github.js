@@ -28,6 +28,91 @@ class GitHubHttpClient extends BaseHttpClient {
   }
 
   /**
+   * Pagenates pull request nodes
+   * @param {'comments' | 'reviews' | 'reviewThreads'} type Type to pagenate
+   * @param {string} repoOwner Name of the repository owner
+   * @param {string} repoName Name of the repository
+   * @param {number} pullRequestNumber Pull request number
+   * @param {string} nodeFields Fields that a node should include
+   * @param {Object} pageInfo Page info object used for pagenation
+   * @returns
+   */
+  async pagenatePullRequestNodes(
+    type,
+    repoOwner,
+    repoName,
+    pullRequestNumber,
+    nodeFields,
+    pageInfo
+  ) {
+    const query = `
+      query ($repoOwner: String!, $repoName: String!, $pullRequestNumber: Int!, $cursor: String) {
+        repository(owner: $repoOwner, name: $repoName) {
+          pullRequest(number: $pullRequestNumber) {
+            ${type}(first: 100, after: $cursor) {
+              nodes {
+                ${nodeFields}
+              }
+              pageInfo {
+                ...pageInfoFields
+              }
+            }
+          }
+        }
+      }
+
+      fragment commentFields on Comment {
+        createdAt
+        body
+        author {
+          login
+        }
+      }
+
+      fragment pageInfoFields on PageInfo {
+        endCursor
+        hasNextPage
+      }
+    `;
+
+    const variables = {
+      repoOwner,
+      repoName,
+      pullRequestNumber,
+      cursor: pageInfo.endCursor,
+    };
+
+    const result = {
+      nodes: [],
+    };
+
+    let { hasNextPage } = pageInfo;
+    while (hasNextPage) {
+      // eslint-disable-next-line no-await-in-loop
+      const resp = await this.graphqlRequest(query, variables);
+      // eslint-disable-next-line no-await-in-loop
+      const respJson = await resp.json();
+      if (!resp.ok) {
+        throw new GitHubError(JSON.stringify(respJson));
+      }
+      if (respJson.errors) {
+        throw new GraphQLError(JSON.stringify(respJson.errors));
+      }
+
+      const {
+        nodes,
+        pageInfo: currentPageInfo,
+      } = respJson.data.repository.pullRequest[type];
+      nodes.forEach((node) => result.nodes.push(node));
+
+      variables.cursor = currentPageInfo.endCursor;
+      hasNextPage = currentPageInfo.hasNextPage;
+    }
+
+    return { [type]: result };
+  }
+
+  /**
    * Retrieves all the comments of a pull request
    * @param {string} repoOwner Name of the repository owner
    * @param {string} repoName Name of the repository
@@ -47,17 +132,30 @@ class GitHubHttpClient extends BaseHttpClient {
                 databaseId
                 ...commentFields
               }
+              pageInfo {
+                ...pageInfoFields
+              }
             }
             reviews(first: 100) {
               nodes {
                 databaseId
                 ...commentFields
+              }
+              pageInfo {
+                ...pageInfoFields
+              }
+            }
+            reviewThreads(first:100) {
+              nodes {
                 comments(first: 100) {
                   nodes {
                     databaseId
                     ...commentFields
                   }
                 }
+              }
+              pageInfo {
+                ...pageInfoFields
               }
             }
           }
@@ -75,6 +173,11 @@ class GitHubHttpClient extends BaseHttpClient {
           login
         }
       }
+
+      fragment pageInfoFields on PageInfo {
+        endCursor
+        hasNextPage
+      }
     `;
     const variables = {
       repoOwner,
@@ -91,25 +194,69 @@ class GitHubHttpClient extends BaseHttpClient {
       throw new GraphQLError(JSON.stringify(respJson.errors));
     }
 
-    const { data } = respJson;
-    const { rateLimit } = data;
-    const { pullRequest, databaseId: repoDatabaseId } = data.repository;
+    const { repository, rateLimit } = respJson.data;
+    const { pullRequest, databaseId: repoDatabaseId } = repository;
     const {
       comments,
+      reviewThreads,
       reviews,
       number,
       state,
       databaseId: pullRequestDatabaseId,
     } = pullRequest;
+
     const allCommentNodes = [...comments.nodes];
-    reviews.nodes.forEach(
-      ({ databaseId, createdAt, body, author, comments: reviewComments }) => {
-        allCommentNodes.push({ databaseId, createdAt, body, author });
-        reviewComments.nodes.forEach((comment) => {
-          allCommentNodes.push(comment);
-        });
+    const reviewAndCommentNodeFields = `
+      databaseId
+      ...commentFields
+    `;
+    const addNodes = (node) => allCommentNodes.push(node);
+    (
+      await this.pagenatePullRequestNodes(
+        'comments',
+        repoOwner,
+        repoName,
+        pullRequestNumber,
+        reviewAndCommentNodeFields,
+        comments.pageInfo
+      )
+    ).comments.nodes.forEach(addNodes);
+
+    reviews.nodes.forEach(addNodes);
+    (
+      await this.pagenatePullRequestNodes(
+        'reviews',
+        repoOwner,
+        repoName,
+        pullRequestNumber,
+        reviewAndCommentNodeFields,
+        reviews.pageInfo
+      )
+    ).reviews.nodes.forEach(addNodes);
+
+    const extractReviewThreadNodes = ({ comments: reviewComments }) => {
+      reviewComments.nodes.forEach((comment) => {
+        allCommentNodes.push(comment);
+      });
+    };
+    const reviewThreadNodeFields = `
+      comments(first: 100) {
+        nodes {
+          ${reviewAndCommentNodeFields}
+        }
       }
-    );
+    `;
+    reviewThreads.nodes.forEach(extractReviewThreadNodes);
+    (
+      await this.pagenatePullRequestNodes(
+        'reviewThreads',
+        repoOwner,
+        repoName,
+        pullRequestNumber,
+        reviewThreadNodeFields,
+        reviewThreads.pageInfo
+      )
+    ).reviewThreads.nodes.forEach(extractReviewThreadNodes);
 
     const filteredCommentNodes = allCommentNodes
       .filter(({ body }) => body.length > 0)
