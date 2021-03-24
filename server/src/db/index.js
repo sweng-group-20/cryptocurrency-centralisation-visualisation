@@ -7,11 +7,15 @@ const pool = new Pool({
   password: process.env.POSTGRES_PASSWORD,
   port: 5432,
   max: 20,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
 });
 
 const query = (queryString, params) => pool.query(queryString, params);
-Object.freeze(query);
+const getClient = () => pool.connect();
 
-module.exports = { query };
+const db = {
+  query,
+  getClient,
+};
+Object.freeze(db);
+
+module.exports = db;

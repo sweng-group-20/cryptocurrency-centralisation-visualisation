@@ -1,4 +1,5 @@
 const pLimit = require('p-limit');
+const logger = require('../logger');
 
 const db = require('../db');
 const gitHubHttpClient = require('../http_clients/github');
@@ -17,12 +18,18 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
   repoName,
   startCursor
 ) => {
+  logger.debug(
+    { params: { type, repoOwner, repoName, startCursor } },
+    `[syncDatabaseRepositoryIssuesOrPullRequests]`
+  );
+
   const rateLimitResp = await gitHubHttpClient.getRateLimit();
   const { remaining } = rateLimitResp.rateLimit;
-  if (remaining <= 50) {
+  const threshold = 250;
+  if (remaining <= threshold) {
     return;
   }
-  const limit = Math.floor(remaining - 50);
+  const limit = Math.floor(remaining - threshold);
 
   const getIssueOrPullRequestNumbersResponse = await gitHubHttpClient.getIssueOrPullRequestNumbers(
     type,
@@ -35,7 +42,7 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
   const updatedCursor =
     getIssueOrPullRequestNumbersResponse.repository.endCursor;
 
-  const limitPromise = pLimit(3);
+  const limitPromise = pLimit(5);
 
   const getIssueOrPullRequestCommentsResponse = await Promise.all(
     getIssueOrPullRequestNumbersResponse.repository[type].nodes.map(
@@ -65,57 +72,72 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
     { databaseId: 0, issuesOrPullRequests: [] }
   );
 
-  if (updatedCursor != null) {
-    const cursor = `${
-      type === 'pullRequests' ? 'pull_request' : 'issue'
-    }_cursor`;
-    await db.query(
-      `
-      INSERT INTO repositories (database_id, repo_name, repo_owner, ${cursor})
-        VALUES ($1, $2, $3, $4)
-      ON CONFLICT (database_id)
-        DO UPDATE SET
-          ${cursor} = $4;
-      `,
-      [repository.databaseId, repoName, repoOwner, updatedCursor]
-    );
-  }
+  const client = await db.getClient();
 
-  Promise.all(
-    repository.issuesOrPullRequests.map(async (issueOrPullRequest) => {
-      await db.query(
+  try {
+    await client.query('BEGIN');
+
+    if (updatedCursor != null) {
+      const cursor = `${
+        type === 'pullRequests' ? 'pull_request' : 'issue'
+      }_cursor`;
+      await client.query(
         `
-        INSERT INTO issues_and_pull_requests (database_id, issue_type, parent_repo_id, issue_number, issue_state)
-          VALUES ($1, $2, $3, $4, $5)
-        ON CONFLICT
-          DO NOTHING;
+        INSERT INTO repositories (database_id, repo_name, repo_owner, ${cursor})
+          VALUES ($1, $2, $3, $4)
+        ON CONFLICT (database_id)
+          DO UPDATE SET
+            ${cursor} = $4;
         `,
-        [
-          issueOrPullRequest.databaseId,
-          type === 'pullRequests' ? 'PR' : 'ISSUE',
-          repository.databaseId,
-          issueOrPullRequest.number,
-          issueOrPullRequest.state,
-        ]
+        [repository.databaseId, repoName, repoOwner, updatedCursor]
       );
-      return issueOrPullRequest.comments.nodes.map((comment) =>
-        db.query(
+    }
+
+    await Promise.all(
+      repository.issuesOrPullRequests.map(async (issueOrPullRequest) => {
+        await client.query(
           `
-          INSERT INTO comments (database_id, created_at, author_login, parent_issue_id)
-            VALUES ($1, $2, $3, $4)
+          INSERT INTO issues_and_pull_requests (database_id, issue_type, parent_repo_id, issue_number, issue_state)
+            VALUES ($1, $2, $3, $4, $5)
           ON CONFLICT
             DO NOTHING;
           `,
           [
-            comment.databaseId,
-            comment.createdAt,
-            comment.author?.login,
             issueOrPullRequest.databaseId,
+            type === 'pullRequests' ? 'PR' : 'ISSUE',
+            repository.databaseId,
+            issueOrPullRequest.number,
+            issueOrPullRequest.state,
           ]
-        )
-      );
-    })
-  );
+        );
+
+        return Promise.all(
+          issueOrPullRequest.comments.nodes.map((comment) =>
+            client.query(
+              `
+            INSERT INTO comments (database_id, created_at, author_login, parent_issue_id)
+              VALUES ($1, $2, $3, $4)
+            ON CONFLICT
+              DO NOTHING;
+            `,
+              [
+                comment.databaseId,
+                comment.createdAt,
+                comment.author?.login,
+                issueOrPullRequest.databaseId,
+              ]
+            )
+          )
+        );
+      })
+    );
+    await client.query('COMMIT');
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
 };
 
 /**
@@ -124,6 +146,8 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
  * @param {string} repoName Name of the repository
  */
 const syncDatabase = async (repoOwner, repoName) => {
+  logger.debug({ params: { repoOwner, repoName } }, `[syncDatabase]`);
+
   const { rows } = await db.query(
     `
     SELECT
