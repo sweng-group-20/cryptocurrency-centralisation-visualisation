@@ -3,12 +3,14 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const cron = require('node-cron');
+const pLimit = require('p-limit');
 
-const routes = require('./routes');
 const apidocs = require('./routes/api_docs');
-const { notFoundError, errorHandler } = require('./middlewares');
-const { syncDatabase } = require('./graph_data/github_comments');
 const logger = require('./logger');
+const routes = require('./routes');
+const { notFoundError, errorHandler } = require('./middlewares');
+const { refreshSatoshiIndex } = require('./graph_data/satoshi_index');
+const { syncDatabase } = require('./graph_data/github_comments');
 
 const app = express();
 
@@ -68,14 +70,18 @@ cron.schedule('0 */2 * * *', async () => {
       { repoOwner: 'bitcoin', repoName: 'bitcoin' },
       { repoOwner: 'ethereum', repoName: 'go-ethereum' },
     ];
+    const limit = pLimit(1);
 
     await Promise.all(
       repos.map(async ({ repoOwner, repoName }) => {
-        logger.info(`Syncing repository github.com/${repoOwner}/${repoName}`);
-        await syncDatabase(repoOwner, repoName);
-        logger.info(
-          `Sync repository github.com/${repoOwner}/${repoName} complete`
-        );
+        limit(async () => {
+          logger.info(`Syncing repository github.com/${repoOwner}/${repoName}`);
+          await syncDatabase(repoOwner, repoName);
+          await refreshSatoshiIndex(repoOwner, repoName);
+          logger.info(
+            `Sync repository github.com/${repoOwner}/${repoName} complete`
+          );
+        });
       })
     );
   } catch (err) {
