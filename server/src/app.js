@@ -26,15 +26,6 @@ app.use(
 );
 app.use(express.json());
 
-/**
- * @swagger
- * /:
- *  get:
- *      description: Hello World Response
- *      responses:
- *          200:
- *              description: Successful response
- */
 app.get('/', (_req, res) => {
   res.status(200);
   res.json({
