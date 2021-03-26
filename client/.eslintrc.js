@@ -12,6 +12,9 @@ module.exports = {
     jest: true,
     node: true,
   },
+  parserOptions: {
+    ecmaVersion: 2021,
+  },
   rules: {
     'eslint-comments/no-use': ['error', { allow: [] }],
     'jsx-a11y/href-no-hash': ['off'],

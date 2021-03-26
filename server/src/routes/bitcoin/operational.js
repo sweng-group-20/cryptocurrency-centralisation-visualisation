@@ -4,13 +4,24 @@ const fetch = require('node-fetch');
 const router = express.Router();
 
 /**
- * @swagger
- * /api/v1/bitcoin/operational/:
- *  get:
- *      description: Basic message for bitcoin operational endpoint
- *      responses:
- *          200:
- *              description: Successful response
+ * @openapi
+ *
+ * /bitcoin/operational:
+ *   get:
+ *     description: Basic message for bitcoin operational layer endpoint
+ *     tags:
+ *       - bitcoin
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   enum: ['operational layer endpoint']
  */
 router.get('/', (_req, res) => {
   res.status(200);
@@ -20,13 +31,38 @@ router.get('/', (_req, res) => {
 });
 
 /**
- * @swagger
- * /api/v1/bitcoin/operational/storage-constraint:
- *  get:
- *      description: Returns plot points for the storage constraint factor in the operational layer for Bitcoin - TEST EXECUTION MAY BE SLOW
- *      responses:
- *          200:
- *              description: Successful response
+ * @openapi
+ *
+ * /bitcoin/operational/storage-constraint:
+ *   get:
+ *     description: Returns plot points for the storage constraint factor in the operational layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *     tags:
+ *       - bitcoin
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       data:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             x:
+ *                               type: string
+ *                               format: date
+ *                             y:
+ *                               type: number
  */
 router.get('/storage-constraint', async (_req, res) => {
   const resp = await fetch(

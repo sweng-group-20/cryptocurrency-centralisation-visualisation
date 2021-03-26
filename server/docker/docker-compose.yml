@@ -9,5 +9,32 @@ services:
     ports:
       - '4000:4000'
     environment:
-      - CORS_ORIGIN_URL=${CORS_ORIGIN_URL}
       - NODE_ENV=production
+      - CORS_ORIGIN_URL=${CORS_ORIGIN_URL}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+    networks:
+      - network
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13.1-alpine
+    container_name: cryptocurrency-centralisation-visualisation-database
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    networks:
+      - network
+    volumes:
+      - database_data:/var/lib/postgresql/data
+      - ../sql_scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+networks:
+  network:
+    name: cryptocurrency-centralisation-visualisation-network
+    driver: bridge
+
+volumes:
+  database_data:
+    name: cryptocurrency-centralisation-visualisation-database-data
