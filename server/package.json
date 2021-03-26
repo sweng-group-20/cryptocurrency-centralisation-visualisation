@@ -1,6 +1,6 @@
 {
-  "name": "server",
-  "version": "0.1.0",
+  "name": "cryptocurrency-centralisation-visualisation-back-end",
+  "version": "0.3.0",
   "description": "Back end for cryptocurrency centralisation visualisation web app",
   "main": "app.js",
   "repository": "https://github.com/sweng-group-20/cryptocurrency-centralisation-visualisation",
@@ -15,6 +15,7 @@
     "neat-csv": "^6.0.1",
     "node-cron": "^3.0.0",
     "node-fetch": "^2.6.1",
+    "openapi-types": "^7.2.3",
     "p-limit": "^3.1.0",
     "pg": "^8.5.1",
     "pino": "^6.11.2",
