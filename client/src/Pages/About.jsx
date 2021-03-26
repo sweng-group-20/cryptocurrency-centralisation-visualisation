@@ -24,7 +24,7 @@ function About() {
         <div className="about-image-container">
           <img
             className="about-image"
-            src="{./images/—Pngtree—white cartoon line electronics_4615679.png}"
+            src={require('../components/images/—Pngtree—white cartoon line electronics_4615679.png')}
             alt=""
           />
         </div>

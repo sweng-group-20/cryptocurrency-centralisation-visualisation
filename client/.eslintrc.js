@@ -13,6 +13,7 @@ module.exports = {
     node: true,
   },
   rules: {
+    'global-require': 0,
     'eslint-comments/no-use': ['error', { allow: [] }],
     'jsx-a11y/href-no-hash': ['off'],
     'prefer-arrow-callback': 'error',
