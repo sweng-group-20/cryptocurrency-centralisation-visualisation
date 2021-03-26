@@ -1,6 +1,7 @@
 import React from 'react';
 import './About.css';
 import '../index.css';
+import Image from '../components/images/—Pngtree—white cartoon line electronics_4615679.png';
 
 function About() {
   return (
@@ -22,11 +23,7 @@ function About() {
           doloribus possimus est enim facere iure, magnam harum rem.
         </div>
         <div className="about-image-container">
-          <img
-            className="about-image"
-            src={require('../components/images/—Pngtree—white cartoon line electronics_4615679.png')}
-            alt=""
-          />
+          <img className="about-image" src={Image} alt="" />
         </div>
       </div>
     </section>

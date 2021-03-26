@@ -2,6 +2,7 @@
   height: 40px;
   width: 40px;
   position: fixed;
-  right: 0;
-  bottom: 0;
+  cursor: pointer;
+  right: 5%;
+  bottom: 5%;
 }
