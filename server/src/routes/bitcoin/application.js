@@ -1,6 +1,6 @@
 const express = require('express');
 
-const calculateSatoshiIndex = require('../../graph_data/satoshi_index');
+const { getSatoshiIndex } = require('../../graph_data/satoshi_index');
 
 const router = express.Router();
 
@@ -14,21 +14,25 @@ router.get('/', (_req, res) => {
   });
 });
 
-router.get('/reference-client-concentration', async (_req, res) => {
-  const satoshiIndex = await calculateSatoshiIndex('bitcoin', 'bitcoin');
-  const satoshiIndexPlotPoints = Object.entries(
-    satoshiIndex
-  ).map(([date, index]) => ({ x: date, y: index }));
+router.get('/reference-client-concentration', async (_req, res, next) => {
+  try {
+    const satoshiIndex = await getSatoshiIndex('bitcoin', 'bitcoin');
+    const satoshiIndexPlotPoints = Object.entries(
+      satoshiIndex
+    ).map(([date, index]) => ({ x: date, y: index }));
 
-  res.status(200);
-  res.json({
-    data: [
-      {
-        id: 'Bitcoin',
-        data: satoshiIndexPlotPoints,
-      },
-    ],
-  });
+    res.status(200);
+    res.json({
+      data: [
+        {
+          id: 'Bitcoin',
+          data: satoshiIndexPlotPoints,
+        },
+      ],
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;
