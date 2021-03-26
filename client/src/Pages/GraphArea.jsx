@@ -1,15 +1,16 @@
-import React from "react";
-import "./GraphArea.css";
-import "../index.css";
-import Bitcoin from "../components/Bitcoin";
-import Ethereum from "../components/Ethereum";
-import CryptoNav from "../components/CryptoNav";
+import React from 'react';
+import './GraphArea.css';
+import '../index.css';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
-} from "react-router-dom";
+} from 'react-router-dom';
+
+import Bitcoin from '../components/Bitcoin';
+import Ethereum from '../components/Ethereum';
+import CryptoNav from '../components/CryptoNav';
 
 function GraphArea() {
   return (
@@ -24,7 +25,7 @@ function GraphArea() {
               return <Redirect to="/Bitcoin" />;
             }}
           />
-          <Route exact path="/Bitcoin" component={Bitcoin}></Route>
+          <Route exact path="/Bitcoin" component={Bitcoin} />
           <Route path="/Ethereum" component={Ethereum} />
         </Switch>
       </Router>

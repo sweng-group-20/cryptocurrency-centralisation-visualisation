@@ -1,14 +1,15 @@
+import React from 'react';
 import './App.css';
-import Hero from './Pages/Hero'
-import About from './Pages/About'
-import Graphs from './Pages/GraphArea'
+import Hero from './Pages/Hero';
+import About from './Pages/About';
+import Graphs from './Pages/GraphArea';
 
 function App() {
   return (
     <div className="App">
-        <Hero />
-        <About />
-        <Graphs />
+      <Hero />
+      <About />
+      <Graphs />
     </div>
   );
 }
