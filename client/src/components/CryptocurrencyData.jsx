@@ -1,27 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AllSix from './AllSix';
 import './CryptocurrencyData.css';
 import '../App.css';
+import matchType from '../types/match';
 
-function CryptocurrencyData({ name }) {
+function CryptocurrencyData({ name, match }) {
   return (
     <div className="graph-content-container">
       <div className="graph-container">
-        <AllSix name={name} />
-        <Link to="/Application" name={name} />
-        <Link to="/Consensus" name={name} />
-        <Link to="/Incentive" name={name} />
-        <Link to="/Operational" name={name} />
-        <Link to="/Network" name={name} />
-        <Link to="/Governance" name={name} />
+        <AllSix name={name} match={match} />
       </div>
     </div>
   );
 }
 
-CryptocurrencyData.propTypes = { name: PropTypes.string };
+CryptocurrencyData.propTypes = {
+  name: PropTypes.string,
+  match: matchType.isRequired,
+};
 CryptocurrencyData.defaultProps = { name: '' };
 
 export default CryptocurrencyData;
