@@ -5,6 +5,9 @@ module.exports = {
     es6: true,
     node: true,
   },
+  parserOptions: {
+    ecmaVersion: 2021,
+  },
   plugins: ['prettier'],
   extends: [
     'airbnb-base',
@@ -14,6 +17,9 @@ module.exports = {
   rules: {
     'prefer-arrow-callback': 'error',
     'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-    'eslint-comments/no-use': ['error', { allow: [] }],
+    'eslint-comments/no-use': [
+      'error',
+      { allow: ['eslint-disable-next-line'] },
+    ],
   },
 };

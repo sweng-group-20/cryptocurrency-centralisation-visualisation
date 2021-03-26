@@ -1,11 +1,27 @@
 const express = require('express');
 const fetch = require('node-fetch');
-const neatCsv = require('neat-csv');
 
 const router = express.Router();
 
 /**
- * Default response
+ * @openapi
+ *
+ * /ethereum/operational:
+ *   get:
+ *     description: Basic message for ethereum operational layer endpoint
+ *     tags:
+ *       - ethereum
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   enum: ['operational layer endpoint']
  */
 router.get('/', (_req, res) => {
   res.status(200);
@@ -14,37 +30,64 @@ router.get('/', (_req, res) => {
   });
 });
 
+/**
+ * @openapi
+ *
+ * /ethereum/operational/storage-constraint:
+ *   get:
+ *     description: Returns plot points for the storage constraint factor in the operational layer for Ethereum - TEST EXECUTION MAY BE SLOW
+ *     tags:
+ *       - ethereum
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       data:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             x:
+ *                               type: string
+ *                               format: date
+ *                             y:
+ *                               type: number
+ */
 router.get('/storage-constraint', async (_req, res) => {
   const resp = await fetch(
-    'https://etherscan.io/chartsync/chaindefault?output=csv',
-    {
-      method: 'GET',
-    }
+    'https://api.blockchair.com/ethereum/blocks?a=date,sum(size)',
+    { method: 'GET' }
   );
-  const respText = await resp.text();
-  const respCsv = await neatCsv(respText);
-  const mid = Math.floor(respCsv.length / 2);
-  const gethBlockchainSizes = respCsv.slice(0, mid);
-  const openEthereumBlockchainSizes = respCsv.slice(mid + 1, respCsv.length);
 
+  const respText = await resp.json();
+  const points = respText.data;
   const compareInterval = 14;
   const calculatePlotPoints = (
-    { UnixTimeStamp: unixTimeStamp, Value: value },
+    { date, 'sum(size)': blockChainSize },
     index,
     array
   ) => {
     if (index < compareInterval) {
       return {};
     }
-    const x = new Date(unixTimeStamp * 1000).toISOString().split('T')[0];
-    const y = value / array[index - compareInterval].Value;
-    return { x, y };
+    return {
+      x: date,
+      y: blockChainSize / array[index - compareInterval]['sum(size)'],
+    };
   };
 
-  const gethPlotPoints = gethBlockchainSizes
-    .map(calculatePlotPoints)
-    .slice(compareInterval);
-  const openEthereumPlotPoints = openEthereumBlockchainSizes
+  const ethereumPlotPoints = points
     .map(calculatePlotPoints)
     .slice(compareInterval);
 
@@ -52,12 +95,8 @@ router.get('/storage-constraint', async (_req, res) => {
   res.json({
     data: [
       {
-        id: 'GETH',
-        data: gethPlotPoints,
-      },
-      {
-        id: 'OpenEthereum',
-        data: openEthereumPlotPoints,
+        id: 'Ethereum',
+        data: ethereumPlotPoints,
       },
     ],
   });

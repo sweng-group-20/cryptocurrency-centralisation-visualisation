@@ -12,6 +12,9 @@ module.exports = {
     jest: true,
     node: true,
   },
+  parserOptions: {
+    ecmaVersion: 2021,
+  },
   rules: {
     'global-require': 0,
     'eslint-comments/no-use': ['error', { allow: [] }],
