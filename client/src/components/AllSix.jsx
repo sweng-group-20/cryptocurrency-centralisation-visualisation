@@ -1,12 +1,11 @@
 import React from 'react';
 import './AllSix.css';
 import '../index.css';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import matchType from '../types/match';
 
-function AllSix({ name, match }) {
-  const { path } = match;
+function AllSix({ name }) {
+  const { path } = useRouteMatch();
   return (
     <section className="AllSix">
       <Link to={`${path}/Application`} name={name}>
@@ -57,7 +56,6 @@ function AllSix({ name, match }) {
 
 AllSix.propTypes = {
   name: PropTypes.string,
-  match: matchType.isRequired,
 };
 AllSix.defaultProps = { name: '' };
 

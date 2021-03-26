@@ -2,18 +2,13 @@ import React from 'react';
 import CryptocurrencyData from './CryptocurrencyData';
 import './Bitcoin.css';
 import '../App.css';
-import matchType from '../types/match';
 
-function Bitcoin({ match }) {
+function Bitcoin() {
   return (
     <div className="graph-content-container">
-      <CryptocurrencyData name="Bitcoin" match={match} />
+      <CryptocurrencyData name="Bitcoin" />
     </div>
   );
 }
-
-Bitcoin.propTypes = {
-  match: matchType.isRequired,
-};
 
 export default Bitcoin;
