@@ -5,45 +5,45 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function AllSix({ name }) {
-  const { path } = useRouteMatch();
+  const { url } = useRouteMatch();
   return (
     <section className="AllSix">
-      <Link to={`${path}/Application`} name={name}>
+      <Link to={`${url}/Application`}>
         <div className="graph Application">
           Application
           <br />
           {name}
         </div>
       </Link>
-      <Link to={`${path}/Consensus`} name={name}>
+      <Link to={`${url}/Consensus`}>
         <div className="graph Consensus">
           Consensus
           <br />
           {name}
         </div>
       </Link>
-      <Link to={`${path}/Incentive`} name={name}>
+      <Link to={`${url}/Incentive`}>
         <div className="graph Incentive">
           Incentive
           <br />
           {name}
         </div>
       </Link>
-      <Link to={`${path}/Operational`} name={name}>
+      <Link to={`${url}/Operational`}>
         <div className="graph Operational">
           Operational
           <br />
           {name}
         </div>
       </Link>
-      <Link to={`${path}/Network`} name={name}>
+      <Link to={`${url}/Network`}>
         <div className="graph Network">
           Network
           <br />
           {name}
         </div>
       </Link>
-      <Link to={`${path}/Governance`} name={name}>
+      <Link to={`${url}/Governance`}>
         <div className="graph Governance">
           Governance
           <br />
