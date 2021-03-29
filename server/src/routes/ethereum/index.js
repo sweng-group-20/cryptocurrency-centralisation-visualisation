@@ -2,6 +2,7 @@ const express = require('express');
 
 const application = require('./application');
 const operational = require('./operational');
+const network = require('./network');
 
 const router = express.Router();
 
@@ -20,5 +21,6 @@ router.get('/', (_req, res) => {
  */
 router.use('/application', application);
 router.use('/operational', operational);
+router.use('/network', network);
 
 module.exports = router;

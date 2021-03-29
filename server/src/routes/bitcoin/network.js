@@ -56,6 +56,7 @@ router.get('/geographical-distribution', async (_req, res) => {
         }
       }
     }
+    res.status(200);
     res.json({
       data,
     });

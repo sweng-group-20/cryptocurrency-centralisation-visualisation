@@ -12,6 +12,7 @@ const GraphPage = () => {
   const [ethereumSC, setEthereumSC] = useState([]);
   const [ethereumRCC, setEthereumRCC] = useState([]);
   const [bitcoinGeo, setBitcoinGeo] = useState([]);
+  const [ethereumGeo, setEthereumGeo] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -53,6 +54,13 @@ const GraphPage = () => {
       const bitcoinGeoJson = await bitcoinGeoResp.json();
       const { data: bitcoinGeoData } = bitcoinGeoJson;
       setBitcoinGeo(bitcoinGeoData);
+      const ethereumGeoResp = await fetch(
+        'http://localhost:4000/api/v1/ethereum/network/geographical-distribution',
+        { method: 'GET' }
+      );
+      const ethereumGeoJson = await ethereumGeoResp.json();
+      const { data: ethereumGeoData } = ethereumGeoJson;
+      setEthereumGeo(ethereumGeoData);
     })();
   }, [
     setBitcoinSC,
@@ -60,6 +68,7 @@ const GraphPage = () => {
     setEthereumSC,
     setEthereumRCC,
     setBitcoinGeo,
+    setEthereumGeo,
   ]);
 
   return (
@@ -92,6 +101,7 @@ const GraphPage = () => {
           />
         </div>
         <ResponsiveChoropleth data={bitcoinGeo} />
+        <ResponsiveChoropleth data={ethereumGeo} />
       </div>
       <hr />
     </div>

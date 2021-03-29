@@ -8,6 +8,7 @@
   "license": "MIT",
   "type": "commonjs",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "helmet": "^4.4.1",
@@ -19,6 +20,7 @@
     "p-limit": "^3.1.0",
     "pg": "^8.5.1",
     "pino": "^6.11.2",
+    "request": "^2.88.2",
     "swagger-jsdoc": "6.0.0",
     "swagger-ui-express": "^4.1.6"
   },
