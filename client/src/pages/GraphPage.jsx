@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import classnames from 'classnames';
 import ResponsiveLineCanvas from '../components/ResponsiveLineCanvas';
 import ResponsiveChoropleth from '../components/GeoMap';
+import ResponsivePieChart from '../components/PieChart';
 
 // ResponsiveGeoMap,
 // ResponsiveGeoMapCanvas,
@@ -13,6 +14,7 @@ const GraphPage = () => {
   const [ethereumRCC, setEthereumRCC] = useState([]);
   const [bitcoinGeo, setBitcoinGeo] = useState([]);
   const [ethereumGeo, setEthereumGeo] = useState([]);
+  const [bitcoinCon, setBitcoinConData] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -61,6 +63,14 @@ const GraphPage = () => {
       const ethereumGeoJson = await ethereumGeoResp.json();
       const { data: ethereumGeoData } = ethereumGeoJson;
       setEthereumGeo(ethereumGeoData);
+
+      const bitcoinConResp = await fetch(
+        'http://localhost:4000/api/v1/bitcoin/consensus/data',
+        { method: 'GET' }
+      );
+      const bitcoinConJson = await bitcoinConResp.json();
+      const { data: bitcoinConData } = bitcoinConJson;
+      setBitcoinConData(bitcoinConData);
     })();
   }, [
     setBitcoinSC,
@@ -69,6 +79,7 @@ const GraphPage = () => {
     setEthereumRCC,
     setBitcoinGeo,
     setEthereumGeo,
+    setBitcoinConData,
   ]);
 
   return (
@@ -102,6 +113,9 @@ const GraphPage = () => {
         </div>
         <ResponsiveChoropleth data={bitcoinGeo} />
         <ResponsiveChoropleth data={ethereumGeo} />
+        <div className={classnames('w-screen', 'h-screen')}>
+          <ResponsivePieChart data={bitcoinCon} />
+        </div>
       </div>
       <hr />
     </div>
