@@ -2,8 +2,11 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import './Application.css';
 import '../index.css';
+import PropTypes from 'prop-types';
+import LineGraph from './LineGraph';
+// import { data } from 'autoprefixer';
 
-function Application() {
+function Application({ data }) {
   const history = useHistory();
 
   return (
@@ -17,8 +20,14 @@ function Application() {
       >
         Go back
       </button>
+      <LineGraph data={data} smallGraph={false} />
     </div>
   );
 }
+
+Application.propTypes = {
+  data: PropTypes.string,
+};
+Application.defaultProps = { data: '' };
 
 export default Application;

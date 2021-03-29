@@ -11,7 +11,7 @@ import { ResponsivePie } from '@nivo/pie';
 import PropTypes from 'prop-types';
 import './PieChart.css';
 
-function PieChart({ data }) {
+function PieChart({ data, smallGraph }) {
   return (
     <div className="pieChart">
       <ResponsivePie
@@ -98,38 +98,42 @@ function PieChart({ data }) {
             id: 'lines',
           },
         ]}
-        // legends={[
-        //   {
-        //     anchor: 'bottom',
-        //     direction: 'row',
-        //     justify: false,
-        //     translateX: 0,
-        //     translateY: 56,
-        //     itemsSpacing: 0,
-        //     itemWidth: 100,
-        //     itemHeight: 18,
-        //     itemTextColor: '#999',
-        //     itemDirection: 'left-to-right',
-        //     itemOpacity: 1,
-        //     symbolSize: 18,
-        //     symbolShape: 'circle',
-        //     effects: [
-        //       {
-        //         on: 'hover',
-        //         style: {
-        //           itemTextColor: '#000',
-        //         },
-        //       },
-        //     ],
-        //   },
-        // ]}
+        legends={
+          smallGraph
+            ? []
+            : [
+                {
+                  anchor: 'bottom',
+                  direction: 'row',
+                  justify: false,
+                  translateX: 0,
+                  translateY: 56,
+                  itemsSpacing: 0,
+                  itemWidth: 100,
+                  itemHeight: 18,
+                  itemTextColor: '#999',
+                  itemDirection: 'left-to-right',
+                  itemOpacity: 1,
+                  symbolSize: 18,
+                  symbolShape: 'circle',
+                  effects: [
+                    {
+                      on: 'hover',
+                      style: {
+                        itemTextColor: '#000',
+                      },
+                    },
+                  ],
+                },
+              ]
+        }
       />
       )
     </div>
   );
 }
 
-PieChart.propTypes = { data: PropTypes.string };
-PieChart.defaultProps = { data: '' };
+PieChart.propTypes = { data: PropTypes.string, smallGraph: PropTypes.bool };
+PieChart.defaultProps = { data: '', smallGraph: true };
 
 export default PieChart;

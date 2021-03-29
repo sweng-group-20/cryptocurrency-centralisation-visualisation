@@ -2,8 +2,10 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import './Governance.css';
 import '../index.css';
+import PropTypes from 'prop-types';
+import PieChart from './PieChart';
 
-function Governance() {
+function Governance({ data }) {
   const history = useHistory();
 
   return (
@@ -17,8 +19,14 @@ function Governance() {
       >
         Go back
       </button>
+      <PieChart data={data} smallGraph={false} />
     </div>
   );
 }
+
+Governance.propTypes = {
+  data: PropTypes.string,
+};
+Governance.defaultProps = { data: '' };
 
 export default Governance;
