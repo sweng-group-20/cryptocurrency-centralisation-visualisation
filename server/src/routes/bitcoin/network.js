@@ -2,6 +2,8 @@ const express = require('express');
 
 const fetch = require('node-fetch');
 
+const logger = require('../../logger');
+
 const router = express.Router();
 /**
  * Default response
@@ -59,8 +61,8 @@ router.get('/geographical-distribution', async (_req, res) => {
     res.json({
       data,
     });
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    logger.error({ err }, 'con fetch network error');
     res.sendStatus(500);
   }
 });
