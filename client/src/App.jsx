@@ -1,10 +1,10 @@
 import React from 'react';
 import classnames from 'classnames';
-import CounterPage from './pages/CounterPage';
+import GraphPage from './pages/GraphPage';
 
 const App = () => (
   <div className={classnames('font-sans')}>
-    <CounterPage />
+    <GraphPage />
   </div>
 );
 
