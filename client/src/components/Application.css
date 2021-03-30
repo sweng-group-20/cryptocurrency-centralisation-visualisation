@@ -1,9 +1,14 @@
 .ApplicationGraph {
-  width: 100%;
-  height: 100vh;
+  width: 90%;
+  margin: 0 auto;
+  min-height: 100vh;
   background-color: var(--mywhite);
   z-index: 100;
   border-radius: 1rem;
   color: var(--myblack);
   padding: 1rem;
+}
+
+.linegraph {
+  height: 80vh;
 }

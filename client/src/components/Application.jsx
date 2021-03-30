@@ -20,7 +20,9 @@ function Application({ data }) {
       >
         Go back
       </button>
-      <LineGraph data={data} smallGraph={false} />
+      <div className="linegraph">
+        <LineGraph data={data} smallGraph={false} />
+      </div>
     </div>
   );
 }

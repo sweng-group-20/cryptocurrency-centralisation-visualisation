@@ -19,7 +19,9 @@ function Network() {
       >
         Go back
       </button>
-      <ResponsiveChoropleth />
+      <div className="map">
+        <ResponsiveChoropleth />
+      </div>
     </div>
   );
 }
