@@ -349,15 +349,8 @@ function CryptocurrencyData() {
           </Route>
 
           <Route exact path={`${path}/Governance`}>
-            <Governance data={lineData} />
+            <Governance data={pieData} />
           </Route>
-
-          {/* <Route exact path={`${path}/Application`} component={Application data={lineData}} />
-          <Route exact path={`${path}/Consensus`} component={Consensus} />
-          <Route exact path={`${path}/Incentive`} component={Incentive} />
-          <Route exact path={`${path}/Operational`} component={Operational} />
-          <Route exact path={`${path}/Network`} component={Network} />
-          <Route exact path={`${path}/Governance`} component={Governance} /> */}
         </Switch>
       </div>
     </div>

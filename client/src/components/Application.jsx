@@ -1,10 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import './Application.css';
-import '../index.css';
+
 import PropTypes from 'prop-types';
 import LineGraph from './LineGraph';
-// import { data } from 'autoprefixer';
+import './Application.css';
+import '../index.css';
 
 function Application({ data }) {
   const history = useHistory();
