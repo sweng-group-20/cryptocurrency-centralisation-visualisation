@@ -5,7 +5,7 @@ import './ScrollArrow.css';
 import '../index.css';
 
 function ScrollArrow() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   // Show button when page is scorlled upto given distance
   const toggleVisibility = () => {
