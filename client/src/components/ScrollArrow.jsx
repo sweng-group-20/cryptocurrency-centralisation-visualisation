@@ -9,7 +9,7 @@ function ScrollArrow() {
 
   // Show button when page is scorlled upto given distance
   const toggleVisibility = () => {
-    if (window.pageYOffset > 1000) {
+    if (window.pageYOffset > 800) {
       setIsVisible(false);
     } else {
       setIsVisible(true);

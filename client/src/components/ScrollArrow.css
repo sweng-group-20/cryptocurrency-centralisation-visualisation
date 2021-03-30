@@ -1,9 +1,9 @@
 .ScrollArrow {
   height: 3rem;
-  width: 2.5rem;
+  width: 2rem;
   position: fixed;
   cursor: pointer;
-  right: 5%;
+  right: 6%;
   bottom: 7.5%;
   scroll-behavior: smooth;
   animation: mymove 2s infinite;
