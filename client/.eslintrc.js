@@ -17,6 +17,7 @@ module.exports = {
   },
   rules: {
     'import/no-unresolved': 'off',
+    'import/no-named-as-default': 0,
     'global-require': 0,
     'eslint-comments/no-use': ['error', { allow: [] }],
     'jsx-a11y/href-no-hash': ['off'],

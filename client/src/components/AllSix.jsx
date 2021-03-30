@@ -14,13 +14,11 @@ function AllSix({ lineData, pieData }) {
     <section className="AllSix">
       <Link to={`${url}/Application`}>
         <div className="graph Application">
-          Application
           <LineGraph data={lineData} smallGraph />
         </div>
       </Link>
       <Link to={`${url}/Consensus`}>
         <div className="graph Consensus">
-          Consensus
           <PieChart data={pieData} smallGraph />
         </div>
       </Link>
