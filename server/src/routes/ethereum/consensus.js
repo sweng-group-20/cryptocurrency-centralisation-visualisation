@@ -2,11 +2,27 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 
-const logger = require('../../logger');
-
 const router = express.Router();
+
 /**
- * Default response
+ * @openapi
+ *
+ * /ethereum/consensus:
+ *   get:
+ *     description: Basic message for ethereum consensus layer endpoint
+ *     tags:
+ *       - ethereum
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   enum: ['consensus layer endpoint']
  */
 router.get('/', (_req, res) => {
   res.status(200);
@@ -15,7 +31,35 @@ router.get('/', (_req, res) => {
   });
 });
 
-router.get('/data', async (_req, res) => {
+/**
+ * @openapi
+ *
+ * /ethereum/consensus/data:
+ *   get:
+ *     description: Returns pie chart values for the consensus power distribution factor in the consensus layer for Ethereum - TEST EXECUTION MAY BE SLOW
+ *     tags:
+ *       - ethereum
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       label:
+ *                         type: string
+ *                       value:
+ *                         type: integer
+ */
+router.get('/data', async (_req, res, next) => {
   try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -107,8 +151,7 @@ router.get('/data', async (_req, res) => {
       data,
     });
   } catch (err) {
-    logger.error({ err }, 'con fetch network error');
-    res.sendStatus(500);
+    next(err);
   }
 });
 
