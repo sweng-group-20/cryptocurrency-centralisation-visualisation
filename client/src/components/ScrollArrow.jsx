@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+
+import Arrow from './images/arrow.png';
 import './ScrollArrow.css';
 import '../index.css';
-import Arrow from './images/arrow.png';
 
 function ScrollArrow() {
   const [isVisible, setIsVisible] = useState(false);

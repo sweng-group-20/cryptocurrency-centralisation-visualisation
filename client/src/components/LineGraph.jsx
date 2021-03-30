@@ -16,7 +16,7 @@ function LineGraph({ data, smallGraph }) {
     <div className="lineGraph">
       <ResponsiveLine
         data={data}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+        margin={{ top: 50, right: smallGraph ? 60 : 110, bottom: 50, left: 60 }}
         xScale={{ type: 'point' }}
         yScale={{
           type: 'linear',

@@ -1,22 +1,15 @@
-// install (please make sure versions match peerDependencies)
-// yarn add @nivo/core @nivo/line
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
-
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
 import PropTypes from 'prop-types';
+
 import './LineGraph.css';
 
-function Chloropleth({ data }) {
+function Chloropleth({ data, smallGraph }) {
   return (
     <div className="lineGraph">
       <ResponsiveLine
         data={data}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+        margin={{ top: 50, right: smallGraph ? 60 : 110, bottom: 50, left: 60 }}
         xScale={{ type: 'point' }}
         yScale={{
           type: 'linear',
@@ -80,7 +73,14 @@ function Chloropleth({ data }) {
   );
 }
 
-Chloropleth.propTypes = { data: PropTypes.string };
-Chloropleth.defaultProps = { data: '' };
+Chloropleth.propTypes = {
+  data: PropTypes.string,
+  smallGraph: PropTypes.bool,
+};
+
+Chloropleth.defaultProps = {
+  data: '',
+  smallGraph: false,
+};
 
 export default Chloropleth;

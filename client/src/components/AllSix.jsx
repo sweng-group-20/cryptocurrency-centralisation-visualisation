@@ -1,12 +1,12 @@
 import React from 'react';
-import './AllSix.css';
-import '../index.css';
 import { Link, useRouteMatch } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import LineGraph from './LineGraph';
 import PieChart from './PieChart';
 import ResponsiveChoropleth from './GeoMap';
-// import NetworkSmallGraph from './NetworkSmallGraph';
+import './AllSix.css';
+import '../index.css';
 
 function AllSix({ lineData, pieData }) {
   const { url } = useRouteMatch();

@@ -1,8 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+
+import ResponsiveChoropleth from './GeoMap';
 import './Network.css';
 import '../index.css';
-import ResponsiveChoropleth from './GeoMap';
 
 function Network() {
   const history = useHistory();
