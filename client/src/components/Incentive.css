@@ -1,7 +1,9 @@
 .IncentiveGraph {
   width: 100%;
   height: 100vh;
-  background-color: aqua;
-  color: brown;
+  background-color: var(--mywhite);
   z-index: 100;
+  border-radius: 1rem;
+  color: var(--myblack);
+  padding: 1rem;
 }

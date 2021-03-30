@@ -14,44 +14,38 @@ function AllSix({ lineData, pieData }) {
     <section className="AllSix">
       <Link to={`${url}/Application`}>
         <div className="graph Application">
-          <LineGraph data={lineData} smallGraph />
           Application
-          <br />
+          <LineGraph data={lineData} smallGraph />
         </div>
       </Link>
       <Link to={`${url}/Consensus`}>
         <div className="graph Consensus">
-          <PieChart data={pieData} smallGraph />
           Consensus
-          <br />
+          <PieChart data={pieData} smallGraph />
         </div>
       </Link>
       <Link to={`${url}/Incentive`}>
         <div className="graph Incentive">
-          <PieChart data={pieData} smallGraph />
           Incentive
-          <br />
+          <PieChart data={pieData} smallGraph />
         </div>
       </Link>
       <Link to={`${url}/Operational`}>
         <div className="graph Operational">
-          <LineGraph data={lineData} smallGraph />
           Operational
-          <br />
+          <LineGraph data={lineData} smallGraph />
         </div>
       </Link>
       <Link to={`${url}/Network`}>
         <div className="graph Network">
-          <ResponsiveChoropleth />
           Network
-          <br />
+          <ResponsiveChoropleth />
         </div>
       </Link>
       <Link to={`${url}/Governance`}>
         <div className="graph Governance">
-          <PieChart data={pieData} smallGraph />
           Governance
-          <br />
+          <PieChart data={pieData} smallGraph />
         </div>
       </Link>
     </section>
