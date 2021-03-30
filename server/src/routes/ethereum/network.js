@@ -1,6 +1,6 @@
 const express = require('express');
 const cheerio = require('cheerio');
-const request = require('request');
+const fetch = require('node-fetch');
 
 const countryDict = require('./CountryCodes.json');
 
@@ -61,25 +61,29 @@ router.get('/', (_req, res) => {
  */
 router.get('/geographical-distribution', async (_req, res, next) => {
   try {
+    const resp = await fetch('https://www.ethernodes.org/countries', {
+      method: 'GET',
+    });
+    const body = await resp.text();
+
     const data = [];
-    request('https://www.ethernodes.org/countries', (error, response, body) => {
-      if (!error && response.statusCode === 200) {
-        const $ = cheerio.load(body);
-        $('li').each((_, elem) => {
-          const countryName = $(elem).find('a').text();
-          const nodes = $(elem).find('span').eq(1).text().split(' ');
-          if (countryDict[countryName]) {
-            data.push({
-              id: countryDict[countryName],
-              value: nodes[0],
-            });
-          }
-        });
-        res.status(200);
-        res.json({
-          data,
-        });
-      }
+    if (resp.status === 200) {
+      const $ = cheerio.load(body);
+      $('li').each((_, elem) => {
+        const countryName = $(elem).find('a').text();
+        const nodes = $(elem).find('span').eq(1).text().split(' ');
+        if (countryDict[countryName]) {
+          data.push({
+            id: countryDict[countryName],
+            value: parseInt(nodes[0], 10),
+          });
+        }
+      });
+    }
+
+    res.status(200);
+    res.json({
+      data,
     });
   } catch (err) {
     next(err);
