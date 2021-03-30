@@ -1,12 +1,27 @@
 const express = require('express');
-
 const fetch = require('node-fetch');
 
-const logger = require('../../logger');
-
 const router = express.Router();
+
 /**
- * Default response
+ * @openapi
+ *
+ * /bitcoin/network:
+ *   get:
+ *     description: Basic message for ethereum network layer endpoint
+ *     tags:
+ *       - bitcoin
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   enum: ['network layer endpoint']
  */
 router.get('/', (_req, res) => {
   res.status(200);
@@ -15,7 +30,33 @@ router.get('/', (_req, res) => {
   });
 });
 
-router.get('/geographical-distribution', async (_req, res) => {
+/**
+ * @openapi
+ *
+ * /bitcoin/network/geographical-distribution:
+ *   get:
+ *     description: Returns values for the geographic distribuion factor in the network layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *     tags:
+ *       - bitcoin
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       value:
+ *                         type: integer
+ */
+router.get('/geographical-distribution', async (_req, res, next) => {
   try {
     const resp = await fetch('https://bitnodes.io/api/v1/snapshots/latest/', {
       method: 'GET',
@@ -63,8 +104,7 @@ router.get('/geographical-distribution', async (_req, res) => {
       data,
     });
   } catch (err) {
-    logger.error({ err }, 'con fetch network error');
-    res.sendStatus(500);
+    next(err);
   }
 });
 

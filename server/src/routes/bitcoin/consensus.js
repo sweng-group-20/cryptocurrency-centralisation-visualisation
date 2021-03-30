@@ -1,11 +1,27 @@
 const express = require('express');
 const fetch = require('node-fetch');
 
-const logger = require('../../logger');
-
 const router = express.Router();
+
 /**
- * Default response
+ * @openapi
+ *
+ * /bitcoin/consensus:
+ *   get:
+ *     description: Basic message for bitcoin consensus layer endpoint
+ *     tags:
+ *       - bitcoin
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   enum: ['consensus layer endpoint']
  */
 router.get('/', (_req, res) => {
   res.status(200);
@@ -14,7 +30,35 @@ router.get('/', (_req, res) => {
   });
 });
 
-router.get('/data', async (_req, res) => {
+/**
+ * @openapi
+ *
+ * /bitcoin/consensus/data:
+ *   get:
+ *     description: Returns pie chart values for the consensus power distribution factor in the consensus layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *     tags:
+ *       - bitcoin
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       label:
+ *                         type: string
+ *                       value:
+ *                         type: integer
+ */
+router.get('/data', async (_req, res, next) => {
   try {
     const poolNames = [];
     const poolHashs = [];
@@ -42,8 +86,7 @@ router.get('/data', async (_req, res) => {
       data,
     });
   } catch (err) {
-    logger.error({ err }, 'con fetch network error');
-    res.sendStatus(500);
+    next(err);
   }
 });
 
