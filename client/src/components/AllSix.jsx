@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
-
 import PropTypes from 'prop-types';
 import LineGraph from './LineGraph';
 import PieChart from './PieChart';
