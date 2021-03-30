@@ -1,7 +1,7 @@
 import React from 'react';
 import './About.css';
 import '../index.css';
-import Image from '../components/images/—Pngtree—white cartoon line electronics_4615679.png';
+// import Image from '../components/images/—Pngtree—white cartoon line electronics_4615679.png';
 
 function About() {
   return (
@@ -32,9 +32,9 @@ function About() {
           users losing their funds due to a single cause (hacking the third
           party).
         </div>
-        <div className="about-image-container">
+        {/* <div className="about-image-container">
           <img className="about-image" src={Image} alt="" />
-        </div>
+        </div> */}
       </div>
     </section>
   );

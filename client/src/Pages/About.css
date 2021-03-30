@@ -22,7 +22,8 @@
   margin: 0 auto 1rem;
   width: 90%;
   font-size: 2.5rem;
-  border-bottom: solid 0.25rem var(--myorange);
+  font-weight: 500;
+  border-bottom: solid 0.2rem var(--myorange);
   border-radius: 0.1rem;
 }
 

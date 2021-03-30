@@ -7,7 +7,8 @@ function Hero() {
     <section className="Hero">
       <header className="main-section">
         <h1 className="title">
-          Visualising Centralisation <br /> in <br />
+          Visualising <br />
+          Centralisation in <br />
           Cryptocurrencies
         </h1>
       </header>

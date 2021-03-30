@@ -16,6 +16,7 @@ module.exports = {
     ecmaVersion: 2021,
   },
   rules: {
+    'import/no-unresolved': 'off',
     'global-require': 0,
     'eslint-comments/no-use': ['error', { allow: [] }],
     'jsx-a11y/href-no-hash': ['off'],

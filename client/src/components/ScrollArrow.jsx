@@ -16,7 +16,8 @@ function ScrollArrow() {
   };
 
   const scrollToTop = () => {
-    window.scrollBy(window.scrollBy(0, 650));
+    const pageHeight = window.innerHeight;
+    window.scrollBy(window.scrollBy(0, pageHeight));
   };
 
   useEffect(() => {
@@ -24,7 +25,7 @@ function ScrollArrow() {
   }, []);
 
   return (
-    <button type="button" onClick={scrollToTop}>
+    <button className="arrow" type="button" onClick={scrollToTop}>
       {isVisible && <img className="ScrollArrow" src={Arrow} alt="Go to top" />}
     </button>
   );

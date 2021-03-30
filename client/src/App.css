@@ -9,3 +9,10 @@
   --myblack: #141414;
   --mywhite: #efefef;
 }
+
+::selection {
+  background: #ff6200; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #ff6200; /* Gecko Browsers */
+}
