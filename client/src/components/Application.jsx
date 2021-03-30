@@ -1,23 +1,33 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import './Application.css';
 import '../index.css';
-// import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import LineGraph from './LineGraph';
+// import { data } from 'autoprefixer';
 
-function Application() {
-  // const history = useHistory();
+function Application({ data }) {
+  const history = useHistory();
 
   return (
     <div className="ApplicationGraph">
       <h1>Application Layer</h1>
-      {/* <button
+      <button
+        type="button"
         onClick={() => {
           history.goBack();
         }}
       >
         Go back
-      </button> */}
+      </button>
+      <LineGraph data={data} smallGraph={false} />
     </div>
   );
 }
+
+Application.propTypes = {
+  data: PropTypes.string,
+};
+Application.defaultProps = { data: '' };
 
 export default Application;

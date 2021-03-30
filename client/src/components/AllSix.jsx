@@ -1,59 +1,67 @@
 import React from 'react';
 import './AllSix.css';
 import '../index.css';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import LineGraph from './LineGraph';
+import PieChart from './PieChart';
+import ResponsiveChoropleth from './GeoMap';
+// import NetworkSmallGraph from './NetworkSmallGraph';
 
-function AllSix({ name }) {
+function AllSix({ lineData, pieData }) {
+  const { url } = useRouteMatch();
   return (
     <section className="AllSix">
-      <Link to="/Application" name={name}>
+      <Link to={`${url}/Application`}>
         <div className="graph Application">
+          <LineGraph data={lineData} smallGraph />
           Application
           <br />
-          {name}
         </div>
       </Link>
-      <Link to="/Consensus" name={name}>
+      <Link to={`${url}/Consensus`}>
         <div className="graph Consensus">
+          <PieChart data={pieData} smallGraph />
           Consensus
           <br />
-          {name}
         </div>
       </Link>
-      <Link to="/Incentive" name={name}>
+      <Link to={`${url}/Incentive`}>
         <div className="graph Incentive">
+          <PieChart data={pieData} smallGraph />
           Incentive
           <br />
-          {name}
         </div>
       </Link>
-      <Link to="/Operational" name={name}>
+      <Link to={`${url}/Operational`}>
         <div className="graph Operational">
+          <LineGraph data={lineData} smallGraph />
           Operational
           <br />
-          {name}
         </div>
       </Link>
-      <Link to="/Network" name={name}>
+      <Link to={`${url}/Network`}>
         <div className="graph Network">
+          <ResponsiveChoropleth />
           Network
           <br />
-          {name}
         </div>
       </Link>
-      <Link to="/Governance" name={name}>
+      <Link to={`${url}/Governance`}>
         <div className="graph Governance">
+          <PieChart data={pieData} smallGraph />
           Governance
           <br />
-          {name}
         </div>
       </Link>
     </section>
   );
 }
 
-AllSix.propTypes = { name: PropTypes.string };
-AllSix.defaultProps = { name: '' };
+AllSix.propTypes = {
+  lineData: PropTypes.string,
+  pieData: PropTypes.string,
+};
+AllSix.defaultProps = { lineData: '', pieData: '' };
 
 export default AllSix;

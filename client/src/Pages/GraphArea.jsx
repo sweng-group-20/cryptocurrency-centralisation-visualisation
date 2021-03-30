@@ -25,7 +25,7 @@ function GraphArea() {
               return <Redirect to="/Bitcoin" />;
             }}
           />
-          <Route exact path="/Bitcoin" component={Bitcoin} />
+          <Route path="/Bitcoin" component={Bitcoin} />
           <Route path="/Ethereum" component={Ethereum} />
         </Switch>
       </Router>
