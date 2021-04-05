@@ -23,6 +23,8 @@ function PieChart({ data, smallGraph }) {
         colors={{ scheme: 'nivo' }}
         borderWidth={1}
         borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
+        enableSliceLabels={!smallGraph}
+        enableRadialLabels={!smallGraph}
         radialLabelsSkipAngle={10}
         radialLabelsTextColor="#333333"
         radialLabelsLinkColor={{ from: 'color' }}

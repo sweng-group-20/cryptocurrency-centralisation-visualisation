@@ -1,10 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import PieChart from './PieChart';
 import './Consensus.css';
 import '../index.css';
+import { pieChartDataType } from './types';
 
 function Consensus({ data }) {
   const history = useHistory();
@@ -20,14 +20,14 @@ function Consensus({ data }) {
       >
         Go back
       </button>
-      <PieChart data={data} smallGraph={false} />
+      <div className="piechart">
+        <PieChart data={data} smallGraph={false} />
+      </div>
     </div>
   );
 }
 
-Consensus.propTypes = {
-  data: PropTypes.string,
-};
-Consensus.defaultProps = { data: '' };
+Consensus.propTypes = { data: pieChartDataType };
+Consensus.defaultProps = { data: [] };
 
 export default Consensus;

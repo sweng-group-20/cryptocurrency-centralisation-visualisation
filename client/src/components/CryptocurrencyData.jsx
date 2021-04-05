@@ -2,11 +2,11 @@ import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
 import AllSix from './AllSix';
-import { lineGraphDataType } from './types';
+import { lineGraphDataType, pieChartDataType } from './types';
 import Application from './Application';
 import Operational from './Operational';
 // import Incentive from './Incentive';
-// import Consensus from './Consensus';
+import Consensus from './Consensus';
 // import Network from './Network';
 // import Governance from './Governance';
 import '../App.css';
@@ -16,7 +16,7 @@ function CryptocurrencyData({
   applicationData,
   operationalData,
   // incentiveData,
-  // consensusData,
+  consensusData,
   // networkData,
   // governanceData,
 }) {
@@ -29,6 +29,10 @@ function CryptocurrencyData({
             <AllSix
               applicationData={applicationData}
               operationalData={operationalData}
+              // incentiveData={incentiveData}
+              consensusData={consensusData}
+              // networkData={networkData}
+              // governanceData={governanceData}
             />
           </Route>
 
@@ -44,9 +48,9 @@ function CryptocurrencyData({
             <Incentive data={pieData} />
           </Route> */}
 
-          {/* <Route exact path={`${path}/Consensus`}>
+          <Route exact path={`${path}/Consensus`}>
             <Consensus data={consensusData} />
-          </Route> */}
+          </Route>
 
           {/* <Route exact path={`${path}/Network`}>
             <Network data={networkData} />
@@ -65,7 +69,7 @@ CryptocurrencyData.propTypes = {
   applicationData: lineGraphDataType,
   operationalData: lineGraphDataType,
   // incentiveData: PropTypes.string,
-  // consensusData: PropTypes.string,
+  consensusData: pieChartDataType,
   // networkData: PropTypes.string,
   // governanceData: PropTypes.string,
 };
@@ -73,7 +77,7 @@ CryptocurrencyData.defaultProps = {
   applicationData: [],
   operationalData: [],
   // incentiveData: [],
-  // consensusData: [],
+  consensusData: [],
   // networkData: [],
   // governanceData: [],
 };

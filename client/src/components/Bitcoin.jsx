@@ -16,7 +16,7 @@ function Bitcoin() {
   const [applicationData, setApplicationData] = useState([]);
   const [operationalData, setOperationalData] = useState([]);
   // const [incentiveData, setIncentiveData] = useState([]);
-  // const [consensusData, setConsensusData] = useState([]);
+  const [consensusData, setConsensusData] = useState([]);
   // const [networkData, setNetworkData] = useState([]);
   // const [governanceData, setGovernanceData] = useState([]);
 
@@ -36,10 +36,10 @@ function Bitcoin() {
       //   url: '',
       //   setData: setIncentiveData,
       // },
-      // {
-      //   url: 'http://localhost:4000/api/v1/bitcoin/consensus/data',
-      //   setData: setConsensusData,
-      // },
+      {
+        url: 'http://localhost:4000/api/v1/bitcoin/consensus/data',
+        setData: setConsensusData,
+      },
       // {
       //   url:
       //     'http://localhost:4000/api/v1/bitcoin/network/geographical-distribution',
@@ -73,7 +73,7 @@ function Bitcoin() {
         applicationData={applicationData}
         operationalData={operationalData}
         // incentiveData={incentiveData}
-        // consensusData={consensusData}
+        consensusData={consensusData}
         // networkData={networkData}
         // governanceData={governanceData}
       />
