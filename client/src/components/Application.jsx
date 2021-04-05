@@ -1,10 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import PropTypes from 'prop-types';
 import LineGraph from './LineGraph';
 import './Application.css';
 import '../index.css';
+import { lineGraphDataType } from './types';
 
 function Application({ data }) {
   const history = useHistory();
@@ -21,15 +21,13 @@ function Application({ data }) {
         Go back
       </button>
       <div className="linegraph">
-        <LineGraph data={data} smallGraph={false} />
+        <LineGraph data={data} smallGraph={false} yScaleType="log" />
       </div>
     </div>
   );
 }
 
-Application.propTypes = {
-  data: PropTypes.string,
-};
-Application.defaultProps = { data: '' };
+Application.propTypes = lineGraphDataType;
+Application.defaultProps = { data: [] };
 
 export default Application;

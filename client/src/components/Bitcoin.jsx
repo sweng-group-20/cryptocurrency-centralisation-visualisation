@@ -13,52 +13,50 @@ import '../App.css';
 // 3: pass data to graphs
 
 function Bitcoin() {
-  // const [data, setData] = useState([]);
-  // const [applicationData, setApplicationData] = useState([]);
-  const [consensusData, setConsensusData] = useState([]);
-  // const [governanceData, setGovernanceData] = useState([]);
-  // const [incentiveData, setIncentiveData] = useState([]);
-  const [networkData, setNetworkData] = useState([]);
+  const [applicationData, setApplicationData] = useState([]);
   const [operationalData, setOperationalData] = useState([]);
+  // const [incentiveData, setIncentiveData] = useState([]);
+  // const [consensusData, setConsensusData] = useState([]);
+  // const [networkData, setNetworkData] = useState([]);
+  // const [governanceData, setGovernanceData] = useState([]);
 
   const apiDataUrls = useMemo(
     () => [
-      // {
-      //   url:
-      //     'http://localhost:4000/api/v1/bitcoin/application/reference-client-concentration',
-      //   setData: setApplicationData,
-      // },
-      {
-        url: 'http://localhost:4000/api/v1/bitcoin/consensus/data',
-        setData: setConsensusData,
-      },
-      // {
-      //   url: '',
-      //   setData: setGovernanceData,
-      // },
-      // {
-      //   url: '',
-      //   setData: setIncentiveData,
-      // },
       {
         url:
-          'http://localhost:4000/api/v1/bitcoin/network/geographical-distribution',
-        setData: setNetworkData,
+          'http://localhost:4000/api/v1/bitcoin/application/reference-client-concentration',
+        setData: setApplicationData,
       },
       {
         url:
           'http://localhost:4000/api/v1/bitcoin/operational/storage-constraint',
         setData: setOperationalData,
       },
+      // {
+      //   url: '',
+      //   setData: setIncentiveData,
+      // },
+      // {
+      //   url: 'http://localhost:4000/api/v1/bitcoin/consensus/data',
+      //   setData: setConsensusData,
+      // },
+      // {
+      //   url:
+      //     'http://localhost:4000/api/v1/bitcoin/network/geographical-distribution',
+      //   setData: setNetworkData,
+      // },
+      // {
+      //   url: '',
+      //   setData: setGovernanceData,
+      // },
     ],
     []
   );
 
   const fetchAPIData = async (url, setData) => {
-    console.log(url, setData);
     const data = await fetch(url, { method: 'GET' });
     const dataJson = await data.json();
-    setData(dataJson);
+    setData(dataJson.data);
   };
 
   useEffect(() => {
@@ -72,12 +70,12 @@ function Bitcoin() {
     <div className="graph-content-container">
       {/* pass in data as a prop to CryptocurrencyData component */}
       <CryptocurrencyData
-        // applicationData={applicationData}
-        consensusData={consensusData}
-        // governanceData={governanceData}
-        // incentiveData={incentiveData}
-        networkData={networkData}
+        applicationData={applicationData}
         operationalData={operationalData}
+        // incentiveData={incentiveData}
+        // consensusData={consensusData}
+        // networkData={networkData}
+        // governanceData={governanceData}
       />
     </div>
   );

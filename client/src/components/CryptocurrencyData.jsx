@@ -1,45 +1,56 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
+
+import AllSix from './AllSix';
+import { lineGraphDataType } from './types';
+import Application from './Application';
+import Operational from './Operational';
+// import Incentive from './Incentive';
+// import Consensus from './Consensus';
+// import Network from './Network';
+// import Governance from './Governance';
 import '../App.css';
 import './CryptocurrencyData.css';
-// import AllSix from './AllSix';
-// import Application from './Application';
-import Consensus from './Consensus';
-// import Incentive from './Incentive';
-import Operational from './Operational';
-import Network from './Network';
-// import Governance from './Governance';
 
-function CryptocurrencyData({ consensusData, networkData, operationalData }) {
+function CryptocurrencyData({
+  applicationData,
+  operationalData,
+  // incentiveData,
+  // consensusData,
+  // networkData,
+  // governanceData,
+}) {
   const { path } = useRouteMatch();
   return (
     <div className="graph-content-container">
       <div className="graph-container">
         <Switch>
-          {/* <Route exact path={path}>
-            <AllSix applicationData={applicationData} />
-          </Route> */}
+          <Route exact path={path}>
+            <AllSix
+              applicationData={applicationData}
+              operationalData={operationalData}
+            />
+          </Route>
 
-          {/* <Route exact path={`${path}/Application`}>
+          <Route exact path={`${path}/Application`}>
             <Application data={applicationData} />
-          </Route> */}
+          </Route>
 
-          <Route exact path={`${path}/Consensus`}>
-            <Consensus data={consensusData} />
+          <Route exact path={`${path}/Operational`}>
+            <Operational data={operationalData} />
           </Route>
 
           {/* <Route exact path={`${path}/Incentive`}>
             <Incentive data={pieData} />
           </Route> */}
 
-          <Route exact path={`${path}/Operational`}>
-            <Operational data={operationalData} />
-          </Route>
+          {/* <Route exact path={`${path}/Consensus`}>
+            <Consensus data={consensusData} />
+          </Route> */}
 
-          <Route exact path={`${path}/Network`}>
+          {/* <Route exact path={`${path}/Network`}>
             <Network data={networkData} />
-          </Route>
+          </Route> */}
 
           {/* <Route exact path={`${path}/Governance`}>
             <Governance data={pieData} />
@@ -51,20 +62,20 @@ function CryptocurrencyData({ consensusData, networkData, operationalData }) {
 }
 
 CryptocurrencyData.propTypes = {
-  // applicationData: PropTypes.string,
-  // applicationData: PropTypes.string,
-  // applicationData: PropTypes.string,
-  consensusData: PropTypes.string,
-  networkData: PropTypes.string,
-  operationalData: PropTypes.string,
+  applicationData: lineGraphDataType,
+  operationalData: lineGraphDataType,
+  // incentiveData: PropTypes.string,
+  // consensusData: PropTypes.string,
+  // networkData: PropTypes.string,
+  // governanceData: PropTypes.string,
 };
 CryptocurrencyData.defaultProps = {
-  // applicationData: '',
-  // applicationData: '',
-  // applicationData: '',
-  consensusData: '',
-  networkData: '',
-  operationalData: '',
+  applicationData: [],
+  operationalData: [],
+  // incentiveData: [],
+  // consensusData: [],
+  // networkData: [],
+  // governanceData: [],
 };
 
 export default CryptocurrencyData;

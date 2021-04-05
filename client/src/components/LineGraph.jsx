@@ -1,53 +1,89 @@
-// install (please make sure versions match peerDependencies)
-// yarn add @nivo/core @nivo/line
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
-
 import React from 'react';
-import { ResponsiveLine } from '@nivo/line';
 import PropTypes from 'prop-types';
+import { ResponsiveLineCanvas } from '@nivo/line';
+import { BasicTooltip } from '@nivo/tooltip';
+
+import { lineGraphDataType } from './types';
 import './LineGraph.css';
 
-function LineGraph({ data, smallGraph }) {
+function LineGraph({ data, smallGraph, yScaleType }) {
   return (
     <div className="lineGraph">
-      <ResponsiveLine
+      <ResponsiveLineCanvas
+        tooltip={({ point }) => (
+          <BasicTooltip
+            id={
+              <span>
+                {point.serieId}
+                <br />
+                x: <strong>{point.data.xFormatted}</strong>, y:{' '}
+                <strong>{point.data.yFormatted}</strong>
+              </span>
+            }
+            enableChip
+            color={point.serieColor}
+          />
+        )}
+        curve="monotoneX"
+        isInteractive
         data={data}
-        margin={{ top: 50, right: smallGraph ? 60 : 110, bottom: 50, left: 60 }}
-        xScale={{ type: 'point' }}
+        margin={{
+          top: 60,
+          right: 160,
+          bottom: 70,
+          left: 60,
+          ...(smallGraph && { right: 60, bottom: 60 }),
+        }}
+        xScale={{
+          type: 'time',
+          precision: 'day',
+          useUTC: false,
+          format: '%Y-%m-%d',
+        }}
+        xFormat="time:%Y-%m-%d"
         yScale={{
-          type: 'linear',
+          type: yScaleType,
           min: 'auto',
           max: 'auto',
-          stacked: true,
-          reverse: false,
+          stacked: false,
         }}
-        yFormat=" >-.2f"
+        yFormat=" >-.4f"
         axisTop={null}
         axisRight={null}
-        axisBottom={null}
-        // axisBottom={{
-        //   orient: 'bottom',
-        //   tickSize: 5,
-        //   tickPadding: 5,
-        //   tickRotation: 0,
-        // }}
-        axisLeft={null}
-        // axisLeft={{
-        //   orient: 'left',
-        //   tickSize: 5,
-        //   tickPadding: 5,
-        //   tickRotation: 0,
-        // }}
-        pointSize={10}
+        axisBottom={
+          smallGraph
+            ? null
+            : {
+                orient: 'bottom',
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: -41,
+                legend: '',
+                legendOffset: 90,
+                legendPosition: 'middle',
+                format: '%Y-%m-%d',
+              }
+        }
+        axisLeft={
+          smallGraph
+            ? null
+            : {
+                orient: 'left',
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: '',
+                legendOffset: -40,
+                legendPosition: 'middle',
+              }
+        }
+        enableGridY
+        lineWidth={1}
+        pointSize={4}
         pointColor={{ theme: 'background' }}
-        pointBorderWidth={2}
+        pointBorderWidth={1}
         pointBorderColor={{ from: 'serieColor' }}
-        pointLabelYOffset={-12}
-        useMesh
+        colors={{ scheme: 'spectral' }}
         legends={
           smallGraph
             ? []
@@ -79,12 +115,19 @@ function LineGraph({ data, smallGraph }) {
               ]
         }
       />
-      )
     </div>
   );
 }
 
-LineGraph.propTypes = { data: PropTypes.string, smallGraph: PropTypes.bool };
-LineGraph.defaultProps = { data: '', smallGraph: true };
+LineGraph.propTypes = {
+  data: lineGraphDataType,
+  smallGraph: PropTypes.bool,
+  yScaleType: PropTypes.oneOf(['linear', 'log']),
+};
+LineGraph.defaultProps = {
+  data: [],
+  smallGraph: false,
+  yScaleType: 'linear',
+};
 
 export default LineGraph;

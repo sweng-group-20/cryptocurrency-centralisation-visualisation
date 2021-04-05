@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import LineGraph from './LineGraph';
+import { lineGraphDataType } from './types';
 import './Operational.css';
 import '../index.css';
 
@@ -20,14 +20,14 @@ function Operational({ data }) {
       >
         Go back
       </button>
-      <LineGraph data={data} smallGraph={false} />
+      <div className="linegraph">
+        <LineGraph data={data} smallGraph={false} yScaleType="linear" />
+      </div>
     </div>
   );
 }
 
-Operational.propTypes = {
-  data: PropTypes.string,
-};
-Operational.defaultProps = { data: '' };
+Operational.propTypes = { data: lineGraphDataType };
+Operational.defaultProps = { data: [] };
 
 export default Operational;
