@@ -11,8 +11,8 @@
 }
 
 ::selection {
-  background: #ff6200; /* WebKit/Blink Browsers */
+  background: var(--myorange); /* WebKit/Blink Browsers */
 }
 ::-moz-selection {
-  background: #ff6200; /* Gecko Browsers */
+  background: var(--myorange); /* Gecko Browsers */
 }
