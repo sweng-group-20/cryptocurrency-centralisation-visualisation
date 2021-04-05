@@ -27,7 +27,7 @@ function Application({ data }) {
   );
 }
 
-Application.propTypes = lineGraphDataType;
+Application.propTypes = { data: lineGraphDataType };
 Application.defaultProps = { data: [] };
 
 export default Application;
