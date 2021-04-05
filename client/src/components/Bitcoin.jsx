@@ -3,7 +3,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import CryptocurrencyData from './CryptocurrencyData';
 import './Bitcoin.css';
 import '../App.css';
-// import GraphPage from '../Pages/GraphPage';
 
 // 6 props: 1 for each Graph layer thingy
 // ^^ use useState() 6 times
@@ -17,7 +16,7 @@ function Bitcoin() {
   const [operationalData, setOperationalData] = useState([]);
   // const [incentiveData, setIncentiveData] = useState([]);
   const [consensusData, setConsensusData] = useState([]);
-  // const [networkData, setNetworkData] = useState([]);
+  const [networkData, setNetworkData] = useState([]);
   // const [governanceData, setGovernanceData] = useState([]);
 
   const apiDataUrls = useMemo(
@@ -40,11 +39,11 @@ function Bitcoin() {
         url: 'http://localhost:4000/api/v1/bitcoin/consensus/data',
         setData: setConsensusData,
       },
-      // {
-      //   url:
-      //     'http://localhost:4000/api/v1/bitcoin/network/geographical-distribution',
-      //   setData: setNetworkData,
-      // },
+      {
+        url:
+          'http://localhost:4000/api/v1/bitcoin/network/geographical-distribution',
+        setData: setNetworkData,
+      },
       // {
       //   url: '',
       //   setData: setGovernanceData,
@@ -74,7 +73,7 @@ function Bitcoin() {
         operationalData={operationalData}
         // incentiveData={incentiveData}
         consensusData={consensusData}
-        // networkData={networkData}
+        networkData={networkData}
         // governanceData={governanceData}
       />
     </div>

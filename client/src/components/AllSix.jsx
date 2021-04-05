@@ -1,18 +1,19 @@
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
+
 import LineGraph from './LineGraph';
 import PieChart from './PieChart';
 import ResponsiveChoropleth from './GeoMap';
+import { geoMapDataType, lineGraphDataType, pieChartDataType } from './types';
 import './AllSix.css';
 import '../index.css';
-import { lineGraphDataType, pieChartDataType } from './types';
 
 function AllSix({
   applicationData,
   operationalData,
   // incentiveData,
   consensusData,
-  // networkData,
+  networkData,
   // governanceData,
 }) {
   const { url } = useRouteMatch();
@@ -46,7 +47,7 @@ function AllSix({
         <div className="graph Network">
           <h3 className="link">Network</h3>
           <div className="visual">
-            <ResponsiveChoropleth />
+            <ResponsiveChoropleth data={networkData} smallGraph />
           </div>
         </div>
       </Link>
@@ -63,17 +64,17 @@ function AllSix({
 AllSix.propTypes = {
   applicationData: lineGraphDataType,
   operationalData: lineGraphDataType,
-  // incentiveData: PropTypes.string,
+  // incentiveData: pieChartDataType,
   consensusData: pieChartDataType,
-  // networkData: PropTypes.string,
-  // governanceData: PropTypes.string,
+  networkData: geoMapDataType,
+  // governanceData: pieChartDataType,
 };
 AllSix.defaultProps = {
   applicationData: [],
   operationalData: [],
   // incentiveData: [],
   consensusData: [],
-  // networkData: [],
+  networkData: [],
   // governanceData: [],
 };
 

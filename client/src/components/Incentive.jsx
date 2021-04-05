@@ -1,9 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+
+import PieChart from './PieChart';
+import { pieChartDataType } from './types';
 import './Incentive.css';
 import '../index.css';
-import PropTypes from 'prop-types';
-import PieChart from './PieChart';
 
 function Incentive({ data }) {
   const history = useHistory();
@@ -24,9 +25,7 @@ function Incentive({ data }) {
   );
 }
 
-Incentive.propTypes = {
-  data: PropTypes.string,
-};
-Incentive.defaultProps = { data: '' };
+Incentive.propTypes = { data: pieChartDataType };
+Incentive.defaultProps = { data: [] };
 
 export default Incentive;

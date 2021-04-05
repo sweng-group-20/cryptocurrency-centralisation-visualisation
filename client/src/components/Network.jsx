@@ -2,10 +2,11 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import ResponsiveChoropleth from './GeoMap';
+import { geoMapDataType } from './types';
 import './Network.css';
 import '../index.css';
 
-function Network() {
+function Network({ data }) {
   const history = useHistory();
 
   return (
@@ -20,10 +21,13 @@ function Network() {
         Go back
       </button>
       <div className="map">
-        <ResponsiveChoropleth />
+        <ResponsiveChoropleth data={data} />
       </div>
     </div>
   );
 }
+
+Network.propTypes = { data: geoMapDataType };
+Network.defaultProps = { data: [] };
 
 export default Network;

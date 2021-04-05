@@ -19,3 +19,10 @@ export const pieChartDataType = PropTypes.arrayOf(
     value: PropTypes.number,
   })
 );
+
+export const geoMapDataType = PropTypes.arrayOf(
+  PropTypes.shape({
+    id: PropTypes.string,
+    value: PropTypes.number,
+  })
+);

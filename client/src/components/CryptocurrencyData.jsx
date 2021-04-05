@@ -2,12 +2,12 @@ import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
 import AllSix from './AllSix';
-import { lineGraphDataType, pieChartDataType } from './types';
+import { geoMapDataType, lineGraphDataType, pieChartDataType } from './types';
 import Application from './Application';
 import Operational from './Operational';
 // import Incentive from './Incentive';
 import Consensus from './Consensus';
-// import Network from './Network';
+import Network from './Network';
 // import Governance from './Governance';
 import '../App.css';
 import './CryptocurrencyData.css';
@@ -17,7 +17,7 @@ function CryptocurrencyData({
   operationalData,
   // incentiveData,
   consensusData,
-  // networkData,
+  networkData,
   // governanceData,
 }) {
   const { path } = useRouteMatch();
@@ -31,7 +31,7 @@ function CryptocurrencyData({
               operationalData={operationalData}
               // incentiveData={incentiveData}
               consensusData={consensusData}
-              // networkData={networkData}
+              networkData={networkData}
               // governanceData={governanceData}
             />
           </Route>
@@ -52,9 +52,9 @@ function CryptocurrencyData({
             <Consensus data={consensusData} />
           </Route>
 
-          {/* <Route exact path={`${path}/Network`}>
+          <Route exact path={`${path}/Network`}>
             <Network data={networkData} />
-          </Route> */}
+          </Route>
 
           {/* <Route exact path={`${path}/Governance`}>
             <Governance data={pieData} />
@@ -68,17 +68,17 @@ function CryptocurrencyData({
 CryptocurrencyData.propTypes = {
   applicationData: lineGraphDataType,
   operationalData: lineGraphDataType,
-  // incentiveData: PropTypes.string,
+  // incentiveData: pieChartDataType,
   consensusData: pieChartDataType,
-  // networkData: PropTypes.string,
-  // governanceData: PropTypes.string,
+  networkData: geoMapDataType,
+  // governanceData: pieChartDataType,
 };
 CryptocurrencyData.defaultProps = {
   applicationData: [],
   operationalData: [],
   // incentiveData: [],
   consensusData: [],
-  // networkData: [],
+  networkData: [],
   // governanceData: [],
 };
 

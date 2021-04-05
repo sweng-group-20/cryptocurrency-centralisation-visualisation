@@ -1,10 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
+import PieChart from './PieChart';
+import { pieChartDataType } from './types';
 import './Governance.css';
 import '../index.css';
-import PieChart from './PieChart';
 
 function Governance({ data }) {
   const history = useHistory();
@@ -25,9 +25,7 @@ function Governance({ data }) {
   );
 }
 
-Governance.propTypes = {
-  data: PropTypes.string,
-};
-Governance.defaultProps = { data: '' };
+Governance.propTypes = { data: pieChartDataType };
+Governance.defaultProps = { data: [] };
 
 export default Governance;
