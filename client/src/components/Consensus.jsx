@@ -11,15 +11,23 @@ function Consensus({ data }) {
 
   return (
     <div className="ConsensusGraph">
-      <h1>Consensus Layer</h1>
-      <button
-        type="button"
-        onClick={() => {
-          history.goBack();
-        }}
-      >
-        Go back
-      </button>
+      <div className="section-top">
+        <h1 className="section-title">Consensus Layer</h1>
+        <button
+          className="back-button"
+          type="button"
+          onClick={() => {
+            history.goBack();
+          }}
+        >
+          <div className="circle">
+            <div className="small-circle">
+              <div className="x-one" />
+              <div className="x-two" />
+            </div>
+          </div>
+        </button>
+      </div>
       <div className="piechart">
         <PieChart data={data} smallGraph={false} />
       </div>

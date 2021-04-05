@@ -11,15 +11,23 @@ function Governance({ data }) {
 
   return (
     <div className="GovernanceGraph">
-      <h1>Governance Layer</h1>
-      <button
-        type="button"
-        onClick={() => {
-          history.goBack();
-        }}
-      >
-        Go back
-      </button>
+      <div className="section-top">
+        <h1 className="section-title">Governance Layer</h1>
+        <button
+          className="back-button"
+          type="button"
+          onClick={() => {
+            history.goBack();
+          }}
+        >
+          <div className="circle">
+            <div className="small-circle">
+              <div className="x-one" />
+              <div className="x-two" />
+            </div>
+          </div>
+        </button>
+      </div>
       <PieChart data={data} smallGraph={false} />
     </div>
   );

@@ -26,9 +26,13 @@ function ScrollArrow() {
   }, []);
 
   return (
-    <button className="arrow" type="button" onClick={scrollToTop}>
-      {isVisible && <img className="ScrollArrow" src={Arrow} alt="Go to top" />}
-    </button>
+    <div>
+      <button className="arrow" type="button" onClick={scrollToTop}>
+        {isVisible && (
+          <img className="ScrollArrow" src={Arrow} alt="Go to top" />
+        )}
+      </button>
+    </div>
   );
 }
 

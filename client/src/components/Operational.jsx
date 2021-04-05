@@ -11,17 +11,31 @@ function Operational({ data }) {
 
   return (
     <div className="OperationalGraph">
-      <h1>Operational Layer</h1>
-      <button
-        type="button"
-        onClick={() => {
-          history.goBack();
-        }}
-      >
-        Go back
-      </button>
+      <div className="section-top">
+        <h1 className="section-title">Operational Layer</h1>
+        <button
+          className="back-button"
+          type="button"
+          onClick={() => {
+            history.goBack();
+          }}
+        >
+          <div className="circle">
+            <div className="small-circle">
+              <div className="x-one" />
+              <div className="x-two" />
+            </div>
+          </div>
+        </button>
+      </div>
       <div className="linegraph">
         <LineGraph data={data} smallGraph={false} yScaleType="linear" />
+      </div>
+      <div className="section-about">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt enim
+        perferendis adipisci nostrum aliquid, expedita sapiente quis blanditiis
+        porro recusandae quidem, earum quam eligendi eius? Ratione illum error
+        natus non.
       </div>
     </div>
   );

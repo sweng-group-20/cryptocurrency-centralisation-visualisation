@@ -11,15 +11,23 @@ function Application({ data }) {
 
   return (
     <div className="ApplicationGraph">
-      <h1>Application Layer</h1>
-      <button
-        type="button"
-        onClick={() => {
-          history.goBack();
-        }}
-      >
-        Go back
-      </button>
+      <div className="section-top">
+        <h1 className="section-title">Application Layer</h1>
+        <button
+          className="back-button"
+          type="button"
+          onClick={() => {
+            history.goBack();
+          }}
+        >
+          <div className="circle">
+            <div className="small-circle">
+              <div className="x-one" />
+              <div className="x-two" />
+            </div>
+          </div>
+        </button>
+      </div>
       <div className="linegraph">
         <LineGraph data={data} smallGraph={false} yScaleType="log" />
       </div>

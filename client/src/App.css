@@ -16,3 +16,7 @@
 ::-moz-selection {
   background: var(--myorange); /* Gecko Browsers */
 }
+
+button:active {
+  outline: none;
+}
