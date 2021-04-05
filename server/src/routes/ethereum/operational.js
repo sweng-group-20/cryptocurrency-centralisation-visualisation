@@ -64,42 +64,46 @@ router.get('/', (_req, res) => {
  *                             y:
  *                               type: number
  */
-router.get('/storage-constraint', async (_req, res) => {
-  const resp = await fetch(
-    'https://api.blockchair.com/ethereum/blocks?a=date,sum(size)',
-    { method: 'GET' }
-  );
+router.get('/storage-constraint', async (_req, res, next) => {
+  try {
+    const resp = await fetch(
+      'https://api.blockchair.com/ethereum/blocks?a=date,sum(size)',
+      { method: 'GET' }
+    );
 
-  const respText = await resp.json();
-  const points = respText.data;
-  const compareInterval = 14;
-  const calculatePlotPoints = (
-    { date, 'sum(size)': blockChainSize },
-    index,
-    array
-  ) => {
-    if (index < compareInterval) {
-      return {};
-    }
-    return {
-      x: date,
-      y: blockChainSize / array[index - compareInterval]['sum(size)'],
+    const respText = await resp.json();
+    const points = respText.data;
+    const compareInterval = 14;
+    const calculatePlotPoints = (
+      { date, 'sum(size)': blockChainSize },
+      index,
+      array
+    ) => {
+      if (index < compareInterval) {
+        return {};
+      }
+      return {
+        x: date,
+        y: blockChainSize / array[index - compareInterval]['sum(size)'],
+      };
     };
-  };
 
-  const ethereumPlotPoints = points
-    .map(calculatePlotPoints)
-    .slice(compareInterval);
+    const ethereumPlotPoints = points
+      .map(calculatePlotPoints)
+      .slice(compareInterval);
 
-  res.status(200);
-  res.json({
-    data: [
-      {
-        id: 'Ethereum',
-        data: ethereumPlotPoints,
-      },
-    ],
-  });
+    res.status(200);
+    res.json({
+      data: [
+        {
+          id: 'Ethereum',
+          data: ethereumPlotPoints,
+        },
+      ],
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;
