@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React from 'react';
 
 import CryptocurrencyData from './CryptocurrencyData';
+import useFetch from './hooks/useFetch';
 import './Bitcoin.css';
 import '../App.css';
 
@@ -12,68 +13,39 @@ import '../App.css';
 // 3: pass data to graphs
 
 function Bitcoin() {
-  const [applicationData, setApplicationData] = useState([]);
-  const [operationalData, setOperationalData] = useState([]);
-  // const [incentiveData, setIncentiveData] = useState([]);
-  const [consensusData, setConsensusData] = useState([]);
-  const [networkData, setNetworkData] = useState([]);
-  // const [governanceData, setGovernanceData] = useState([]);
-
-  const apiDataUrls = useMemo(
-    () => [
-      {
-        url:
-          'http://localhost:4000/api/v1/bitcoin/application/reference-client-concentration',
-        setData: setApplicationData,
-      },
-      {
-        url:
-          'http://localhost:4000/api/v1/bitcoin/operational/storage-constraint',
-        setData: setOperationalData,
-      },
-      // {
-      //   url: '',
-      //   setData: setIncentiveData,
-      // },
-      {
-        url: 'http://localhost:4000/api/v1/bitcoin/consensus/data',
-        setData: setConsensusData,
-      },
-      {
-        url:
-          'http://localhost:4000/api/v1/bitcoin/network/geographical-distribution',
-        setData: setNetworkData,
-      },
-      // {
-      //   url: '',
-      //   setData: setGovernanceData,
-      // },
-    ],
+  const fetchOptions = { method: 'GET' };
+  const { data: applicationLayer } = useFetch(
+    'http://localhost:4000/api/v1/bitcoin/application/reference-client-concentration',
+    fetchOptions,
     []
   );
-
-  const fetchAPIData = async (url, setData) => {
-    const data = await fetch(url, { method: 'GET' });
-    const dataJson = await data.json();
-    setData(dataJson.data);
-  };
-
-  useEffect(() => {
-    const dataSets = apiDataUrls.map(async ({ url, setData }) =>
-      fetchAPIData(url, setData)
-    );
-    Promise.all(dataSets); // fetch data at same time
-  }, [apiDataUrls]);
+  const { data: operationalLayer } = useFetch(
+    'http://localhost:4000/api/v1/bitcoin/operational/storage-constraint',
+    fetchOptions,
+    []
+  );
+  // const { data: incentiveLayer } = useFetch('', fetchOptions, []);
+  const { data: consensusLayer } = useFetch(
+    'http://localhost:4000/api/v1/bitcoin/consensus/data',
+    fetchOptions,
+    []
+  );
+  const { data: networkLayer } = useFetch(
+    'http://localhost:4000/api/v1/bitcoin/network/geographical-distribution',
+    fetchOptions,
+    []
+  );
+  // const { data: governanceLayer } = useFetch('', fetchOptions, []);
 
   return (
     <div className="graph-content-container">
       {/* pass in data as a prop to CryptocurrencyData component */}
       <CryptocurrencyData
-        applicationData={applicationData}
-        operationalData={operationalData}
+        applicationData={applicationLayer.data}
+        operationalData={operationalLayer.data}
         // incentiveData={incentiveData}
-        consensusData={consensusData}
-        networkData={networkData}
+        consensusData={consensusLayer.data}
+        networkData={networkLayer.data}
         // governanceData={governanceData}
       />
     </div>

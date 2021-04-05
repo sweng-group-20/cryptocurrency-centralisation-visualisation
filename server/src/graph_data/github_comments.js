@@ -174,7 +174,7 @@ const syncDatabase = async (repoOwner, repoName) => {
     issueCursor
   );
 
-  await syncDatabaseRepositoryIssuesOrPullRequests(
+  return syncDatabaseRepositoryIssuesOrPullRequests(
     'pullRequests',
     repoOwner,
     repoName,
