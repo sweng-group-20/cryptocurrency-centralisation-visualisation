@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import AllSix from './AllSix';
 import { geoMapDataType, lineGraphDataType, pieChartDataType } from './types';
@@ -19,6 +20,12 @@ function CryptocurrencyData({
   consensusData,
   networkData,
   // governanceData,
+  applicationLoading,
+  operationalLoading,
+  incentiveLoading,
+  consensusLoading,
+  networkLoading,
+  // governanceLoading,
 }) {
   const { path } = useRouteMatch();
   return (
@@ -33,6 +40,12 @@ function CryptocurrencyData({
               consensusData={consensusData}
               networkData={networkData}
               // governanceData={governanceData}
+              applicationLoading={applicationLoading}
+              operationalLoading={operationalLoading}
+              incentiveLoading={incentiveLoading}
+              consensusLoading={consensusLoading}
+              networkLoading={networkLoading}
+              // governanceLoading={governanceLoading}
             />
           </Route>
 
@@ -72,6 +85,12 @@ CryptocurrencyData.propTypes = {
   consensusData: pieChartDataType,
   networkData: geoMapDataType,
   // governanceData: pieChartDataType,
+  applicationLoading: PropTypes.bool,
+  operationalLoading: PropTypes.bool,
+  incentiveLoading: PropTypes.bool,
+  consensusLoading: PropTypes.bool,
+  networkLoading: PropTypes.bool,
+  // governanceLoading: PropTypes.bool,
 };
 CryptocurrencyData.defaultProps = {
   applicationData: [],
@@ -80,6 +99,12 @@ CryptocurrencyData.defaultProps = {
   consensusData: [],
   networkData: [],
   // governanceData: [],
+  applicationLoading: false,
+  operationalLoading: false,
+  incentiveLoading: false,
+  consensusLoading: false,
+  networkLoading: false,
+  // governanceLoading: false,
 };
 
 export default CryptocurrencyData;

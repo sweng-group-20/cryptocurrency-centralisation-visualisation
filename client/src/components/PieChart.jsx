@@ -3,9 +3,14 @@ import { ResponsivePie } from '@nivo/pie';
 import PropTypes from 'prop-types';
 
 import { pieChartDataType } from './types';
+import Spinner from './Spinner';
 import './PieChart.css';
 
-function PieChart({ data, smallGraph }) {
+function PieChart({ data, smallGraph, loading }) {
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <div className="pieChart">
       <ResponsivePie
@@ -52,10 +57,12 @@ function PieChart({ data, smallGraph }) {
 PieChart.propTypes = {
   data: pieChartDataType,
   smallGraph: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 PieChart.defaultProps = {
   data: [],
   smallGraph: false,
+  loading: false,
 };
 
 export default PieChart;

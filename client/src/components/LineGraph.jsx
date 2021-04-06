@@ -5,8 +5,20 @@ import { BasicTooltip } from '@nivo/tooltip';
 
 import { lineGraphDataType } from './types';
 import './LineGraph.css';
+import Spinner from './Spinner';
 
-function LineGraph({ data, smallGraph, yScaleType, xAxisLabel, yAxisLabel }) {
+function LineGraph({
+  data,
+  smallGraph,
+  yScaleType,
+  xAxisLabel,
+  yAxisLabel,
+  loading,
+}) {
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <div className="lineGraph">
       <ResponsiveLineCanvas
@@ -133,6 +145,7 @@ LineGraph.propTypes = {
   yScaleType: PropTypes.oneOf(['linear', 'log']),
   xAxisLabel: PropTypes.string,
   yAxisLabel: PropTypes.string,
+  loading: PropTypes.bool,
 };
 LineGraph.defaultProps = {
   data: [],
@@ -140,6 +153,7 @@ LineGraph.defaultProps = {
   yScaleType: 'linear',
   xAxisLabel: '',
   yAxisLabel: '',
+  loading: false,
 };
 
 export default LineGraph;

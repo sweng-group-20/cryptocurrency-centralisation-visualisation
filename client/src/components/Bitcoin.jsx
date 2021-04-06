@@ -14,32 +14,36 @@ import '../App.css';
 
 function Bitcoin() {
   const fetchOptions = { method: 'GET' };
-  const { data: applicationLayer } = useFetch(
+  const { data: applicationLayer, loading: applicationLoading } = useFetch(
     'http://localhost:4000/api/v1/bitcoin/application/reference-client-concentration',
     fetchOptions,
     []
   );
-  const { data: operationalLayer } = useFetch(
+  const { data: operationalLayer, loading: operationalLoading } = useFetch(
     'http://localhost:4000/api/v1/bitcoin/operational/storage-constraint',
     fetchOptions,
     []
   );
-  const { data: incentiveLayer } = useFetch(
+  const { data: incentiveLayer, loading: incentiveLoading } = useFetch(
     'http://localhost:4000/api/v1/bitcoin/incentive/wealth-concentration',
     fetchOptions,
     []
   );
-  const { data: consensusLayer } = useFetch(
+  const { data: consensusLayer, loading: consensusLoading } = useFetch(
     'http://localhost:4000/api/v1/bitcoin/consensus/data',
     fetchOptions,
     []
   );
-  const { data: networkLayer } = useFetch(
+  const { data: networkLayer, loading: networkLoading } = useFetch(
     'http://localhost:4000/api/v1/bitcoin/network/geographical-distribution',
     fetchOptions,
     []
   );
-  // const { data: governanceLayer } = useFetch('', fetchOptions, []);
+  // const { data: governanceLayer, loading: governanceLoading } = useFetch(
+  //   '',
+  //   fetchOptions,
+  //   []
+  // );
 
   return (
     <div className="graph-content-container">
@@ -51,6 +55,12 @@ function Bitcoin() {
         consensusData={consensusLayer.data}
         networkData={networkLayer.data}
         // governanceData={governanceData}
+        applicationLoading={applicationLoading}
+        operationalLoading={operationalLoading}
+        incentiveLoading={incentiveLoading}
+        consensusLoading={consensusLoading}
+        networkLoading={networkLoading}
+        // governanceLoading={governanceLoading}
       />
     </div>
   );

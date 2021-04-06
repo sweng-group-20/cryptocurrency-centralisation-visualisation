@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import LineGraph from './LineGraph';
 import PieChart from './PieChart';
@@ -15,6 +16,12 @@ function AllSix({
   consensusData,
   networkData,
   // governanceData,
+  applicationLoading,
+  operationalLoading,
+  incentiveLoading,
+  consensusLoading,
+  networkLoading,
+  // governanceLoading,
 }) {
   const { url } = useRouteMatch();
   return (
@@ -22,32 +29,55 @@ function AllSix({
       <Link to={`${url}/Application`}>
         <div className="graph Application">
           <h3 className="link">Application</h3>
-          <LineGraph data={applicationData} smallGraph yScaleType="linear" />
+          <LineGraph
+            data={applicationData}
+            smallGraph
+            yScaleType="linear"
+            loading={applicationLoading}
+          />
         </div>
       </Link>
       <Link to={`${url}/Operational`}>
         <div className="graph Operational">
           <h3 className="link">Operational</h3>
-          <LineGraph data={operationalData} smallGraph yScaleType="linear" />
+          <LineGraph
+            data={operationalData}
+            smallGraph
+            yScaleType="linear"
+            loading={operationalLoading}
+          />
         </div>
       </Link>
       <Link to={`${url}/Incentive`}>
         <div className="graph Incentive">
           <h3 className="link">Incentive</h3>
-          <LineGraph data={incentiveData} smallGraph yScaleType="linear" />
+          <LineGraph
+            data={incentiveData}
+            smallGraph
+            yScaleType="linear"
+            loading={incentiveLoading}
+          />
         </div>
       </Link>
       <Link to={`${url}/Consensus`}>
         <div className="graph Consensus">
           <h3 className="link">Consensus</h3>
-          <PieChart data={consensusData} smallGraph />
+          <PieChart
+            data={consensusData}
+            smallGraph
+            loading={consensusLoading}
+          />
         </div>
       </Link>
       <Link to={`${url}/Network`}>
         <div className="graph Network">
           <h3 className="link">Network</h3>
           <div className="visual">
-            <ResponsiveChoropleth data={networkData} smallGraph />
+            <ResponsiveChoropleth
+              data={networkData}
+              smallGraph
+              loading={networkLoading}
+            />
           </div>
         </div>
       </Link>
@@ -68,6 +98,12 @@ AllSix.propTypes = {
   consensusData: pieChartDataType,
   networkData: geoMapDataType,
   // governanceData: pieChartDataType,
+  applicationLoading: PropTypes.bool,
+  operationalLoading: PropTypes.bool,
+  incentiveLoading: PropTypes.bool,
+  consensusLoading: PropTypes.bool,
+  networkLoading: PropTypes.bool,
+  // governanceLoading: PropTypes.bool,
 };
 AllSix.defaultProps = {
   applicationData: [],
@@ -76,6 +112,12 @@ AllSix.defaultProps = {
   consensusData: [],
   networkData: [],
   // governanceData: [],
+  applicationLoading: false,
+  operationalLoading: false,
+  incentiveLoading: false,
+  consensusLoading: false,
+  networkLoading: false,
+  // governanceLoading: false,
 };
 
 export default AllSix;
