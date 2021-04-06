@@ -13,7 +13,6 @@ const ResponsiveChoropleth = ({ data, smallGraph }) => (
     label="properties.name"
     valueFormat=".2s"
     projectionTranslation={[0.5, 0.5]}
-    enableGraticule
     graticuleLineColor="#dddddd"
     borderWidth={0.5}
     borderColor="#152538"

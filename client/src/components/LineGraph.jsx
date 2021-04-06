@@ -37,9 +37,9 @@ function LineGraph({ data, smallGraph, yScaleType, xAxisLabel, yAxisLabel }) {
         margin={{
           top: 60,
           right: 160,
-          bottom: 70,
+          bottom: 160,
           left: 100,
-          ...(smallGraph && { right: 60, bottom: 60, left: 60 }),
+          ...(smallGraph && { top: 40, right: 40, bottom: 40, left: 40 }),
         }}
         xScale={{
           type: 'time',
@@ -84,7 +84,8 @@ function LineGraph({ data, smallGraph, yScaleType, xAxisLabel, yAxisLabel }) {
                 legendPosition: 'middle',
               }
         }
-        enableGridY
+        enableGridX={!smallGraph}
+        enableGridY={!smallGraph}
         lineWidth={1}
         pointSize={4}
         pointColor={{ theme: 'background' }}
