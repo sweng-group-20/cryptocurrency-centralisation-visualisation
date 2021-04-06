@@ -38,8 +38,8 @@ function LineGraph({ data, smallGraph, yScaleType }) {
           top: 60,
           right: 160,
           bottom: 70,
-          left: 60,
-          ...(smallGraph && { right: 60, bottom: 60 }),
+          left: 100,
+          ...(smallGraph && { right: 60, bottom: 60, left: 60 }),
         }}
         xScale={{
           type: 'time',

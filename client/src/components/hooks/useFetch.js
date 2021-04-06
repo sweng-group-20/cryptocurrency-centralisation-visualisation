@@ -13,14 +13,15 @@ const useFetch = (url, options, defaultData) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
       try {
+        setLoading(true);
         const response = await fetch(url, options);
         const json = await response.json();
         setData(json);
-        setLoading(false);
       } catch (err) {
         setError(err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
