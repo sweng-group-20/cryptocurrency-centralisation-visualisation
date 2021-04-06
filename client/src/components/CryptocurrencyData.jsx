@@ -9,7 +9,7 @@ import Operational from './Operational';
 import Incentive from './Incentive';
 import Consensus from './Consensus';
 import Network from './Network';
-// import Governance from './Governance';
+import Governance from './Governance';
 import '../App.css';
 import './CryptocurrencyData.css';
 
@@ -19,13 +19,13 @@ function CryptocurrencyData({
   incentiveData,
   consensusData,
   networkData,
-  // governanceData,
+  governanceData,
   applicationLoading,
   operationalLoading,
   incentiveLoading,
   consensusLoading,
   networkLoading,
-  // governanceLoading,
+  governanceLoading,
 }) {
   const { path } = useRouteMatch();
   return (
@@ -39,13 +39,13 @@ function CryptocurrencyData({
               incentiveData={incentiveData}
               consensusData={consensusData}
               networkData={networkData}
-              // governanceData={governanceData}
+              governanceData={governanceData}
               applicationLoading={applicationLoading}
               operationalLoading={operationalLoading}
               incentiveLoading={incentiveLoading}
               consensusLoading={consensusLoading}
               networkLoading={networkLoading}
-              // governanceLoading={governanceLoading}
+              governanceLoading={governanceLoading}
             />
           </Route>
 
@@ -69,9 +69,9 @@ function CryptocurrencyData({
             <Network data={networkData} />
           </Route>
 
-          {/* <Route exact path={`${path}/Governance`}>
-            <Governance data={pieData} />
-          </Route> */}
+          <Route exact path={`${path}/Governance`}>
+            <Governance data={governanceData} />
+          </Route>
         </Switch>
       </div>
     </div>
@@ -84,13 +84,13 @@ CryptocurrencyData.propTypes = {
   incentiveData: pieChartDataType,
   consensusData: pieChartDataType,
   networkData: geoMapDataType,
-  // governanceData: pieChartDataType,
+  governanceData: pieChartDataType,
   applicationLoading: PropTypes.bool,
   operationalLoading: PropTypes.bool,
   incentiveLoading: PropTypes.bool,
   consensusLoading: PropTypes.bool,
   networkLoading: PropTypes.bool,
-  // governanceLoading: PropTypes.bool,
+  governanceLoading: PropTypes.bool,
 };
 CryptocurrencyData.defaultProps = {
   applicationData: [],
@@ -98,13 +98,13 @@ CryptocurrencyData.defaultProps = {
   incentiveData: [],
   consensusData: [],
   networkData: [],
-  // governanceData: [],
+  governanceData: [],
   applicationLoading: false,
   operationalLoading: false,
   incentiveLoading: false,
   consensusLoading: false,
   networkLoading: false,
-  // governanceLoading: false,
+  governanceLoading: false,
 };
 
 export default CryptocurrencyData;

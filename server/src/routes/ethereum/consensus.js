@@ -73,14 +73,16 @@ router.get('/data', async (_req, res, next) => {
       const poolName = webData.data[i].pool_id;
       const poolHash = (webData.data[i].hashrate / 1e15).toFixed(2);
 
-      const jsonObj = {};
-      jsonObj.id = poolName;
-      jsonObj.label = poolName;
-      jsonObj.value = parseFloat(poolHash);
-      if (poolName && !set.has(poolName)) {
-        data.push(jsonObj);
+      if (poolHash > 0) {
+        const jsonObj = {};
+        jsonObj.id = poolName;
+        jsonObj.label = poolName;
+        jsonObj.value = parseFloat(poolHash);
+        if (poolName && !set.has(poolName)) {
+          data.push(jsonObj);
+        }
+        set.add(poolName);
       }
-      set.add(poolName);
     });
     data.sort((a, b) => a.value - b.value);
     res.json({

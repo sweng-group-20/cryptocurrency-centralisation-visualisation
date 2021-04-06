@@ -1,5 +1,4 @@
 const express = require('express');
-const fetch = require('node-fetch');
 
 const router = express.Router();
 
@@ -58,35 +57,21 @@ router.get('/', (_req, res) => {
  *                       value:
  *                         type: integer
  */
-router.get('/data', async (_req, res, next) => {
+router.get('/owner-control', async (_req, res, next) => {
   try {
-    const data = [];
-
-    const time = await fetch('https://miningpoolstats.stream/data/time');
-    const webDataRaw = await fetch(
-      `https://data.miningpoolstats.stream/data/bitcoin.js?t=${await time.text()}`
-    );
-
-    const webData = await webDataRaw.json();
-    const set = new Set();
-    webData.data.forEach((_, i) => {
-      const poolName = webData.data[i].pool_id;
-      const poolHash = (webData.data[i].hashrate / 1e15).toFixed(2);
-
-      if (poolHash > 1000) {
-        const jsonObj = {};
-        jsonObj.id = poolName;
-        jsonObj.label = poolName;
-        jsonObj.value = parseFloat(poolHash);
-        if (poolName && !set.has(poolName)) {
-          data.push(jsonObj);
-        }
-        set.add(poolName);
-      }
-    });
-    data.sort((a, b) => a.value - b.value);
     res.json({
-      data,
+      data: [
+        {
+          id: 'owner',
+          label: 'owner',
+          value: 1814499,
+        },
+        {
+          id: 'total',
+          label: 'total',
+          value: 18673250,
+        },
+      ],
     });
   } catch (err) {
     next(err);

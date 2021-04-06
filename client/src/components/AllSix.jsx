@@ -15,13 +15,13 @@ function AllSix({
   incentiveData,
   consensusData,
   networkData,
-  // governanceData,
+  governanceData,
   applicationLoading,
   operationalLoading,
   incentiveLoading,
   consensusLoading,
   networkLoading,
-  // governanceLoading,
+  governanceLoading,
 }) {
   const { url } = useRouteMatch();
   return (
@@ -84,7 +84,11 @@ function AllSix({
       <Link to={`${url}/Governance`}>
         <div className="graph Governance">
           <h3 className="link">Governance</h3>
-          {/* <PieChart data={pieData} smallGraph /> */}
+          <PieChart
+            data={governanceData}
+            smallGraph
+            loading={governanceLoading}
+          />
         </div>
       </Link>
     </section>
@@ -97,13 +101,13 @@ AllSix.propTypes = {
   incentiveData: pieChartDataType,
   consensusData: pieChartDataType,
   networkData: geoMapDataType,
-  // governanceData: pieChartDataType,
+  governanceData: pieChartDataType,
   applicationLoading: PropTypes.bool,
   operationalLoading: PropTypes.bool,
   incentiveLoading: PropTypes.bool,
   consensusLoading: PropTypes.bool,
   networkLoading: PropTypes.bool,
-  // governanceLoading: PropTypes.bool,
+  governanceLoading: PropTypes.bool,
 };
 AllSix.defaultProps = {
   applicationData: [],
@@ -111,13 +115,13 @@ AllSix.defaultProps = {
   incentiveData: [],
   consensusData: [],
   networkData: [],
-  // governanceData: [],
+  governanceData: [],
   applicationLoading: false,
   operationalLoading: false,
   incentiveLoading: false,
   consensusLoading: false,
   networkLoading: false,
-  // governanceLoading: false,
+  governanceLoading: false,
 };
 
 export default AllSix;

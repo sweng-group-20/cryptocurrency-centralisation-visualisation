@@ -1,16 +1,15 @@
 const express = require('express');
-const fetch = require('node-fetch');
 
 const router = express.Router();
 
 /**
  * @openapi
  *
- * /bitcoin/consensus:
+ * /ethereum/consensus:
  *   get:
- *     description: Basic message for bitcoin consensus layer endpoint
+ *     description: Basic message for ethereum consensus layer endpoint
  *     tags:
- *       - bitcoin
+ *       - ethereum
  *     responses:
  *       200:
  *         description: Successful response
@@ -33,11 +32,11 @@ router.get('/', (_req, res) => {
 /**
  * @openapi
  *
- * /bitcoin/consensus/data:
+ * /ethereum/consensus/data:
  *   get:
- *     description: Returns pie chart values for the consensus power distribution factor in the consensus layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *     description: Returns pie chart values for the consensus power distribution factor in the consensus layer for Ethereum - TEST EXECUTION MAY BE SLOW
  *     tags:
- *       - bitcoin
+ *       - ethereum
  *     responses:
  *       200:
  *         description: Successful response
@@ -58,35 +57,21 @@ router.get('/', (_req, res) => {
  *                       value:
  *                         type: integer
  */
-router.get('/data', async (_req, res, next) => {
+router.get('/owner-control', async (_req, res, next) => {
   try {
-    const data = [];
-
-    const time = await fetch('https://miningpoolstats.stream/data/time');
-    const webDataRaw = await fetch(
-      `https://data.miningpoolstats.stream/data/bitcoin.js?t=${await time.text()}`
-    );
-
-    const webData = await webDataRaw.json();
-    const set = new Set();
-    webData.data.forEach((_, i) => {
-      const poolName = webData.data[i].pool_id;
-      const poolHash = (webData.data[i].hashrate / 1e15).toFixed(2);
-
-      if (poolHash > 1000) {
-        const jsonObj = {};
-        jsonObj.id = poolName;
-        jsonObj.label = poolName;
-        jsonObj.value = parseFloat(poolHash);
-        if (poolName && !set.has(poolName)) {
-          data.push(jsonObj);
-        }
-        set.add(poolName);
-      }
-    });
-    data.sort((a, b) => a.value - b.value);
     res.json({
-      data,
+      data: [
+        {
+          id: 'owner',
+          label: 'owner',
+          value: 12000000,
+        },
+        {
+          id: 'total',
+          label: 'total',
+          value: 106514407.78,
+        },
+      ],
     });
   } catch (err) {
     next(err);

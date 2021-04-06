@@ -31,11 +31,11 @@ function Ethereum() {
     fetchOptions,
     []
   );
-  // const { data: governanceLayer, loading: governanceLoading } = useFetch(
-  //   '',
-  //   fetchOptions,
-  //   []
-  // );
+  const { data: governanceLayer, loading: governanceLoading } = useFetch(
+    'http://localhost:4000/api/v1/ethereum/governance/owner-control',
+    fetchOptions,
+    []
+  );
 
   return (
     <div className="graph-content-container">
@@ -46,13 +46,13 @@ function Ethereum() {
         incentiveData={incentiveLayer.data}
         consensusData={consensusLayer.data}
         networkData={networkLayer.data}
-        // governanceData={governanceData}
+        governanceData={governanceLayer.data}
         applicationLoading={applicationLoading}
         operationalLoading={operationalLoading}
         incentiveLoading={incentiveLoading}
         consensusLoading={consensusLoading}
         networkLoading={networkLoading}
-        // governanceLoading={governanceLoading}
+        governanceLoading={governanceLoading}
       />
     </div>
   );
