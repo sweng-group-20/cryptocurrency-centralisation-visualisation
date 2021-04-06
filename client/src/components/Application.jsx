@@ -29,7 +29,7 @@ function Application({ data }) {
         </button>
       </div>
       <div className="linegraph">
-        <LineGraph data={data} smallGraph={false} yScaleType="log" />
+        <LineGraph data={data} yScaleType="linear" />
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ function PieChart({ data, smallGraph }) {
   return (
     <div className="pieChart">
       <ResponsivePie
-        data={data}
+        data={smallGraph ? data.slice(-10, -1) : data}
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={0.5}
         padAngle={0.7}
@@ -84,7 +84,7 @@ PieChart.propTypes = {
 };
 PieChart.defaultProps = {
   data: [],
-  smallGraph: true,
+  smallGraph: false,
 };
 
 export default PieChart;

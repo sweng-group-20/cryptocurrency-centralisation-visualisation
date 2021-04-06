@@ -22,7 +22,7 @@ function AllSix({
       <Link to={`${url}/Application`}>
         <div className="graph Application">
           <h3 className="link">Application</h3>
-          <LineGraph data={applicationData} smallGraph yScaleType="log" />
+          <LineGraph data={applicationData} smallGraph yScaleType="linear" />
         </div>
       </Link>
       <Link to={`${url}/Operational`}>

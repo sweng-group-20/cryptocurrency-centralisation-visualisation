@@ -28,7 +28,7 @@ function Governance({ data }) {
           </div>
         </button>
       </div>
-      <PieChart data={data} smallGraph={false} />
+      <PieChart data={data} />
     </div>
   );
 }

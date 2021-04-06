@@ -29,7 +29,7 @@ function Consensus({ data }) {
         </button>
       </div>
       <div className="piechart">
-        <PieChart data={data} smallGraph={false} />
+        <PieChart data={data} />
       </div>
     </div>
   );

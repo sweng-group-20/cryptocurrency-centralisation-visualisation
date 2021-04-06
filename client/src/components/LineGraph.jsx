@@ -26,7 +26,14 @@ function LineGraph({ data, smallGraph, yScaleType }) {
         )}
         curve="monotoneX"
         isInteractive
-        data={data}
+        data={
+          smallGraph
+            ? data.map(({ id, data: plotPoints }) => ({
+                id,
+                data: plotPoints.slice(-25, -1),
+              }))
+            : data
+        }
         margin={{
           top: 60,
           right: 160,

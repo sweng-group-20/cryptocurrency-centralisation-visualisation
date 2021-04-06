@@ -29,7 +29,7 @@ function Operational({ data }) {
         </button>
       </div>
       <div className="linegraph">
-        <LineGraph data={data} smallGraph={false} yScaleType="linear" />
+        <LineGraph data={data} yScaleType="linear" />
       </div>
       <div className="section-about">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt enim
