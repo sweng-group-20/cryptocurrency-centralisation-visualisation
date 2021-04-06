@@ -5,9 +5,9 @@ const router = express.Router();
 /**
  * @openapi
  *
- * /bitcoin/consensus:
+ * /bitcoin/governance:
  *   get:
- *     description: Basic message for bitcoin consensus layer endpoint
+ *     description: Basic message for bitcoin governance layer endpoint
  *     tags:
  *       - bitcoin
  *     responses:
@@ -20,21 +20,21 @@ const router = express.Router();
  *               properties:
  *                 message:
  *                   type: string
- *                   enum: ['consensus layer endpoint']
+ *                   enum: ['governance layer endpoint']
  */
 router.get('/', (_req, res) => {
   res.status(200);
   res.json({
-    message: 'consensus layer endpoint',
+    message: 'governance layer endpoint',
   });
 });
 
 /**
  * @openapi
  *
- * /bitcoin/consensus/data:
+ * /bitcoin/governance/owner-control:
  *   get:
- *     description: Returns pie chart values for the consensus power distribution factor in the consensus layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *     description: Returns pie chart values for the owner control factor in the governance layer for Bitcoin - TEST EXECUTION MAY BE SLOW
  *     tags:
  *       - bitcoin
  *     responses:
