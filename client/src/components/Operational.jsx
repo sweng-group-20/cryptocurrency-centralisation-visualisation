@@ -34,6 +34,7 @@ function Operational({ data }) {
           yScaleType="linear"
           xAxisLabel="date"
           yAxisLabel="ratio of growth"
+          yAxisMax={15}
         />
       </div>
       <div className="section-about">
