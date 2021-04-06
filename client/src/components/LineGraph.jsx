@@ -13,6 +13,7 @@ function LineGraph({
   yScaleType,
   xAxisLabel,
   yAxisLabel,
+  yAxisMax,
   loading,
 }) {
   if (loading) {
@@ -63,7 +64,7 @@ function LineGraph({
         yScale={{
           type: yScaleType,
           min: 'auto',
-          max: 'auto',
+          max: yAxisMax,
           stacked: false,
         }}
         yFormat=" >-.4f"
@@ -92,7 +93,7 @@ function LineGraph({
                 tickPadding: 5,
                 tickRotation: 0,
                 legend: yAxisLabel,
-                legendOffset: -40,
+                legendOffset: -60,
                 legendPosition: 'middle',
               }
         }
@@ -145,6 +146,7 @@ LineGraph.propTypes = {
   yScaleType: PropTypes.oneOf(['linear', 'log']),
   xAxisLabel: PropTypes.string,
   yAxisLabel: PropTypes.string,
+  yAxisMax: PropTypes.oneOf([PropTypes.number, 'auto']),
   loading: PropTypes.bool,
 };
 LineGraph.defaultProps = {
@@ -153,6 +155,7 @@ LineGraph.defaultProps = {
   yScaleType: 'linear',
   xAxisLabel: '',
   yAxisLabel: '',
+  yAxisMax: 'auto',
   loading: false,
 };
 

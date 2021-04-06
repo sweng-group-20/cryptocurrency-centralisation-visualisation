@@ -34,6 +34,7 @@ function Application({ data }) {
           yScaleType="linear"
           xAxisLabel="date"
           yAxisLabel="satoshi index"
+          yAxisMax={0.03}
         />
       </div>
       <div className="section-about">
