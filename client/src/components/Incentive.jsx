@@ -1,10 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import PieChart from './PieChart';
-import { pieChartDataType } from './types';
+import { lineGraphDataType } from './types';
 import './Incentive.css';
 import '../index.css';
+import LineGraph from './LineGraph';
 
 function Incentive({ data }) {
   const history = useHistory();
@@ -28,12 +28,19 @@ function Incentive({ data }) {
           </div>
         </button>
       </div>
-      <PieChart data={data} />
+      <div className="linegraph">
+        <LineGraph
+          data={data}
+          yScaleType="linear"
+          xAxisLabel="date"
+          yAxisLabel="gini coefficient &amp; percentage value"
+        />
+      </div>
     </div>
   );
 }
 
-Incentive.propTypes = { data: pieChartDataType };
+Incentive.propTypes = { data: lineGraphDataType };
 Incentive.defaultProps = { data: [] };
 
 export default Incentive;

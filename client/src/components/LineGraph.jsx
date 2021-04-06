@@ -6,7 +6,7 @@ import { BasicTooltip } from '@nivo/tooltip';
 import { lineGraphDataType } from './types';
 import './LineGraph.css';
 
-function LineGraph({ data, smallGraph, yScaleType }) {
+function LineGraph({ data, smallGraph, yScaleType, xAxisLabel, yAxisLabel }) {
   return (
     <div className="lineGraph">
       <ResponsiveLineCanvas
@@ -65,7 +65,7 @@ function LineGraph({ data, smallGraph, yScaleType }) {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: -41,
-                legend: '',
+                legend: xAxisLabel,
                 legendOffset: 90,
                 legendPosition: 'middle',
                 format: '%Y-%m-%d',
@@ -79,7 +79,7 @@ function LineGraph({ data, smallGraph, yScaleType }) {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: '',
+                legend: yAxisLabel,
                 legendOffset: -40,
                 legendPosition: 'middle',
               }
@@ -90,7 +90,7 @@ function LineGraph({ data, smallGraph, yScaleType }) {
         pointColor={{ theme: 'background' }}
         pointBorderWidth={1}
         pointBorderColor={{ from: 'serieColor' }}
-        colors={{ scheme: 'spectral' }}
+        colors={{ scheme: 'dark2' }}
         legends={
           smallGraph
             ? []
@@ -130,11 +130,15 @@ LineGraph.propTypes = {
   data: lineGraphDataType,
   smallGraph: PropTypes.bool,
   yScaleType: PropTypes.oneOf(['linear', 'log']),
+  xAxisLabel: PropTypes.string,
+  yAxisLabel: PropTypes.string,
 };
 LineGraph.defaultProps = {
   data: [],
   smallGraph: false,
   yScaleType: 'linear',
+  xAxisLabel: '',
+  yAxisLabel: '',
 };
 
 export default LineGraph;

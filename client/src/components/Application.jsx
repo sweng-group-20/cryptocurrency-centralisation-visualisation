@@ -29,7 +29,12 @@ function Application({ data }) {
         </button>
       </div>
       <div className="linegraph">
-        <LineGraph data={data} yScaleType="linear" />
+        <LineGraph
+          data={data}
+          yScaleType="linear"
+          xAxisLabel="date"
+          yAxisLabel="satoshi index"
+        />
       </div>
     </div>
   );

@@ -16,7 +16,11 @@ function Ethereum() {
     fetchOptions,
     []
   );
-  // const { data: incentiveLayer } = useFetch('', fetchOptions, []);
+  const { data: incentiveLayer } = useFetch(
+    'http://localhost:4000/api/v1/ethereum/incentive/wealth-concentration',
+    fetchOptions,
+    []
+  );
   const { data: consensusLayer } = useFetch(
     'http://localhost:4000/api/v1/ethereum/consensus/data',
     fetchOptions,
@@ -36,7 +40,7 @@ function Ethereum() {
       <CryptocurrencyData
         applicationData={applicationLayer.data}
         operationalData={operationalLayer.data}
-        // incentiveData={incentiveData}
+        incentiveData={incentiveLayer.data}
         consensusData={consensusLayer.data}
         networkData={networkLayer.data}
         // governanceData={governanceData}

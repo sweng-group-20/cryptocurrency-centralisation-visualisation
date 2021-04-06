@@ -29,7 +29,12 @@ function Operational({ data }) {
         </button>
       </div>
       <div className="linegraph">
-        <LineGraph data={data} yScaleType="linear" />
+        <LineGraph
+          data={data}
+          yScaleType="linear"
+          xAxisLabel="date"
+          yAxisLabel="ratio of growth"
+        />
       </div>
       <div className="section-about">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt enim

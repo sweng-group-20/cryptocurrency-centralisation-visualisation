@@ -5,7 +5,7 @@ import AllSix from './AllSix';
 import { geoMapDataType, lineGraphDataType, pieChartDataType } from './types';
 import Application from './Application';
 import Operational from './Operational';
-// import Incentive from './Incentive';
+import Incentive from './Incentive';
 import Consensus from './Consensus';
 import Network from './Network';
 // import Governance from './Governance';
@@ -15,7 +15,7 @@ import './CryptocurrencyData.css';
 function CryptocurrencyData({
   applicationData,
   operationalData,
-  // incentiveData,
+  incentiveData,
   consensusData,
   networkData,
   // governanceData,
@@ -29,7 +29,7 @@ function CryptocurrencyData({
             <AllSix
               applicationData={applicationData}
               operationalData={operationalData}
-              // incentiveData={incentiveData}
+              incentiveData={incentiveData}
               consensusData={consensusData}
               networkData={networkData}
               // governanceData={governanceData}
@@ -44,9 +44,9 @@ function CryptocurrencyData({
             <Operational data={operationalData} />
           </Route>
 
-          {/* <Route exact path={`${path}/Incentive`}>
-            <Incentive data={pieData} />
-          </Route> */}
+          <Route exact path={`${path}/Incentive`}>
+            <Incentive data={incentiveData} />
+          </Route>
 
           <Route exact path={`${path}/Consensus`}>
             <Consensus data={consensusData} />
@@ -68,7 +68,7 @@ function CryptocurrencyData({
 CryptocurrencyData.propTypes = {
   applicationData: lineGraphDataType,
   operationalData: lineGraphDataType,
-  // incentiveData: pieChartDataType,
+  incentiveData: pieChartDataType,
   consensusData: pieChartDataType,
   networkData: geoMapDataType,
   // governanceData: pieChartDataType,
@@ -76,7 +76,7 @@ CryptocurrencyData.propTypes = {
 CryptocurrencyData.defaultProps = {
   applicationData: [],
   operationalData: [],
-  // incentiveData: [],
+  incentiveData: [],
   consensusData: [],
   networkData: [],
   // governanceData: [],

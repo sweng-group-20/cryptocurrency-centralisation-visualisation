@@ -24,7 +24,11 @@ function Bitcoin() {
     fetchOptions,
     []
   );
-  // const { data: incentiveLayer } = useFetch('', fetchOptions, []);
+  const { data: incentiveLayer } = useFetch(
+    'http://localhost:4000/api/v1/bitcoin/incentive/wealth-concentration',
+    fetchOptions,
+    []
+  );
   const { data: consensusLayer } = useFetch(
     'http://localhost:4000/api/v1/bitcoin/consensus/data',
     fetchOptions,
@@ -43,7 +47,7 @@ function Bitcoin() {
       <CryptocurrencyData
         applicationData={applicationLayer.data}
         operationalData={operationalLayer.data}
-        // incentiveData={incentiveData}
+        incentiveData={incentiveLayer.data}
         consensusData={consensusLayer.data}
         networkData={networkLayer.data}
         // governanceData={governanceData}

@@ -11,7 +11,7 @@ import '../index.css';
 function AllSix({
   applicationData,
   operationalData,
-  // incentiveData,
+  incentiveData,
   consensusData,
   networkData,
   // governanceData,
@@ -34,7 +34,7 @@ function AllSix({
       <Link to={`${url}/Incentive`}>
         <div className="graph Incentive">
           <h3 className="link">Incentive</h3>
-          {/* <PieChart data={pieData} smallGraph /> */}
+          <LineGraph data={incentiveData} smallGraph yScaleType="linear" />
         </div>
       </Link>
       <Link to={`${url}/Consensus`}>
@@ -64,7 +64,7 @@ function AllSix({
 AllSix.propTypes = {
   applicationData: lineGraphDataType,
   operationalData: lineGraphDataType,
-  // incentiveData: pieChartDataType,
+  incentiveData: pieChartDataType,
   consensusData: pieChartDataType,
   networkData: geoMapDataType,
   // governanceData: pieChartDataType,
@@ -72,7 +72,7 @@ AllSix.propTypes = {
 AllSix.defaultProps = {
   applicationData: [],
   operationalData: [],
-  // incentiveData: [],
+  incentiveData: [],
   consensusData: [],
   networkData: [],
   // governanceData: [],
