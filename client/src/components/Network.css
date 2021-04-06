@@ -22,6 +22,11 @@
   padding: 0 5%;
 }
 
+.section-about {
+  padding-left: 4em;
+  padding-right: 4em;
+}
+
 .back-button {
   padding: 0;
   border: none;

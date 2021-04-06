@@ -36,6 +36,15 @@ function Application({ data }) {
           yAxisLabel="satoshi index"
         />
       </div>
+      <div className="section-about">
+        Users often rely on third-party applications to facilitate user
+        interaction with the blockchain. These third-partyapplications include
+        reference implementations, wallets, and exchanges. As a result of our
+        review, we report oncentralization on these three application layer
+        entities. We also suggest that a monopoly in the user end applications
+        fora blockchain instance is a contributor to the centralization of the
+        blockchain
+      </div>
     </div>
   );
 }

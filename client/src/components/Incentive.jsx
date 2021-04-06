@@ -36,6 +36,17 @@ function Incentive({ data }) {
           yAxisLabel="gini coefficient &amp; percentage value"
         />
       </div>
+      <div className="section-about">
+        This deterministic assurance is based on the assumption of an honest
+        majority i.e. the network has at least higherthan 50% non-malicious
+        participants. Blockchain systems use incentive engineering to ensure
+        that the majority of5 the network is honest. This incentive is often in
+        the form of a block reward which is assigned to the node
+        thatsuccessfully adds a new block to the blockchain. The incentive layer
+        describes the mechanism used for issuance ofreward and the distribution
+        of reward. This layer acts as an interface between the user-facing
+        layers and the technicalimplementation layers.2.2.5 Contract Lay
+      </div>
     </div>
   );
 }

@@ -31,6 +31,16 @@ function Consensus({ data }) {
       <div className="piechart">
         <PieChart data={data} />
       </div>
+      <div className="section-about">
+        The consensus layer establishes an agreement on a single state of the
+        data in the public blockchain. In the case of Proof of Work, it is
+        attained by inducing a race to solve a mathematical problem. The
+        firstperson to solve and propagate receives a monetary reward as an
+        incentive. The likelihood of finding the solution tothe mathematical
+        problem depends on the computational power devoted to the solution. Thus
+        a high concentrationof computational power is a direct signifier of
+        centralization in the blockchain.
+      </div>
     </div>
   );
 }

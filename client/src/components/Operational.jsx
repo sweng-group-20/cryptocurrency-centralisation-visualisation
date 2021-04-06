@@ -37,10 +37,16 @@ function Operational({ data }) {
         />
       </div>
       <div className="section-about">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt enim
-        perferendis adipisci nostrum aliquid, expedita sapiente quis blanditiis
-        porro recusandae quidem, earum quam eligendi eius? Ratione illum error
-        natus non.
+        The uncertainty of reward imposes a constraint on participation for
+        rational investors. This reasoning is primarily basedon the cost of
+        mining. A miner can earn rewards in the form of mining incentives and
+        accumulated transactionfees from the mined block but to profitably mine
+        on a Proof-of-Work blockchain, the difference between rewardsearned and
+        the expenses of the mining operation should be positive. This is the
+        ’operations’ we are referring to inthis ’operational’ layer. The
+        expenses of mining operations include capital costs such as the
+        acquisition of adequatehardware and other recurrent costs such as the
+        cost of electricity.
       </div>
     </div>
   );
