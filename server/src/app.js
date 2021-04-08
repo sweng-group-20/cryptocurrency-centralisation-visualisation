@@ -48,7 +48,7 @@ const host = process.env.HOST || 'localhost';
 /**
  * Start web server on port
  */
-app.listen(port, () => {
+const server = app.listen(port, () => {
   logger.info(`Listening at http://${host}:${port}`);
 });
 
@@ -79,3 +79,5 @@ cron.schedule('0 */2 * * *', async () => {
     logger.error({ err }, '[syncDatabase]');
   }
 });
+
+module.exports = server;
