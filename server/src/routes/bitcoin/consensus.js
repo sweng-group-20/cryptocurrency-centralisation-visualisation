@@ -33,7 +33,7 @@ router.get('/', (_req, res) => {
 /**
  * @openapi
  *
- * /bitcoin/consensus/data:
+ * /bitcoin/consensus/power-distribution:
  *   get:
  *     description: Returns pie chart values for the consensus power distribution factor in the consensus layer for Bitcoin - TEST EXECUTION MAY BE SLOW
  *     tags:
@@ -58,7 +58,7 @@ router.get('/', (_req, res) => {
  *                       value:
  *                         type: integer
  */
-router.get('/data', async (_req, res, next) => {
+router.get('/power-distribution', async (_req, res, next) => {
   try {
     const data = [];
 

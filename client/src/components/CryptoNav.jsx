@@ -11,7 +11,7 @@ function CryptoNav() {
           <ul className="nav-menu">
             <li className="nav-item">
               <NavLink
-                to="/Bitcoin"
+                to="/bitcoin"
                 activeClassName="navbar__link--active"
                 className="navbar__link"
               >
@@ -20,7 +20,7 @@ function CryptoNav() {
             </li>
             <li className="nav-item">
               <NavLink
-                to="/Ethereum"
+                to="/ethereum"
                 activeClassName="navbar__link--active"
                 className="navbar__link"
               >

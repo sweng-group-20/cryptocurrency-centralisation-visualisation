@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 
 import AllSix from './AllSix';
 import { geoMapDataType, lineGraphDataType, pieChartDataType } from './types';
-import Application from './Application';
-import Operational from './Operational';
-import Incentive from './Incentive';
-import Consensus from './Consensus';
-import Network from './Network';
-import Governance from './Governance';
+import Application from './layers/Application';
+import Operational from './layers/Operational';
+import Incentive from './layers/Incentive';
+import Consensus from './layers/Consensus';
+import Network from './layers/Network';
+import Governance from './layers/Governance';
 import '../App.css';
 import './CryptocurrencyData.css';
 
@@ -49,27 +49,27 @@ function CryptocurrencyData({
             />
           </Route>
 
-          <Route exact path={`${path}/Application`}>
+          <Route exact path={`${path}/application`}>
             <Application data={applicationData} />
           </Route>
 
-          <Route exact path={`${path}/Operational`}>
+          <Route exact path={`${path}/operational`}>
             <Operational data={operationalData} />
           </Route>
 
-          <Route exact path={`${path}/Incentive`}>
+          <Route exact path={`${path}/incentive`}>
             <Incentive data={incentiveData} />
           </Route>
 
-          <Route exact path={`${path}/Consensus`}>
+          <Route exact path={`${path}/consensus`}>
             <Consensus data={consensusData} />
           </Route>
 
-          <Route exact path={`${path}/Network`}>
+          <Route exact path={`${path}/network`}>
             <Network data={networkData} />
           </Route>
 
-          <Route exact path={`${path}/Governance`}>
+          <Route exact path={`${path}/governance`}>
             <Governance data={governanceData} />
           </Route>
         </Switch>

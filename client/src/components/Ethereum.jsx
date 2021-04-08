@@ -22,7 +22,7 @@ function Ethereum() {
     []
   );
   const { data: consensusLayer, loading: consensusLoading } = useFetch(
-    'http://localhost:4000/api/v1/ethereum/consensus/data',
+    'http://localhost:4000/api/v1/ethereum/consensus/power-distribution',
     fetchOptions,
     []
   );

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { ResponsiveLineCanvas } from '@nivo/line';
 import { BasicTooltip } from '@nivo/tooltip';
 
-import { lineGraphDataType } from './types';
+import { lineGraphDataType } from '../types';
 import './LineGraph.css';
-import Spinner from './Spinner';
+import Spinner from '../Spinner';
 
 function LineGraph({
   data,

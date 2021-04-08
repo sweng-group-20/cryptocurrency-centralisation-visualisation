@@ -2,8 +2,8 @@ import React from 'react';
 import { ResponsivePie } from '@nivo/pie';
 import PropTypes from 'prop-types';
 
-import { pieChartDataType } from './types';
-import Spinner from './Spinner';
+import { pieChartDataType } from '../types';
+import Spinner from '../Spinner';
 import './PieChart.css';
 
 function PieChart({ data, smallGraph, loading }) {

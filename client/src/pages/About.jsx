@@ -1,7 +1,6 @@
 import React from 'react';
 import './About.css';
 import '../index.css';
-// import Image from '../components/images/—Pngtree—white cartoon line electronics_4615679.png';
 
 function About() {
   return (

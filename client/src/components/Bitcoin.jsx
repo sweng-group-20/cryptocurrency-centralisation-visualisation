@@ -5,13 +5,6 @@ import useFetch from './hooks/useFetch';
 import './Bitcoin.css';
 import '../App.css';
 
-// 6 props: 1 for each Graph layer thingy
-// ^^ use useState() 6 times
-
-// 1: on website load do something
-// 2: fetch data (once only)
-// 3: pass data to graphs
-
 function Bitcoin() {
   const fetchOptions = { method: 'GET' };
   const { data: applicationLayer, loading: applicationLoading } = useFetch(
@@ -30,7 +23,7 @@ function Bitcoin() {
     []
   );
   const { data: consensusLayer, loading: consensusLoading } = useFetch(
-    'http://localhost:4000/api/v1/bitcoin/consensus/data',
+    'http://localhost:4000/api/v1/bitcoin/consensus/power-distribution',
     fetchOptions,
     []
   );
@@ -47,7 +40,6 @@ function Bitcoin() {
 
   return (
     <div className="graph-content-container">
-      {/* pass in data as a prop to CryptocurrencyData component */}
       <CryptocurrencyData
         applicationData={applicationLayer.data}
         operationalData={operationalLayer.data}

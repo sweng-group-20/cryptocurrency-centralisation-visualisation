@@ -2,9 +2,9 @@ import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import LineGraph from './LineGraph';
-import PieChart from './PieChart';
-import ResponsiveChoropleth from './GeoMap';
+import LineGraph from './graphs/LineGraph';
+import PieChart from './graphs/PieChart';
+import ResponsiveChoropleth from './graphs/GeoMap';
 import { geoMapDataType, lineGraphDataType, pieChartDataType } from './types';
 import './AllSix.css';
 import '../index.css';
@@ -26,7 +26,7 @@ function AllSix({
   const { url } = useRouteMatch();
   return (
     <section className="AllSix">
-      <Link to={`${url}/Application`}>
+      <Link to={`${url}/application`}>
         <div className="graph Application">
           <h3 className="link">Application</h3>
           <LineGraph
@@ -37,7 +37,7 @@ function AllSix({
           />
         </div>
       </Link>
-      <Link to={`${url}/Operational`}>
+      <Link to={`${url}/operational`}>
         <div className="graph Operational">
           <h3 className="link">Operational</h3>
           <LineGraph
@@ -48,7 +48,7 @@ function AllSix({
           />
         </div>
       </Link>
-      <Link to={`${url}/Incentive`}>
+      <Link to={`${url}/incentive`}>
         <div className="graph Incentive">
           <h3 className="link">Incentive</h3>
           <LineGraph
@@ -59,7 +59,7 @@ function AllSix({
           />
         </div>
       </Link>
-      <Link to={`${url}/Consensus`}>
+      <Link to={`${url}/consensus`}>
         <div className="graph Consensus">
           <h3 className="link">Consensus</h3>
           <PieChart
@@ -69,7 +69,7 @@ function AllSix({
           />
         </div>
       </Link>
-      <Link to={`${url}/Network`}>
+      <Link to={`${url}/network`}>
         <div className="graph Network">
           <h3 className="link">Network</h3>
           <div className="visual">
@@ -81,7 +81,7 @@ function AllSix({
           </div>
         </div>
       </Link>
-      <Link to={`${url}/Governance`}>
+      <Link to={`${url}/governance`}>
         <div className="graph Governance">
           <h3 className="link">Governance</h3>
           <PieChart

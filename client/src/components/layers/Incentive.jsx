@@ -1,10 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { lineGraphDataType } from './types';
+import { lineGraphDataType } from '../types';
+import LineGraph from '../graphs/LineGraph';
 import './Incentive.css';
-import '../index.css';
-import LineGraph from './LineGraph';
+import '../../index.css';
 
 function Incentive({ data }) {
   const history = useHistory();

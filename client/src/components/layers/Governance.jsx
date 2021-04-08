@@ -1,18 +1,18 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import PieChart from './PieChart';
-import './Consensus.css';
-import '../index.css';
-import { pieChartDataType } from './types';
+import PieChart from '../graphs/PieChart';
+import { pieChartDataType } from '../types';
+import './Governance.css';
+import '../../index.css';
 
-function Consensus({ data }) {
+function Governance({ data }) {
   const history = useHistory();
 
   return (
-    <div className="ConsensusGraph">
+    <div className="GovernanceGraph">
       <div className="section-top">
-        <h1 className="section-title">Consensus Layer</h1>
+        <h1 className="section-title">Governance Layer</h1>
         <button
           className="back-button"
           type="button"
@@ -45,7 +45,7 @@ function Consensus({ data }) {
   );
 }
 
-Consensus.propTypes = { data: pieChartDataType };
-Consensus.defaultProps = { data: [] };
+Governance.propTypes = { data: pieChartDataType };
+Governance.defaultProps = { data: [] };
 
-export default Consensus;
+export default Governance;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import LineGraph from './LineGraph';
-import { lineGraphDataType } from './types';
+import LineGraph from '../graphs/LineGraph';
+import { lineGraphDataType } from '../types';
 import './Operational.css';
-import '../index.css';
+import '../../index.css';
 
 function Operational({ data }) {
   const history = useHistory();

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ResponsiveChoropleth as NivoResponsiveChoropleth } from '@nivo/geo';
 
 import countries from './world_countries.json';
-import Spinner from './Spinner';
+import Spinner from '../Spinner';
 
 const ResponsiveChoropleth = ({ data, smallGraph, loading }) => {
   if (loading) {
