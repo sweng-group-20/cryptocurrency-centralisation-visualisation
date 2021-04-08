@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --myorange: #ff6200;
+  --myblack: #141414;
+  --mywhite: #efefef;
+}
+
+::selection {
+  background: var(--myorange); /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: var(--myorange); /* Gecko Browsers */
+}
+
+button:active {
+  outline: none;
+}

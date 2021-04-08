@@ -1,0 +1,89 @@
+.ApplicationGraph {
+  width: 90%;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: var(--mywhite);
+  z-index: 100;
+  border-radius: 1rem;
+  color: var(--myblack);
+  padding: 1rem;
+}
+
+.piechart {
+  height: 80vh;
+}
+
+.section-title {
+  font-size: 2.5rem;
+}
+
+.section-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5%;
+}
+
+.back-button {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.back-button:focus {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.circle {
+  background: var(--myblack);
+  border-radius: 50%;
+  width: 2.25rem;
+  height: 2.25rem;
+  cursor: pointer;
+}
+
+.small-circle {
+  position: relative;
+  background-color: var(--mywhite);
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: ease-in 0.15s;
+}
+
+.x-one {
+  background-color: var(--myblack);
+  transition: ease-in 0.1s;
+  position: absolute;
+  height: 1rem;
+  width: 0.15rem;
+  left: 47.5%;
+  top: 28%;
+  transform: translate(-50%, -50%);
+  transform: rotate(45deg);
+}
+
+.x-two {
+  background-color: var(--myblack);
+  transition: ease-in 0.1s;
+  position: absolute;
+  height: 1rem;
+  width: 0.19em;
+  left: 47.5%;
+  top: 28%;
+  transform: translate(-50%, -50%);
+  transform: rotate(135deg);
+}
+
+.circle:hover .small-circle {
+  background-color: var(--myblack);
+}
+
+.circle:hover .x-one,
+.circle:hover .x-two {
+  background-color: var(--mywhite);
+}

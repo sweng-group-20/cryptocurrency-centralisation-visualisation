@@ -16,7 +16,13 @@ module.exports = {
     ecmaVersion: 2021,
   },
   rules: {
-    'eslint-comments/no-use': ['error', { allow: [] }],
+    'import/no-unresolved': 'off',
+    'import/no-named-as-default': 0,
+    'global-require': 0,
+    'eslint-comments/no-use': [
+      'error',
+      { allow: ['eslint-disable-next-line'] },
+    ],
     'jsx-a11y/href-no-hash': ['off'],
     'prefer-arrow-callback': 'error',
     'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx'] }],

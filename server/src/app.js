@@ -64,7 +64,7 @@ cron.schedule('0 */2 * * *', async () => {
     const limit = pLimit(1);
 
     await Promise.all(
-      repos.map(async ({ repoOwner, repoName }) => {
+      repos.map(async ({ repoOwner, repoName }) =>
         limit(async () => {
           logger.info(`Syncing repository github.com/${repoOwner}/${repoName}`);
           await syncDatabase(repoOwner, repoName);
@@ -72,8 +72,8 @@ cron.schedule('0 */2 * * *', async () => {
           logger.info(
             `Sync repository github.com/${repoOwner}/${repoName} complete`
           );
-        });
-      })
+        })
+      )
     );
   } catch (err) {
     logger.error({ err }, '[syncDatabase]');
