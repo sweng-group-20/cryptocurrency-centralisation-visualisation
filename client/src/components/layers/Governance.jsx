@@ -32,14 +32,14 @@ function Governance({ data }) {
         <PieChart data={data} />
       </div>
       <div className="section-about">
-        The consensus layer establishes an agreement on a single state of the
-        data in the public blockchain. In the case of Proof of Work, it is
-        attained by inducing a race to solve a mathematical problem. The
-        firstperson to solve and propagate receives a monetary reward as an
-        incentive. The likelihood of finding the solution tothe mathematical
-        problem depends on the computational power devoted to the solution. Thus
-        a high concentrationof computational power is a direct signifier of
-        centralization in the blockchain.
+        Blockchain, like any other information system, is subject to
+        evolutionary changes that are governed by a governance structure. These
+        evolutionary changes may include security patches, scalability
+        provisions, and improvement proposals. It is theorizesd that the
+        relationship between the value proposition of blockchain and the
+        governance structure in place. They reason that the core value
+        proposition of blockchain is rooted in decentralization. This property
+        of decentralization is considered valuable by investors.
       </div>
     </div>
   );
