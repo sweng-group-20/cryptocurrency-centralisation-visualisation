@@ -1,12 +1,14 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Linkify from 'react-linkify';
+import { string } from 'prop-types';
 
 import { lineGraphDataType } from '../types';
 import LineGraph from '../graphs/LineGraph';
 import './Incentive.css';
 import '../../index.css';
 
-function Incentive({ data }) {
+function Incentive({ data, dataSource }) {
   const history = useHistory();
 
   return (
@@ -47,11 +49,18 @@ function Incentive({ data }) {
         of reward. This layer acts as an interface between the user-facing
         layers and the technicalimplementation layers.2.2.5 Contract Lay
       </div>
+      <br />
+      <br />
+      <Linkify>
+        <div className="text" align="center">
+          Data source: {dataSource}
+        </div>
+      </Linkify>
     </div>
   );
 }
 
-Incentive.propTypes = { data: lineGraphDataType };
-Incentive.defaultProps = { data: [] };
+Incentive.propTypes = { data: lineGraphDataType, dataSource: string };
+Incentive.defaultProps = { data: [], dataSource: '' };
 
 export default Incentive;

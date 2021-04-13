@@ -41,12 +41,12 @@ function Bitcoin() {
   return (
     <div className="graph-content-container">
       <CryptocurrencyData
-        applicationData={applicationLayer.data}
-        operationalData={operationalLayer.data}
-        incentiveData={incentiveLayer.data}
-        consensusData={consensusLayer.data}
-        networkData={networkLayer.data}
-        governanceData={governanceLayer.data}
+        applicationData={applicationLayer}
+        operationalData={operationalLayer}
+        incentiveData={incentiveLayer}
+        consensusData={consensusLayer}
+        networkData={networkLayer}
+        governanceData={governanceLayer}
         applicationLoading={applicationLoading}
         operationalLoading={operationalLoading}
         incentiveLoading={incentiveLoading}

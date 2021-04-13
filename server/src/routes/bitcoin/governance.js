@@ -34,7 +34,10 @@ router.get('/', (_req, res) => {
  *
  * /bitcoin/governance/owner-control:
  *   get:
- *     description: Returns pie chart values for the owner control factor in the governance layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *     description: |
+ *       Returns pie chart values for the owner control factor in the governance layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *
+ *       Attribution: https://api.github.com
  *     tags:
  *       - bitcoin
  *     responses:
@@ -56,6 +59,8 @@ router.get('/', (_req, res) => {
  *                         type: string
  *                       value:
  *                         type: integer
+ *                 data_source:
+ *                   type: string
  */
 router.get('/owner-control', async (_req, res, next) => {
   try {
@@ -72,6 +77,7 @@ router.get('/owner-control', async (_req, res, next) => {
           value: 18673250,
         },
       ],
+      data_source: 'https://api.github.com',
     });
   } catch (err) {
     next(err);

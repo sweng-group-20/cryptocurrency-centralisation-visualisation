@@ -1,12 +1,14 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Linkify from 'react-linkify';
+import { string } from 'prop-types';
 
 import LineGraph from '../graphs/LineGraph';
 import { lineGraphDataType } from '../types';
 import './Operational.css';
 import '../../index.css';
 
-function Operational({ data }) {
+function Operational({ data, dataSource }) {
   const history = useHistory();
 
   return (
@@ -49,11 +51,18 @@ function Operational({ data }) {
         acquisition of adequatehardware and other recurrent costs such as the
         cost of electricity.
       </div>
+      <br />
+      <br />
+      <Linkify>
+        <div className="text" align="center">
+          Data source: {dataSource}
+        </div>
+      </Linkify>
     </div>
   );
 }
 
-Operational.propTypes = { data: lineGraphDataType };
-Operational.defaultProps = { data: [] };
+Operational.propTypes = { data: lineGraphDataType, dataSource: string };
+Operational.defaultProps = { data: [], dataSource: [] };
 
 export default Operational;
