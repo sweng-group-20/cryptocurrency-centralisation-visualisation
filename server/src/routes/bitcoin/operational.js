@@ -35,7 +35,10 @@ router.get('/', (_req, res) => {
  *
  * /bitcoin/operational/storage-constraint:
  *   get:
- *     description: Returns plot points for the storage constraint factor in the operational layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *     description: |
+ *       Returns plot points for the storage constraint factor in the operational layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *
+ *       Attribution: https://blockchair.com
  *     tags:
  *       - bitcoin
  *     responses:
@@ -85,6 +88,7 @@ router.get('/storage-constraint', async (_req, res, next) => {
     res.status(200);
     res.json({
       data,
+      dataSource: 'https://blockchair.com',
     });
   } catch (err) {
     next(err);

@@ -1,12 +1,14 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Linkify from 'react-linkify';
+import { string } from 'prop-types';
 
 import PieChart from '../graphs/PieChart';
 import { pieChartDataType } from '../types';
 import './Consensus.css';
 import '../../index.css';
 
-function Consensus({ data }) {
+function Consensus({ data, dataSource }) {
   const history = useHistory();
 
   return (
@@ -41,11 +43,18 @@ function Consensus({ data }) {
         a high concentrationof computational power is a direct signifier of
         centralization in the blockchain.
       </div>
+      <br />
+      <br />
+      <Linkify>
+        <div className="text" align="center">
+          Data source: {dataSource}
+        </div>
+      </Linkify>
     </div>
   );
 }
 
-Consensus.propTypes = { data: pieChartDataType };
-Consensus.defaultProps = { data: [] };
+Consensus.propTypes = { data: pieChartDataType, dataSource: string };
+Consensus.defaultProps = { data: [], dataSource: '' };
 
 export default Consensus;

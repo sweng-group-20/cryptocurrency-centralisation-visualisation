@@ -1,12 +1,14 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Linkify from 'react-linkify';
+import { string } from 'prop-types';
 
 import LineGraph from '../graphs/LineGraph';
 import { lineGraphDataType } from '../types';
 import './Application.css';
 import '../../index.css';
 
-function Application({ data }) {
+function Application({ data, dataSource }) {
   const history = useHistory();
 
   return (
@@ -46,11 +48,18 @@ function Application({ data }) {
         fora blockchain instance is a contributor to the centralization of the
         blockchain
       </div>
+      <br />
+      <br />
+      <Linkify>
+        <div className="text" align="center">
+          Data source: {dataSource}
+        </div>
+      </Linkify>
     </div>
   );
 }
 
-Application.propTypes = { data: lineGraphDataType };
-Application.defaultProps = { data: [] };
+Application.propTypes = { data: lineGraphDataType, dataSource: string };
+Application.defaultProps = { data: [], dataSource: [] };
 
 export default Application;

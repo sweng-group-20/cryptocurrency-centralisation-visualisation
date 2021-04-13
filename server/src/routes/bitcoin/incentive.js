@@ -36,7 +36,10 @@ router.get('/', (_req, res) => {
  *
  * /bitcoin/incentive/wealth-concentration:
  *   get:
- *     description: Returns plot points for the wealth concentration factor in the incentive layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *     description: |
+ *       Returns plot points for the wealth concentration factor in the incentive layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *
+ *       Attribution: Google BigQuery
  *     tags:
  *       - bitcoin
  *     responses:
@@ -80,6 +83,7 @@ router.get('/wealth-concentration', async (_req, res) => {
         data,
       },
     ],
+    dataSource: 'Google BigQuery',
   });
 });
 

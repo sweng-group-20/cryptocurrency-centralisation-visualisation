@@ -34,12 +34,12 @@ function CryptocurrencyData({
         <Switch>
           <Route exact path={path}>
             <AllSix
-              applicationData={applicationData}
-              operationalData={operationalData}
-              incentiveData={incentiveData}
-              consensusData={consensusData}
-              networkData={networkData}
-              governanceData={governanceData}
+              applicationData={applicationData.data}
+              operationalData={operationalData.data}
+              incentiveData={incentiveData.data}
+              consensusData={consensusData.data}
+              networkData={networkData.data}
+              governanceData={governanceData.data}
               applicationLoading={applicationLoading}
               operationalLoading={operationalLoading}
               incentiveLoading={incentiveLoading}
@@ -50,27 +50,45 @@ function CryptocurrencyData({
           </Route>
 
           <Route exact path={`${path}/application`}>
-            <Application data={applicationData} />
+            <Application
+              data={applicationData.data}
+              dataSource={applicationData.dataSource}
+            />
           </Route>
 
           <Route exact path={`${path}/operational`}>
-            <Operational data={operationalData} />
+            <Operational
+              data={operationalData.data}
+              dataSource={operationalData.dataSource}
+            />
           </Route>
 
           <Route exact path={`${path}/incentive`}>
-            <Incentive data={incentiveData} />
+            <Incentive
+              data={incentiveData.data}
+              dataSource={incentiveData.dataSource}
+            />
           </Route>
 
           <Route exact path={`${path}/consensus`}>
-            <Consensus data={consensusData} />
+            <Consensus
+              data={consensusData.data}
+              dataSource={consensusData.dataSource}
+            />
           </Route>
 
           <Route exact path={`${path}/network`}>
-            <Network data={networkData} />
+            <Network
+              data={networkData.data}
+              dataSource={networkData.dataSource}
+            />
           </Route>
 
           <Route exact path={`${path}/governance`}>
-            <Governance data={governanceData} />
+            <Governance
+              data={governanceData.data}
+              dataSource={governanceData.dataSource}
+            />
           </Route>
         </Switch>
       </div>

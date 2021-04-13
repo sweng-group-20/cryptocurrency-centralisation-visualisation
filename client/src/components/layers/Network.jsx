@@ -1,14 +1,15 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Linkify from 'react-linkify';
+import { string } from 'prop-types';
 
 import ResponsiveChoropleth from '../graphs/GeoMap';
 import { geoMapDataType } from '../types';
 import './Network.css';
 import '../../index.css';
 
-function Network({ data }) {
+function Network({ data, dataSource }) {
   const history = useHistory();
-
   return (
     <div className="NetworkGraph">
       <div className="section-top">
@@ -41,11 +42,18 @@ function Network({ data }) {
         centralized nodes that act as relay points to transmitmessages between
         the participants, the network is largely a peer-to-peer system.
       </div>
+      <br />
+      <br />
+      <Linkify>
+        <div className="text" align="center">
+          Data source: {dataSource}
+        </div>
+      </Linkify>
     </div>
   );
 }
 
-Network.propTypes = { data: geoMapDataType };
-Network.defaultProps = { data: [] };
+Network.propTypes = { data: geoMapDataType, dataSource: string };
+Network.defaultProps = { data: [], dataSource: [] };
 
 export default Network;

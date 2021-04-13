@@ -35,7 +35,10 @@ router.get('/', (_req, res) => {
  *
  * /ethereum/consensus/power-distribution:
  *   get:
- *     description: Returns pie chart values for the consensus power distribution factor in the consensus layer for Ethereum - TEST EXECUTION MAY BE SLOW
+ *     description: |
+ *       Returns pie chart values for the consensus power distribution factor in the consensus layer for Ethereum - TEST EXECUTION MAY BE SLOW
+ *
+ *       Attribution: https://miningpoolstats.stream/
  *     tags:
  *       - ethereum
  *     responses:
@@ -87,6 +90,7 @@ router.get('/power-distribution', async (_req, res, next) => {
     data.sort((a, b) => a.value - b.value);
     res.json({
       data,
+      dataSource: 'https://miningpoolstats.stream/',
     });
   } catch (err) {
     next(err);

@@ -35,7 +35,10 @@ router.get('/', (_req, res) => {
  *
  * /ethereum/operational/storage-constraint:
  *   get:
- *     description: Returns plot points for the storage constraint factor in the operational layer for Ethereum - TEST EXECUTION MAY BE SLOW
+ *     description: |
+ *       Returns plot points for the storage constraint factor in the operational layer for Ethereum - TEST EXECUTION MAY BE SLOW
+ *
+ *       Attribution: https://blockchair.com
  *     tags:
  *       - ethereum
  *     responses:
@@ -100,6 +103,7 @@ router.get('/storage-constraint', async (_req, res, next) => {
           data: ethereumPlotPoints,
         },
       ],
+      dataSource: 'https://blockchair.com',
     });
   } catch (err) {
     next(err);

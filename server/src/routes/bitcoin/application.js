@@ -36,7 +36,10 @@ router.get('/', (_req, res) => {
  *
  * /bitcoin/application/reference-client-concentration:
  *   get:
- *     description: Returns plot points for the reference client concentration factor in the application layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *     description: |
+ *       Returns plot points for the reference client concentration factor in the application layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *
+ *       Attribution: https://api.github.com
  *     tags:
  *       - bitcoin
  *     responses:
@@ -71,7 +74,7 @@ router.get('/reference-client-concentration', async (_req, res, next) => {
     const satoshiIndexPlotPoints = Object.entries(
       satoshiIndex
     ).map(([date, index]) => ({ x: date, y: index }));
-
+    const dataSource = 'https://api.github.com';
     res.status(200);
     res.json({
       data: [
@@ -80,6 +83,7 @@ router.get('/reference-client-concentration', async (_req, res, next) => {
           data: satoshiIndexPlotPoints,
         },
       ],
+      dataSource,
     });
   } catch (err) {
     next(err);
