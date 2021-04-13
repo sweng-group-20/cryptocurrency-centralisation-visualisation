@@ -2,7 +2,7 @@ const express = require('express');
 const cheerio = require('cheerio');
 const fetch = require('node-fetch');
 
-const countryDict = require('./CountryCodes.json');
+const countryDict = require('./country_codes.json');
 
 const router = express.Router();
 

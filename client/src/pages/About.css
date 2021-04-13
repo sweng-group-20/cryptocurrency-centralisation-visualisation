@@ -1,0 +1,45 @@
+.About {
+  min-height: 100vh;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 10vh 4rem;
+  background-color: var(--myblack);
+  color: var(--mywhite);
+}
+
+.about-container {
+  display: flex;
+  padding: 1rem;
+  width: 90%;
+  margin: 0 auto;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.about-header {
+  padding: 1rem 1rem 1rem;
+  margin: 0 auto 1rem;
+  width: 90%;
+  font-size: 2.5rem;
+  font-weight: 500;
+  border-bottom: solid 0.2rem var(--myorange);
+  border-radius: 0.1rem;
+}
+
+.about-body {
+  flex: 3;
+  padding: 0 1rem 0 0;
+  font-size: 1.25rem;
+  text-align: justify;
+}
+
+.about-image-container {
+  flex: 2;
+}
+
+.about-image {
+  height: 100%;
+  width: 100%;
+  transform: translateY(-15%);
+}

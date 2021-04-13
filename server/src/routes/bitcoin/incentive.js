@@ -1,16 +1,17 @@
 const express = require('express');
-const fetch = require('node-fetch');
+
+const wealthConcentration = require('./wealth_concentration.json');
 
 const router = express.Router();
 
 /**
  * @openapi
  *
- * /ethereum/operational:
+ * /bitcoin/incentive:
  *   get:
- *     description: Basic message for ethereum operational layer endpoint
+ *     description: Basic message for bitcoin incentive layer endpoint
  *     tags:
- *       - ethereum
+ *       - bitcoin
  *     responses:
  *       200:
  *         description: Successful response
@@ -21,23 +22,23 @@ const router = express.Router();
  *               properties:
  *                 message:
  *                   type: string
- *                   enum: ['operational layer endpoint']
+ *                   enum: ['incentive layer endpoint']
  */
 router.get('/', (_req, res) => {
   res.status(200);
   res.json({
-    message: 'operational layer endpoint',
+    message: 'incentive layer endpoint',
   });
 });
 
 /**
  * @openapi
  *
- * /ethereum/operational/storage-constraint:
+ * /bitcoin/incentive/wealth-concentration:
  *   get:
- *     description: Returns plot points for the storage constraint factor in the operational layer for Ethereum - TEST EXECUTION MAY BE SLOW
+ *     description: Returns plot points for the wealth concentration factor in the incentive layer for Bitcoin - TEST EXECUTION MAY BE SLOW
  *     tags:
- *       - ethereum
+ *       - bitcoin
  *     responses:
  *       200:
  *         description: Successful response
@@ -64,46 +65,22 @@ router.get('/', (_req, res) => {
  *                             y:
  *                               type: number
  */
-router.get('/storage-constraint', async (_req, res, next) => {
-  try {
-    const resp = await fetch(
-      'https://api.blockchair.com/ethereum/blocks?a=date,sum(size)',
-      { method: 'GET' }
-    );
+router.get('/wealth-concentration', async (_req, res) => {
+  const data = wealthConcentration.map(({ date, gini }) => ({
+    x: date,
+    y: parseFloat(gini),
+  }));
+  data.sort((a, b) => new Date(a.x) - new Date(b.x));
 
-    const respText = await resp.json();
-    const points = respText.data;
-    const compareInterval = 14;
-    const calculatePlotPoints = (
-      { date, 'sum(size)': blockChainSize },
-      index,
-      array
-    ) => {
-      if (index < compareInterval) {
-        return {};
-      }
-      return {
-        x: date,
-        y: blockChainSize / array[index - compareInterval]['sum(size)'],
-      };
-    };
-
-    const ethereumPlotPoints = points
-      .map(calculatePlotPoints)
-      .slice(compareInterval);
-
-    res.status(200);
-    res.json({
-      data: [
-        {
-          id: 'Ethereum',
-          data: ethereumPlotPoints,
-        },
-      ],
-    });
-  } catch (err) {
-    next(err);
-  }
+  res.status(200);
+  res.json({
+    data: [
+      {
+        id: 'Bitcoin',
+        data,
+      },
+    ],
+  });
 });
 
 module.exports = router;

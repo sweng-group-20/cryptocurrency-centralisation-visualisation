@@ -33,7 +33,7 @@ router.get('/', (_req, res) => {
 /**
  * @openapi
  *
- * /bitcoin/consensus/data:
+ * /bitcoin/consensus/power-distribution:
  *   get:
  *     description: Returns pie chart values for the consensus power distribution factor in the consensus layer for Bitcoin - TEST EXECUTION MAY BE SLOW
  *     tags:
@@ -58,11 +58,9 @@ router.get('/', (_req, res) => {
  *                       value:
  *                         type: integer
  */
-router.get('/data', async (_req, res, next) => {
+router.get('/power-distribution', async (_req, res, next) => {
   try {
-    const poolNames = [];
-    const poolHashs = [];
-    const pluginArrayArg = [];
+    const data = [];
 
     const time = await fetch('https://miningpoolstats.stream/data/time');
     const webDataRaw = await fetch(
@@ -70,18 +68,23 @@ router.get('/data', async (_req, res, next) => {
     );
 
     const webData = await webDataRaw.json();
+    const set = new Set();
     webData.data.forEach((_, i) => {
-      poolNames[i] = webData.data[i].pool_id;
-      poolHashs[i] = (webData.data[i].hashrate / 1e15).toFixed(2);
+      const poolName = webData.data[i].pool_id;
+      const poolHash = (webData.data[i].hashrate / 1e15).toFixed(2);
 
-      const jsonObj = {};
-      jsonObj.id = poolNames[i];
-      jsonObj.label = poolNames[i];
-      jsonObj.value = poolHashs[i];
-      pluginArrayArg.push(jsonObj);
+      if (poolHash > 1000) {
+        const jsonObj = {};
+        jsonObj.id = poolName;
+        jsonObj.label = poolName;
+        jsonObj.value = parseFloat(poolHash);
+        if (poolName && !set.has(poolName)) {
+          data.push(jsonObj);
+        }
+        set.add(poolName);
+      }
     });
-    pluginArrayArg.sort((a, b) => a.value - b.value);
-    const data = JSON.parse(JSON.stringify(pluginArrayArg));
+    data.sort((a, b) => a.value - b.value);
     res.json({
       data,
     });

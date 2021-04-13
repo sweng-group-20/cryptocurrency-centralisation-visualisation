@@ -31,6 +31,11 @@ CREATE TABLE comments (
   CONSTRAINT fk_parent_issue FOREIGN KEY (parent_issue_id) REFERENCES issues_and_pull_requests (database_id) ON DELETE CASCADE
 );
 
+CREATE TABLE comment_counts (
+  author_login varchar(39),
+  comment_count int
+);
+
 CREATE OR REPLACE FUNCTION calculate_satoshi_index (repo_owner varchar(39), repo_name varchar(100), date_end date DEFAULT CURRENT_DATE)
   RETURNS double precision
   LANGUAGE plpgsql
