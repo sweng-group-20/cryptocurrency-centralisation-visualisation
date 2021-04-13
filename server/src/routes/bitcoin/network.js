@@ -58,6 +58,8 @@ router.get('/', (_req, res) => {
  *                         type: string
  *                       value:
  *                         type: integer
+ *                 data_source:
+ *                   type: string
  */
 router.get('/geographical-distribution', async (_req, res, next) => {
   try {
@@ -102,7 +104,7 @@ router.get('/geographical-distribution', async (_req, res, next) => {
     res.status(200);
     res.json({
       data,
-      dataSource: 'https://bitnodes.io',
+      data_source: 'https://bitnodes.io',
     });
   } catch (err) {
     next(err);

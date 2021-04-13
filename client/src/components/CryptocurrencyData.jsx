@@ -52,42 +52,42 @@ function CryptocurrencyData({
           <Route exact path={`${path}/application`}>
             <Application
               data={applicationData.data}
-              dataSource={applicationData.dataSource}
+              dataSource={applicationData.data_source}
             />
           </Route>
 
           <Route exact path={`${path}/operational`}>
             <Operational
               data={operationalData.data}
-              dataSource={operationalData.dataSource}
+              dataSource={operationalData.data_source}
             />
           </Route>
 
           <Route exact path={`${path}/incentive`}>
             <Incentive
               data={incentiveData.data}
-              dataSource={incentiveData.dataSource}
+              dataSource={incentiveData.data_source}
             />
           </Route>
 
           <Route exact path={`${path}/consensus`}>
             <Consensus
               data={consensusData.data}
-              dataSource={consensusData.dataSource}
+              dataSource={consensusData.data_source}
             />
           </Route>
 
           <Route exact path={`${path}/network`}>
             <Network
               data={networkData.data}
-              dataSource={networkData.dataSource}
+              dataSource={networkData.data_source}
             />
           </Route>
 
           <Route exact path={`${path}/governance`}>
             <Governance
               data={governanceData.data}
-              dataSource={governanceData.dataSource}
+              dataSource={governanceData.data_source}
             />
           </Route>
         </Switch>

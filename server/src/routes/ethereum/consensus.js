@@ -60,6 +60,8 @@ router.get('/', (_req, res) => {
  *                         type: string
  *                       value:
  *                         type: integer
+ *                 data_source:
+ *                   type: string
  */
 router.get('/power-distribution', async (_req, res, next) => {
   try {
@@ -90,7 +92,7 @@ router.get('/power-distribution', async (_req, res, next) => {
     data.sort((a, b) => a.value - b.value);
     res.json({
       data,
-      dataSource: 'https://miningpoolstats.stream/',
+      data_source: 'https://miningpoolstats.stream/',
     });
   } catch (err) {
     next(err);

@@ -67,6 +67,8 @@ router.get('/', (_req, res) => {
  *                               format: date
  *                             y:
  *                               type: number
+ *                 data_source:
+ *                   type: string
  */
 router.get('/wealth-concentration', async (_req, res) => {
   const data = wealthConcentration.map(({ date, gini }) => ({
@@ -83,7 +85,7 @@ router.get('/wealth-concentration', async (_req, res) => {
         data,
       },
     ],
-    dataSource: 'Google BigQuery',
+    data_source: 'Google BigQuery',
   });
 });
 

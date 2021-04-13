@@ -59,6 +59,8 @@ router.get('/', (_req, res) => {
  *                         type: string
  *                       value:
  *                         type: integer
+ *                 data_source:
+ *                   type: string
  */
 router.get('/owner-control', async (_req, res, next) => {
   try {
@@ -75,7 +77,7 @@ router.get('/owner-control', async (_req, res, next) => {
           value: 106514407.78,
         },
       ],
-      dataSource: 'https://api.github.com',
+      data_source: 'https://api.github.com',
     });
   } catch (err) {
     next(err);

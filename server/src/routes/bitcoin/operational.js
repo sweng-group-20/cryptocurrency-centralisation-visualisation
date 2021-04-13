@@ -66,6 +66,8 @@ router.get('/', (_req, res) => {
  *                               format: date
  *                             y:
  *                               type: number
+ *                 data_source:
+ *                   type: string
  */
 router.get('/storage-constraint', async (_req, res, next) => {
   try {
@@ -88,7 +90,7 @@ router.get('/storage-constraint', async (_req, res, next) => {
     res.status(200);
     res.json({
       data,
-      dataSource: 'https://blockchair.com',
+      data_source: 'https://blockchair.com',
     });
   } catch (err) {
     next(err);

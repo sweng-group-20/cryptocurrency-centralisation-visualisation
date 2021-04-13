@@ -67,6 +67,8 @@ router.get('/', (_req, res) => {
  *                               format: date
  *                             y:
  *                               type: number
+ *                 data_source:
+ *                   type: string
  */
 router.get('/reference-client-concentration', async (_req, res, next) => {
   try {
@@ -83,7 +85,7 @@ router.get('/reference-client-concentration', async (_req, res, next) => {
           data: satoshiIndexPlotPoints,
         },
       ],
-      dataSource: 'https://api.github.com',
+      data_source: 'https://api.github.com',
     });
   } catch (err) {
     next(err);
