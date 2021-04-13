@@ -16,14 +16,14 @@ const getSatoshiIndexTableName = (repoOwner, repoName) => {
  * @param {string} repoOwner Name of the repository owner
  * @param {string} repoName Name of the repository
  */
-const refreshSatoshiIndex = (repoOwner, repoName) =>
-  db.query(
-    `REFRESH MATERIALIZED VIEW CONCURRENTLY ${getSatoshiIndexTableName(
-      repoOwner,
-      repoName
-    )}`,
-    []
+const refreshSatoshiIndex = async (repoOwner, repoName) => {
+  const tableName = getSatoshiIndexTableName(repoOwner, repoName);
+  const { rows } = await db.query(
+    `SELECT relispopulated FROM pg_class WHERE relname = '${tableName}'`
   );
+  const concurrently = rows[0].relispopulated ? 'CONCURRENTLY' : '';
+  await db.query(`REFRESH MATERIALIZED VIEW ${concurrently} ${tableName}`, []);
+};
 /**
  * Returns the satoshi index of the given repo owner and repo name
  * @param {string} repoOwner Name of the repository owner
@@ -37,7 +37,9 @@ const getSatoshiIndex = async (repoOwner, repoName) => {
       index_date,
       satoshi_index
     FROM
-      ${tableName};
+      ${tableName}
+    ORDER BY
+      index_date;
     `,
     []
   );
