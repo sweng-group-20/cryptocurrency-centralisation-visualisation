@@ -37,9 +37,9 @@ router.get('/', (_req, res) => {
  * /ethereum/application/reference-client-concentration:
  *   get:
  *     description: |
- *      Returns plot points for the reference client concentration factor in the application layer for Ethereum - TEST EXECUTION MAY BE SLOW
+ *       Returns plot points for the reference client concentration factor in the application layer for Ethereum - TEST EXECUTION MAY BE SLOW
  *
- *      Attribution: https://api.github.com
+ *       Attribution: https://api.github.com
  *     tags:
  *       - ethereum
  *     responses:
