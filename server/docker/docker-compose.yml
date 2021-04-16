@@ -19,16 +19,17 @@ services:
       - db
 
   db:
-    image: postgres:13.1-alpine
+    image: cryptocurrency-centralisation-visualisation-database
     container_name: cryptocurrency-centralisation-visualisation-database
-    restart: always
+    build:
+      context: ../database
+      dockerfile: Dockerfile
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     networks:
       - network
     volumes:
       - database_data:/var/lib/postgresql/data
-      - ../sql_scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 networks:
   network:

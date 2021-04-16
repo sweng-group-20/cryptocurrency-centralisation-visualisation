@@ -7,33 +7,34 @@ import '../App.css';
 
 function Bitcoin() {
   const fetchOptions = { method: 'GET' };
+  const apiHost = process.env.REACT_APP_API_HOST;
   const { data: applicationLayer, loading: applicationLoading } = useFetch(
-    'http://localhost:4000/api/v1/bitcoin/application/reference-client-concentration',
+    `${apiHost}/api/v1/bitcoin/application/reference-client-concentration`,
     fetchOptions,
     []
   );
   const { data: operationalLayer, loading: operationalLoading } = useFetch(
-    'http://localhost:4000/api/v1/bitcoin/operational/storage-constraint',
+    `${apiHost}/api/v1/bitcoin/operational/storage-constraint`,
     fetchOptions,
     []
   );
   const { data: incentiveLayer, loading: incentiveLoading } = useFetch(
-    'http://localhost:4000/api/v1/bitcoin/incentive/wealth-concentration',
+    `${apiHost}/api/v1/bitcoin/incentive/wealth-concentration`,
     fetchOptions,
     []
   );
   const { data: consensusLayer, loading: consensusLoading } = useFetch(
-    'http://localhost:4000/api/v1/bitcoin/consensus/power-distribution',
+    `${apiHost}/api/v1/bitcoin/consensus/power-distribution`,
     fetchOptions,
     []
   );
   const { data: networkLayer, loading: networkLoading } = useFetch(
-    'http://localhost:4000/api/v1/bitcoin/network/geographical-distribution',
+    `${apiHost}/api/v1/bitcoin/network/geographical-distribution`,
     fetchOptions,
     []
   );
   const { data: governanceLayer, loading: governanceLoading } = useFetch(
-    'http://localhost:4000/api/v1/bitcoin/governance/owner-control',
+    `${apiHost}/api/v1/bitcoin/governance/owner-control`,
     fetchOptions,
     []
   );
