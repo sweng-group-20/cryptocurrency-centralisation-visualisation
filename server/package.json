@@ -1,6 +1,6 @@
 {
   "name": "cryptocurrency-centralisation-visualisation-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Back end for cryptocurrency centralisation visualisation web app",
   "main": "app.js",
   "repository": "https://github.com/sweng-group-20/cryptocurrency-centralisation-visualisation",
