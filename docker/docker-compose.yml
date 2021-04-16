@@ -2,15 +2,9 @@ version: "3.9"
 services:
   client:
     image: swenggroup20/cryptocurrency-centralisation-visualisation-client:latest
-    container_name: cryptocurrency-centralisation-visualisation-client
     restart: always
-    build:
-      context: ../client
-      dockerfile: Dockerfile
-      args:
-        - API_HOST=${API_HOST}
     ports:
-      - '3000:3000'
+      - "3000:3000"
     environment:
       - NODE_ENV=production
     networks:
@@ -20,13 +14,9 @@ services:
 
   server:
     image: swenggroup20/cryptocurrency-centralisation-visualisation-server:latest
-    container_name: cryptocurrency-centralisation-visualisation-server
     restart: always
-    build:
-      context: ../server
-      dockerfile: Dockerfile
     ports:
-      - '4000:4000'
+      - "4000:4000"
     environment:
       - NODE_ENV=production
       - CORS_ORIGIN_URL=${CORS_ORIGIN_URL}
@@ -39,11 +29,7 @@ services:
 
   db:
     image: swenggroup20/cryptocurrency-centralisation-visualisation-database:latest
-    container_name: cryptocurrency-centralisation-visualisation-database
     restart: always
-    build:
-      context: ../database
-      dockerfile: Dockerfile
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     networks:
