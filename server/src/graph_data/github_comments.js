@@ -25,11 +25,11 @@ const syncDatabaseRepositoryIssuesOrPullRequests = async (
 
   const rateLimitResp = await gitHubHttpClient.getRateLimit();
   const { remaining } = rateLimitResp.rateLimit;
-  const threshold = 250;
+  const threshold = 400;
   if (remaining <= threshold) {
     return;
   }
-  const limit = Math.floor(remaining - threshold);
+  const limit = threshold;
 
   const getIssueOrPullRequestNumbersResponse = await gitHubHttpClient.getIssueOrPullRequestNumbers(
     type,
