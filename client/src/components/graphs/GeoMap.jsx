@@ -42,6 +42,8 @@ const ResponsiveChoropleth = ({ data, smallGraph, loading }) => {
       <MapContainer
         style={{ height: smallGraph ? '30vh' : '70vh' }}
         zoom={smallGraph ? 1 : 2}
+        maxZoom={8}
+        minZoom={smallGraph ? 1 : 2}
         zoomControl={!smallGraph}
         doubleClickZoom={!smallGraph}
         zoomSnap={!smallGraph}
