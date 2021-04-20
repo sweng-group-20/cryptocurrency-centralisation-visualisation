@@ -30,13 +30,18 @@ const ResponsiveChoropleth = ({ data, smallGraph, loading }) => {
       layer.bindPopup(`${name}: No data`);
     }
   };
-
   return (
     <div>
       <MapContainer
         style={{ height: smallGraph ? '30vh' : '70vh' }}
         zoom={smallGraph ? 1 : 2}
         zoomControl={!smallGraph}
+        doubleClickZoom={!smallGraph}
+        zoomSnap={!smallGraph}
+        zoomDelta={!smallGraph}
+        trackResize={!smallGraph}
+        scrollWheelZoom={!smallGraph}
+        touchZoom={!smallGraph}
         attributionControl={false}
         dragging={!smallGraph}
         center={smallGraph ? [15, 0] : [40, 0]}
