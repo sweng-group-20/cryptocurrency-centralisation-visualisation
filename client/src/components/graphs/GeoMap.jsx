@@ -17,7 +17,6 @@ const ResponsiveChoropleth = ({ data, smallGraph, loading }) => {
     color: 'black',
     fillOpacity: 1,
   };
-  console.log(data);
   const countryData = new SetCountryData(data);
   const sortedData = countryData.sortData();
   const onEachCountry = (country, layer) => {
