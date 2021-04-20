@@ -4,8 +4,8 @@ import { ResponsiveLineCanvas } from '@nivo/line';
 import { BasicTooltip } from '@nivo/tooltip';
 
 import { lineGraphDataType } from '../types';
-import './LineGraph.css';
 import Spinner from '../Spinner';
+import './LineGraph.css';
 
 function LineGraph({
   data,

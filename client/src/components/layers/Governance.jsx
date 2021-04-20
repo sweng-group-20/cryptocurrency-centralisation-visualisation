@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { string } from 'prop-types';
-import DataSource from './DataSource';
 
+import DataSource from './DataSource';
 import PieChart from '../graphs/PieChart';
 import { pieChartDataType } from '../types';
 import './Governance.css';

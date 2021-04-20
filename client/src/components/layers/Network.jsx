@@ -1,14 +1,14 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { string } from 'prop-types';
-import DataSource from './DataSource';
 
+import DataSource from './DataSource';
 import ResponsiveChoropleth from '../graphs/GeoMap';
 import { geoMapDataType } from '../types';
-import './Network.css';
-import '../../index.css';
 import Legend from '../graphs/entities/Legend';
 import legendItems from '../graphs/entities/LegendItems';
+import './Network.css';
+import '../../index.css';
 
 function Network({ data, dataSource }) {
   const history = useHistory();

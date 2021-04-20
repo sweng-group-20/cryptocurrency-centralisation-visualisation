@@ -1,24 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { MapContainer, GeoJSON } from 'react-leaflet';
-// import countries from './world_countries.json';
+
+import SetCountryData from './entities/SetCountries';
 import Spinner from '../Spinner';
 import 'leaflet/dist/leaflet.css';
 import './GeoMap.css';
-import SetCountryData from './entities/SetCountries';
 
 const ResponsiveChoropleth = ({ data, smallGraph, loading }) => {
+  const [sortedData, setSortedData] = useState([]);
+
+  useEffect(() => {
+    const countryData = new SetCountryData(data);
+    setSortedData(countryData.sortData());
+  }, [data]);
+
   if (loading) {
     return <Spinner />;
   }
+
   const mapStyle = {
     fillColor: 'white',
     weight: 1,
     color: 'black',
     fillOpacity: 1,
   };
-  const countryData = new SetCountryData(data);
-  const sortedData = countryData.sortData();
+
   const onEachCountry = (country, layer) => {
     // eslint-disable-next-line no-param-reassign
     layer.options.fillColor = country.properties.colour;
