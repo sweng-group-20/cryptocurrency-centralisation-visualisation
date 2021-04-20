@@ -27,8 +27,7 @@ const legendItems = [
     '#ff3333',
     (numNodes) => numNodes < 50 && numNodes > 0
   ),
-  // eslint-disable-next-line no-unused-vars
-  new LegendItem('No Data', '#7a7878', (numNodes) => true),
+  new LegendItem('No Data', '#7a7878', () => true),
 ];
 
 export default legendItems;
