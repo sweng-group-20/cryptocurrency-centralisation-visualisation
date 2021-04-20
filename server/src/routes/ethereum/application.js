@@ -36,7 +36,10 @@ router.get('/', (_req, res) => {
  *
  * /ethereum/application/reference-client-concentration:
  *   get:
- *     description: Returns plot points for the reference client concentration factor in the application layer for Ethereum - TEST EXECUTION MAY BE SLOW
+ *     description: |
+ *       Returns plot points for the reference client concentration factor in the application layer for Ethereum - TEST EXECUTION MAY BE SLOW
+ *
+ *       Attribution: https://api.github.com
  *     tags:
  *       - ethereum
  *     responses:
@@ -64,6 +67,8 @@ router.get('/', (_req, res) => {
  *                               format: date
  *                             y:
  *                               type: number
+ *                 data_source:
+ *                   type: string
  */
 router.get('/reference-client-concentration', async (_req, res, next) => {
   try {
@@ -80,6 +85,7 @@ router.get('/reference-client-concentration', async (_req, res, next) => {
           data: satoshiIndexPlotPoints,
         },
       ],
+      data_source: 'https://api.github.com',
     });
   } catch (err) {
     next(err);

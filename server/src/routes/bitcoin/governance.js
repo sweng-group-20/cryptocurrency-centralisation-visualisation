@@ -36,7 +36,10 @@ router.get('/', (_req, res) => {
  *
  * /bitcoin/governance/owner-control:
  *   get:
- *     description: Returns pie chart values for the owner control factor in the governance layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *     description: |
+ *       Returns pie chart values for the owner control factor in the governance layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *
+ *       Attribution: https://api.github.com
  *     tags:
  *       - bitcoin
  *     responses:
@@ -58,6 +61,8 @@ router.get('/', (_req, res) => {
  *                         type: string
  *                       value:
  *                         type: integer
+ *                 data_source:
+ *                   type: string
  */
 router.get('/owner-control', async (_req, res, next) => {
   try {
@@ -73,11 +78,13 @@ router.get('/owner-control', async (_req, res, next) => {
       .each((_, elem) => {
         if ($(elem).find('td').eq(5).text().includes('Final')) {
           const str = $(elem).find('td').eq(3).text();
-          let chars = str.split(',');
-          chars = chars.map((element) => {
+          const chars = str.split(',');
+          chars.forEach((element) => {
             if (element[0] === ' ') {
+              // eslint-disable-next-line no-param-reassign
               element = element.substring(1);
             }
+            // eslint-disable-next-line no-param-reassign
             element = element.replace(/(\r\n|\n|\r)/gm, '');
             if (tempData.has(element)) {
               const temp = tempData.get(element);
@@ -90,13 +97,13 @@ router.get('/owner-control', async (_req, res, next) => {
         }
       });
     const data = [];
-    for (const [k, v] of tempData) {
+    tempData.forEach(([k, v]) => {
       const jsonObj = {};
       jsonObj.id = k;
       jsonObj.label = k;
       jsonObj.value = v.value;
       data.push(jsonObj);
-    }
+    });
     data.sort((a, b) => a.value - b.value);
     res.json({
       data,

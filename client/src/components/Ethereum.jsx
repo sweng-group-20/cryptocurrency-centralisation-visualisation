@@ -6,33 +6,34 @@ import '../App.css';
 
 function Ethereum() {
   const fetchOptions = { method: 'GET' };
+  const apiHost = process.env.REACT_APP_API_HOST;
   const { data: applicationLayer, loading: applicationLoading } = useFetch(
-    'http://localhost:4000/api/v1/ethereum/application/reference-client-concentration',
+    `${apiHost}/api/v1/ethereum/application/reference-client-concentration`,
     fetchOptions,
     []
   );
   const { data: operationalLayer, loading: operationalLoading } = useFetch(
-    'http://localhost:4000/api/v1/ethereum/operational/storage-constraint',
+    `${apiHost}/api/v1/ethereum/operational/storage-constraint`,
     fetchOptions,
     []
   );
   const { data: incentiveLayer, loading: incentiveLoading } = useFetch(
-    'http://localhost:4000/api/v1/ethereum/incentive/wealth-concentration',
+    `${apiHost}/api/v1/ethereum/incentive/wealth-concentration`,
     fetchOptions,
     []
   );
   const { data: consensusLayer, loading: consensusLoading } = useFetch(
-    'http://localhost:4000/api/v1/ethereum/consensus/power-distribution',
+    `${apiHost}/api/v1/ethereum/consensus/power-distribution`,
     fetchOptions,
     []
   );
   const { data: networkLayer, loading: networkLoading } = useFetch(
-    'http://localhost:4000/api/v1/ethereum/network/geographical-distribution',
+    `${apiHost}/api/v1/ethereum/network/geographical-distribution`,
     fetchOptions,
     []
   );
   const { data: governanceLayer, loading: governanceLoading } = useFetch(
-    'http://localhost:4000/api/v1/ethereum/governance/owner-control',
+    `${apiHost}/api/v1/ethereum/governance/owner-control`,
     fetchOptions,
     []
   );
@@ -41,12 +42,12 @@ function Ethereum() {
     <div className="graph-content-container">
       {/* pass in data as a prop to CryptocurrencyData component */}
       <CryptocurrencyData
-        applicationData={applicationLayer.data}
-        operationalData={operationalLayer.data}
-        incentiveData={incentiveLayer.data}
-        consensusData={consensusLayer.data}
-        networkData={networkLayer.data}
-        governanceData={governanceLayer.data}
+        applicationData={applicationLayer}
+        operationalData={operationalLayer}
+        incentiveData={incentiveLayer}
+        consensusData={consensusLayer}
+        networkData={networkLayer}
+        governanceData={governanceLayer}
         applicationLoading={applicationLoading}
         operationalLoading={operationalLoading}
         incentiveLoading={incentiveLoading}

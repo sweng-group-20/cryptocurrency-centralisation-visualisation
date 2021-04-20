@@ -14,9 +14,8 @@ const { syncDatabase } = require('./graph_data/github_comments');
 
 const app = express();
 
-/**
- * Add middlewares
- */
+// Add middlewares
+app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 app.use(morgan('common'));
 app.use(helmet());
 app.use(
@@ -33,9 +32,7 @@ app.get('/', (_req, res) => {
   });
 });
 
-/**
- * Add routes
- */
+// Add routes
 app.use('/api-docs', apidocs);
 app.use('/api/v1', routes);
 
@@ -45,17 +42,12 @@ app.use(errorHandler);
 const port = process.env.PORT || 4000;
 const host = process.env.HOST || 'localhost';
 
-/**
- * Start web server on port
- */
+// Start web server on port
 app.listen(port, () => {
   logger.info(`Listening at http://${host}:${port}`);
 });
 
-/**
- * Sync repositories every 2 hours
- */
-cron.schedule('0 */2 * * *', async () => {
+const syncRepositories = async () => {
   try {
     const repos = [
       { repoOwner: 'bitcoin', repoName: 'bitcoin' },
@@ -64,7 +56,7 @@ cron.schedule('0 */2 * * *', async () => {
     const limit = pLimit(1);
 
     await Promise.all(
-      repos.map(async ({ repoOwner, repoName }) =>
+      repos.map(({ repoOwner, repoName }) =>
         limit(async () => {
           logger.info(`Syncing repository github.com/${repoOwner}/${repoName}`);
           await syncDatabase(repoOwner, repoName);
@@ -76,6 +68,12 @@ cron.schedule('0 */2 * * *', async () => {
       )
     );
   } catch (err) {
-    logger.error({ err }, '[syncDatabase]');
+    logger.error({ err }, '[syncRepositories]');
   }
-});
+};
+
+// Sync repositories every 10 minutes
+cron.schedule('*/10 * * * *', syncRepositories);
+
+// Sync on startup
+syncRepositories();

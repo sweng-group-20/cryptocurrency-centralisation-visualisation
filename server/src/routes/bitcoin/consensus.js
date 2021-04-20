@@ -35,7 +35,10 @@ router.get('/', (_req, res) => {
  *
  * /bitcoin/consensus/power-distribution:
  *   get:
- *     description: Returns pie chart values for the consensus power distribution factor in the consensus layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *     description: |
+ *       Returns pie chart values for the consensus power distribution factor in the consensus layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *
+ *       Attribution: https://miningpoolstats.stream/
  *     tags:
  *       - bitcoin
  *     responses:
@@ -57,6 +60,8 @@ router.get('/', (_req, res) => {
  *                         type: string
  *                       value:
  *                         type: integer
+ *                 data_source:
+ *                   type: string
  */
 router.get('/power-distribution', async (_req, res, next) => {
   try {
@@ -87,6 +92,7 @@ router.get('/power-distribution', async (_req, res, next) => {
     data.sort((a, b) => a.value - b.value);
     res.json({
       data,
+      data_source: 'https://miningpoolstats.stream/',
     });
   } catch (err) {
     next(err);

@@ -36,7 +36,10 @@ router.get('/', (_req, res) => {
  *
  * /ethereum/governance/owner-control:
  *   get:
- *     description: Returns pie chart values for the owner control factor in the governance layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *     description: |
+ *       Returns pie chart values for the owner control factor in the governance layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *
+ *       Attribution: https://api.github.com
  *     tags:
  *       - ethereum
  *     responses:
@@ -58,6 +61,8 @@ router.get('/', (_req, res) => {
  *                         type: string
  *                       value:
  *                         type: integer
+ *                 data_source:
+ *                   type: string
  */
 router.get('/owner-control', async (_req, res, next) => {
   try {
@@ -74,8 +79,8 @@ router.get('/owner-control', async (_req, res, next) => {
       .find('tr')
       .each((_, elem) => {
         const str = $(elem).find('.author').text();
-        let chars = str.split(', ');
-        chars = chars.map((element) => {
+        const chars = str.split(', ');
+        chars.forEach((element) => {
           if (tempData.has(element)) {
             const temp = tempData.get(element);
             tempData.set(element, { value: temp.value + 1 });
@@ -86,13 +91,13 @@ router.get('/owner-control', async (_req, res, next) => {
         });
       });
     const data = [];
-    for (const [k, v] of tempData) {
+    tempData.forEach(([k, v]) => {
       const jsonObj = {};
       jsonObj.id = k;
       jsonObj.label = k;
       jsonObj.value = v.value;
       data.push(jsonObj);
-    }
+    });
     data.sort((a, b) => a.value - b.value);
     res.json({
       data,

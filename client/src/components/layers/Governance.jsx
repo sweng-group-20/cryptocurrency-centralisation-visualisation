@@ -1,12 +1,14 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Linkify from 'react-linkify';
+import { string } from 'prop-types';
 
 import PieChart from '../graphs/PieChart';
 import { pieChartDataType } from '../types';
 import './Governance.css';
 import '../../index.css';
 
-function Governance({ data }) {
+function Governance({ data, dataSource }) {
   const history = useHistory();
 
   return (
@@ -41,11 +43,18 @@ function Governance({ data }) {
         proposition of blockchain is rooted in decentralization. This property
         of decentralization is considered valuable by investors.
       </div>
+      <br />
+      <br />
+      <Linkify>
+        <div className="text" align="center">
+          Data source: {dataSource}
+        </div>
+      </Linkify>
     </div>
   );
 }
 
-Governance.propTypes = { data: pieChartDataType };
-Governance.defaultProps = { data: [] };
+Governance.propTypes = { data: pieChartDataType, dataSource: string };
+Governance.defaultProps = { data: [], dataSource: '' };
 
 export default Governance;

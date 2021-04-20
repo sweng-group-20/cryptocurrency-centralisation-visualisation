@@ -35,7 +35,10 @@ router.get('/', (_req, res) => {
  *
  * /bitcoin/network/geographical-distribution:
  *   get:
- *     description: Returns values for the geographic distribuion factor in the network layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *     description: |
+ *       Returns values for the geographic distribuion factor in the network layer for Bitcoin - TEST EXECUTION MAY BE SLOW
+ *
+ *       Attribution: https://bitnodes.io
  *     tags:
  *       - bitcoin
  *     responses:
@@ -55,6 +58,8 @@ router.get('/', (_req, res) => {
  *                         type: string
  *                       value:
  *                         type: integer
+ *                 data_source:
+ *                   type: string
  */
 router.get('/geographical-distribution', async (_req, res, next) => {
   try {
@@ -71,13 +76,9 @@ router.get('/geographical-distribution', async (_req, res, next) => {
     const nodeKeys = Object.keys(respJSON.nodes);
     let i;
     let j;
+
     // Searching through JSON response, for each node with a matching country code (CC), increment value for that CC
-    /*
-    {
-    id: "AFG",
-    value: 336354
-    },
-    */
+
     for (i = 0; i < nodeKeys.length; i += 1) {
       const node = respJSON.nodes[nodeKeys[i]];
       if (node[7] !== null && node[7] !== 'null') {
@@ -91,6 +92,7 @@ router.get('/geographical-distribution', async (_req, res, next) => {
           }
         }
         // If CC not found, add new CC to data & set value to 1
+
         if (!found) {
           data.push({
             id: countryDict[countryCode],
@@ -102,6 +104,7 @@ router.get('/geographical-distribution', async (_req, res, next) => {
     res.status(200);
     res.json({
       data,
+      data_source: 'https://bitnodes.io',
     });
   } catch (err) {
     next(err);

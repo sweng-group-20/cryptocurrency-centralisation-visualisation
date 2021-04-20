@@ -11,7 +11,8 @@ const router = express.Router();
  *
  * /ethereum/network:
  *   get:
- *     description: Basic message for ethereum network layer endpoint
+ *     description: |
+ *       Basic message for ethereum network layer endpoint
  *     tags:
  *       - ethereum
  *     responses:
@@ -38,7 +39,10 @@ router.get('/', (_req, res) => {
  *
  * /ethereum/network/geographical-distribution:
  *   get:
- *     description: Returns values for the geographic distribuion factor in the network layer for Ethereum - TEST EXECUTION MAY BE SLOW
+ *     description: |
+ *       Returns values for the geographic distribuion factor in the network layer for Ethereum - TEST EXECUTION MAY BE SLOW
+ *
+ *       Attribution: https://www.ethernodes.org/
  *     tags:
  *       - ethereum
  *     responses:
@@ -58,6 +62,8 @@ router.get('/', (_req, res) => {
  *                         type: string
  *                       value:
  *                         type: integer
+ *                 data_source:
+ *                   type: string
  */
 router.get('/geographical-distribution', async (_req, res, next) => {
   try {
@@ -84,6 +90,7 @@ router.get('/geographical-distribution', async (_req, res, next) => {
     res.status(200);
     res.json({
       data,
+      data_source: 'https://www.ethernodes.org',
     });
   } catch (err) {
     next(err);

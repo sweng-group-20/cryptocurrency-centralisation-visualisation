@@ -5,9 +5,7 @@ const ethereum = require('./ethereum');
 
 const router = express.Router();
 
-/**
- * Add endpoints
- */
+// Add endpoints
 router.use('/bitcoin', bitcoin);
 router.use('/ethereum', ethereum);
 
