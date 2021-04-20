@@ -1,15 +1,19 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Linkify from 'react-linkify';
 import { string } from 'prop-types';
 
+import DataSource from './DataSource';
 import ResponsiveChoropleth from '../graphs/GeoMap';
 import { geoMapDataType } from '../types';
+import Legend from '../graphs/entities/Legend';
+import legendItems from '../graphs/entities/LegendItems';
 import './Network.css';
 import '../../index.css';
 
 function Network({ data, dataSource }) {
   const history = useHistory();
+  const legendItemsInOrder = [...legendItems].reverse();
+
   return (
     <div className="NetworkGraph">
       <div className="section-top">
@@ -31,24 +35,22 @@ function Network({ data, dataSource }) {
       </div>
       <div className="map">
         <ResponsiveChoropleth data={data} />
+        <Legend legendItems={legendItemsInOrder} />
       </div>
+      <br />
+      <br />
       <div className="section-about">
         The network layer acts as the information dissemination mechanism for
-        the blockchain instance. As the decentralizednetwork cannot have
+        the blockchain instance. As the decentralized network cannot have
         centralized nodes that act as relay points to transmit messages between
-        the participants, thenetwork is largely a peer-to-peer system. The
-        network layer acts as the information dissemination mechanism for
-        theblockchain instance. As the decentralized network cannot have
-        centralized nodes that act as relay points to transmitmessages between
+        the participants, the network is largely a peer-to-peer system. The
+        network layer acts as the information dissemination mechanism for the
+        blockchain instance. As the decentralized network cannot have
+        centralized nodes that act as relay points to transmit messages between
         the participants, the network is largely a peer-to-peer system.
       </div>
       <br />
-      <br />
-      <Linkify>
-        <div className="text" align="center">
-          Data source: {dataSource}
-        </div>
-      </Linkify>
+      <DataSource dataSource={dataSource} />
     </div>
   );
 }

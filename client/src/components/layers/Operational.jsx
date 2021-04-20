@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Linkify from 'react-linkify';
 import { string } from 'prop-types';
 
+import DataSource from './DataSource';
 import LineGraph from '../graphs/LineGraph';
 import { lineGraphDataType } from '../types';
 import './Operational.css';
@@ -41,23 +41,18 @@ function Operational({ data, dataSource }) {
       </div>
       <div className="section-about">
         The uncertainty of reward imposes a constraint on participation for
-        rational investors. This reasoning is primarily basedon the cost of
+        rational investors. This reasoning is primarily based on the cost of
         mining. A miner can earn rewards in the form of mining incentives and
-        accumulated transactionfees from the mined block but to profitably mine
-        on a Proof-of-Work blockchain, the difference between rewardsearned and
+        accumulated transaction fees from the mined block but to profitably mine
+        on a Proof-of-Work blockchain, the difference between rewards earned and
         the expenses of the mining operation should be positive. This is the
-        ’operations’ we are referring to inthis ’operational’ layer. The
+        ’operations’ we are referring to in this ’operational’ layer. The
         expenses of mining operations include capital costs such as the
-        acquisition of adequatehardware and other recurrent costs such as the
+        acquisition of adequate hardware and other recurrent costs such as the
         cost of electricity.
       </div>
       <br />
-      <br />
-      <Linkify>
-        <div className="text" align="center">
-          Data source: {dataSource}
-        </div>
-      </Linkify>
+      <DataSource dataSource={dataSource} />
     </div>
   );
 }

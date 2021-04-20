@@ -1,0 +1,11 @@
+.data-source {
+  padding-left: 4rem;
+  padding-right: 4rem;
+  text-align: left;
+  color: grey;
+  font-size: small;
+}
+
+a,a:visited,a:active,a:hover{
+  color: '#3B82F6';
+}

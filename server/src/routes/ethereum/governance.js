@@ -1,4 +1,6 @@
 const express = require('express');
+const cheerio = require('cheerio');
+const fetch = require('node-fetch');
 
 const router = express.Router();
 
@@ -64,20 +66,42 @@ router.get('/', (_req, res) => {
  */
 router.get('/owner-control', async (_req, res, next) => {
   try {
+    const resp = await fetch('https://eips.ethereum.org/all', {
+      method: 'GET',
+    });
+    const body = await resp.text();
+    const $ = cheerio.load(body);
+
+    const tempData = new Map();
+    $('.eiptable')
+      .eq(1)
+      .find('tbody')
+      .find('tr')
+      .each((_, elem) => {
+        const str = $(elem).find('.author').text();
+        const chars = str.split(', ');
+        chars.forEach((element) => {
+          if (tempData.has(element)) {
+            const temp = tempData.get(element);
+            tempData.set(element, { value: temp.value + 1 });
+          } else {
+            tempData.set(element, { value: 1 });
+          }
+          return element;
+        });
+      });
+    const data = [];
+    tempData.forEach((v, k) => {
+      const jsonObj = {};
+      jsonObj.id = k;
+      jsonObj.label = k;
+      jsonObj.value = v.value;
+      data.push(jsonObj);
+    });
+    data.sort((a, b) => a.value - b.value);
     res.json({
-      data: [
-        {
-          id: 'owner',
-          label: 'owner',
-          value: 12000000,
-        },
-        {
-          id: 'total',
-          label: 'total',
-          value: 106514407.78,
-        },
-      ],
-      data_source: 'https://api.github.com',
+      data,
+      data_source: 'https://eips.ethereum.org/all',
     });
   } catch (err) {
     next(err);

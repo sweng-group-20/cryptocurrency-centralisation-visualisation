@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Linkify from 'react-linkify';
 import { string } from 'prop-types';
+import DataSource from './DataSource';
 
 import LineGraph from '../graphs/LineGraph';
 import { lineGraphDataType } from '../types';
@@ -41,20 +41,15 @@ function Application({ data, dataSource }) {
       </div>
       <div className="section-about">
         Users often rely on third-party applications to facilitate user
-        interaction with the blockchain. These third-partyapplications include
+        interaction with the blockchain. These third-party applications include
         reference implementations, wallets, and exchanges. As a result of our
-        review, we report oncentralization on these three application layer
+        review, we report on centralization on these three application layer
         entities. We also suggest that a monopoly in the user end applications
         fora blockchain instance is a contributor to the centralization of the
-        blockchain
+        blockchain.
       </div>
       <br />
-      <br />
-      <Linkify>
-        <div className="text" align="center">
-          Data source: {dataSource}
-        </div>
-      </Linkify>
+      <DataSource dataSource={dataSource} />
     </div>
   );
 }

@@ -1,58 +1,67 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { ResponsiveChoropleth as NivoResponsiveChoropleth } from '@nivo/geo';
+import { MapContainer, GeoJSON } from 'react-leaflet';
 
-import countries from './world_countries.json';
+import SetCountryData from './entities/SetCountries';
 import Spinner from '../Spinner';
+import 'leaflet/dist/leaflet.css';
+import './GeoMap.css';
 
 const ResponsiveChoropleth = ({ data, smallGraph, loading }) => {
+  const [sortedData, setSortedData] = useState([]);
+
+  useEffect(() => {
+    const countryData = new SetCountryData(data);
+    setSortedData(countryData.sortData());
+  }, [data]);
+
   if (loading) {
     return <Spinner />;
   }
 
+  const mapStyle = {
+    fillColor: 'white',
+    weight: 1,
+    color: 'black',
+    fillOpacity: 1,
+  };
+
+  const onEachCountry = (country, layer) => {
+    // eslint-disable-next-line no-param-reassign
+    layer.options.fillColor = country.properties.colour;
+    const { name } = country.properties;
+    const { numNodes } = country.properties;
+    if (numNodes != null) {
+      layer.bindPopup(`${name}: ${numNodes} nodes`);
+    } else {
+      layer.bindPopup(`${name}: No data`);
+    }
+  };
   return (
-    <NivoResponsiveChoropleth
-      data={data}
-      features={countries.features}
-      colors="nivo"
-      unknownColor="#666666"
-      label="properties.name"
-      valueFormat=".2s"
-      projectionTranslation={[0.5, 0.5]}
-      graticuleLineColor="#dddddd"
-      borderWidth={0.5}
-      borderColor="#152538"
-      domain={[0, 600]}
-      legends={
-        smallGraph
-          ? []
-          : [
-              {
-                anchor: 'bottom-left',
-                direction: 'column',
-                justify: true,
-                translateX: 20,
-                translateY: -100,
-                itemsSpacing: 0,
-                itemWidth: 94,
-                itemHeight: 18,
-                itemDirection: 'left-to-right',
-                itemTextColor: '#444444',
-                itemOpacity: 0.85,
-                symbolSize: 18,
-                effects: [
-                  {
-                    on: 'hover',
-                    style: {
-                      itemTextColor: '#000000',
-                      itemOpacity: 1,
-                    },
-                  },
-                ],
-              },
-            ]
-      }
-    />
+    <div>
+      <MapContainer
+        style={{ height: smallGraph ? '30vh' : '70vh' }}
+        zoom={smallGraph ? 1 : 2}
+        maxZoom={8}
+        minZoom={smallGraph ? 1 : 2}
+        zoomControl={!smallGraph}
+        doubleClickZoom={!smallGraph}
+        zoomSnap={!smallGraph}
+        zoomDelta={!smallGraph}
+        trackResize={!smallGraph}
+        scrollWheelZoom={!smallGraph}
+        touchZoom={!smallGraph}
+        attributionControl={false}
+        dragging={!smallGraph}
+        center={smallGraph ? [15, 0] : [40, 0]}
+      >
+        <GeoJSON
+          style={mapStyle}
+          data={sortedData}
+          onEachFeature={onEachCountry}
+        />
+      </MapContainer>
+    </div>
   );
 };
 
