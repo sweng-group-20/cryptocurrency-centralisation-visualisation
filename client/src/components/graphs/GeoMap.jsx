@@ -29,12 +29,13 @@ const ResponsiveChoropleth = ({ loading }) => {
 
   return (
     <div>
-      <MapContainer style={{ height: '90vh' }} zoom={2} center={[20, 100]} />
-      <GeoJSON
-        style={mapStyle}
-        data={countries.features}
-        onEachFeature={onEachCountry}
-      />
+      <MapContainer style={{ height: '90vh' }} zoom={2} center={[20, 100]}>
+        <GeoJSON
+          style={mapStyle}
+          data={countries.features}
+          onEachFeature={onEachCountry}
+        />
+      </MapContainer>
       <Legend legendItems={legendItemsInOrder} />
     </div>
   );
