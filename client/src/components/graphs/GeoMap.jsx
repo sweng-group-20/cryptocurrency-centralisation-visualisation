@@ -25,7 +25,11 @@ const ResponsiveChoropleth = ({ data, smallGraph, loading }) => {
     layer.options.fillColor = country.properties.colour;
     const { name } = country.properties;
     const { numNodes } = country.properties;
-    layer.bindPopup(`${name}: ${numNodes} nodes`);
+    if (numNodes != null) {
+      layer.bindPopup(`${name}: ${numNodes} nodes`);
+    } else {
+      layer.bindPopup(`${name}: No data`);
+    }
   };
 
   return (

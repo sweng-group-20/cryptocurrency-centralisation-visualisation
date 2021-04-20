@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Linkify from 'react-linkify';
 import { string } from 'prop-types';
+import DataSource from './DataSource';
 
 import ResponsiveChoropleth from '../graphs/GeoMap';
 import { geoMapDataType } from '../types';
@@ -50,12 +50,7 @@ function Network({ data, dataSource }) {
         the participants, the network is largely a peer-to-peer system.
       </div>
       <br />
-      <br />
-      <Linkify>
-        <div className="text" align="center">
-          Data source: {dataSource}
-        </div>
-      </Linkify>
+      <DataSource dataSource={dataSource} />
     </div>
   );
 }
