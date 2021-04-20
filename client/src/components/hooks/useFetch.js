@@ -12,6 +12,7 @@ const useFetch = (url, options, defaultData) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log({ url });
     const fetchData = async () => {
       try {
         setLoading(true);

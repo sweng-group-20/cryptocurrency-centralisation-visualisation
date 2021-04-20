@@ -6,6 +6,7 @@ const Legend = ({ legendItems }) => {
   return (
     <div
       style={{
+        width: '100%',
         display: 'flex',
         alignItems: 'stretch',
       }}

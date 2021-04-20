@@ -6,6 +6,7 @@ import Graphs from './pages/GraphArea';
 import ScrollArrow from './components/ScrollArrow';
 
 function App() {
+  console.log(process.env.REACT_APP_API_HOST);
   return (
     <div className="App">
       <Hero />

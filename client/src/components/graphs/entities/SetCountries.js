@@ -1,4 +1,4 @@
-import countries from './world_countries.json';
+import countries from '../world_countries.json';
 import legendItems from './LegendItems';
 
 function formatNumNodes(number) {
@@ -14,7 +14,7 @@ function setCountryColour(i) {
   }
 }
 
-class setCountryData {
+class SetCountryData {
   constructor(cryptoData) {
     this.cryptoData = cryptoData;
   }
@@ -24,18 +24,21 @@ class setCountryData {
     let j;
     const { features } = countries;
     for (i = 0; i < countries.features.length; i += 1) {
-      for (j = 0; j < this.cryptoData.data.length; j += 1) {
-        if (countries.features[i].id === this.cryptoData.data[i].id) {
-          features[i].properties.numNodes = this.cryptoData.data[i].value;
+      for (j = 0; j < this.cryptoData.length; j += 1) {
+        console.log(`Country ID ${features[i].id}`);
+        console.log(`Crypto country ID ${this.cryptoData[j].id}`);
+        if (countries.features[i].id === this.cryptoData[j].id) {
+          features[i].properties.numNodes = this.cryptoData[j].value;
           features[i].properties.numNodesString = formatNumNodes(
-            this.cryptoData.data[i].value
+            this.cryptoData[j].value
           );
         }
         setCountryColour(i);
       }
     }
-    console.log(countries.features);
+    return countries;
+    // console.log(countries.features);
   }
 }
 
-export default setCountryData;
+export default SetCountryData;
