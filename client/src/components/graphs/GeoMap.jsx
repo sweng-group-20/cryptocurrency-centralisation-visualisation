@@ -1,75 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ResponsiveChoropleth as NivoResponsiveChoropleth } from '@nivo/geo';
-
+import { MapContainer, GeoJSON } from 'react-leaflet';
 import countries from './world_countries.json';
 import Spinner from '../Spinner';
+import Legend from './entities/Legend';
+import legendItems from './entities/LegendItems';
+import 'leaflet/dist/leaflet.css';
+import './GeoMap.css';
 
-const ResponsiveChoropleth = ({ data, smallGraph, loading }) => {
+const ResponsiveChoropleth = ({ loading }) => {
   if (loading) {
     return <Spinner />;
   }
+  const mapStyle = {
+    fillColor: 'white',
+    weight: 1,
+    color: 'black',
+    fillOpacity: 1,
+  };
+  const onEachCountry = (country, layer) => {
+    // eslint-disable-next-line no-param-reassign
+    layer.options.fillColor = country.properties.colour;
+    const { name } = country.properties;
+    const { numNodes } = country.properties;
+    layer.bindPopup(`${name} ${numNodes}`);
+  };
+  const legendItemsInOrder = [...legendItems].reverse();
 
   return (
-    <NivoResponsiveChoropleth
-      data={data}
-      features={countries.features}
-      colors="nivo"
-      unknownColor="#666666"
-      label="properties.name"
-      valueFormat=".2s"
-      projectionTranslation={[0.5, 0.5]}
-      graticuleLineColor="#dddddd"
-      borderWidth={0.5}
-      borderColor="#152538"
-      domain={[0, 600]}
-      legends={
-        smallGraph
-          ? []
-          : [
-              {
-                anchor: 'bottom-left',
-                direction: 'column',
-                justify: true,
-                translateX: 20,
-                translateY: -100,
-                itemsSpacing: 0,
-                itemWidth: 94,
-                itemHeight: 18,
-                itemDirection: 'left-to-right',
-                itemTextColor: '#444444',
-                itemOpacity: 0.85,
-                symbolSize: 18,
-                effects: [
-                  {
-                    on: 'hover',
-                    style: {
-                      itemTextColor: '#000000',
-                      itemOpacity: 1,
-                    },
-                  },
-                ],
-              },
-            ]
-      }
-    />
+    <div>
+      <MapContainer style={{ height: '90vh' }} zoom={2} center={[20, 100]} />
+      <GeoJSON
+        style={mapStyle}
+        data={countries.features}
+        onEachFeature={onEachCountry}
+      />
+      <Legend legendItems={legendItemsInOrder} />
+    </div>
   );
 };
 
 ResponsiveChoropleth.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      value: PropTypes.number,
-    })
-  ),
-  smallGraph: PropTypes.bool,
+  // data: PropTypes.arrayOf(
+  //   PropTypes.shape({
+  //     id: PropTypes.string,
+  //     value: PropTypes.number,
+  //   })
+  // ),
+  //  smallGraph: PropTypes.bool,
   loading: PropTypes.bool,
 };
 
 ResponsiveChoropleth.defaultProps = {
-  data: [],
-  smallGraph: false,
+  //  data: [],
+  //  smallGraph: false,
   loading: false,
 };
 

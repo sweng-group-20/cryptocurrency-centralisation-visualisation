@@ -17,6 +17,13 @@ module.exports = {
   },
   rules: {
     'import/no-unresolved': 'off',
+    'import/extensions': 'off',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
     'import/no-named-as-default': 0,
     'global-require': 0,
     'eslint-comments/no-use': [
