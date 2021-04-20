@@ -101,6 +101,7 @@ router.get('/owner-control', async (_req, res, next) => {
     data.sort((a, b) => a.value - b.value);
     res.json({
       data,
+      data_source: 'https://eips.ethereum.org/all',
     });
   } catch (err) {
     next(err);

@@ -107,6 +107,7 @@ router.get('/owner-control', async (_req, res, next) => {
     data.sort((a, b) => a.value - b.value);
     res.json({
       data,
+      data_source: 'https://github.com/bitcoin/bips',
     });
   } catch (err) {
     next(err);
