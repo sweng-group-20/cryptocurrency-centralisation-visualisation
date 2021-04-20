@@ -75,6 +75,9 @@ You will need to have installed:
 
 The local website is hosted on [`http://localhost:3000`](http://localhost:3000) and the api will be hosted on [`http://localhost:4000`](http://localhost:4000)
 
+ℹ️ | The application layer of the graph will only work on docker
+:---: | :---
+
 ## Authors
 
 1. Lexes Jan Mantiquilla ([@lexesjan](https://github.com/lexesjan))
