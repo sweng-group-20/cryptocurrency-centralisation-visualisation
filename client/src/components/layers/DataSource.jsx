@@ -1,6 +1,7 @@
 import React from 'react';
 import Linkify from 'react-linkify';
 import { string } from 'prop-types';
+
 import './DataSource.css';
 
 function DataSource({ dataSource }) {

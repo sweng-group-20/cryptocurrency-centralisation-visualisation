@@ -7,6 +7,8 @@ const Legend = ({ legendItems }) => {
     <div
       style={{
         width: '100%',
+        paddingLeft: '4em',
+        paddingRight: '4em',
         display: 'flex',
         alignItems: 'stretch',
       }}
