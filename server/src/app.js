@@ -72,8 +72,8 @@ const syncRepositories = async () => {
   }
 };
 
-// Sync repositories every 2 hours
-cron.schedule('0 */2 * * *', syncRepositories);
+// Sync repositories every 10 minutes
+cron.schedule('*/10 * * * *', syncRepositories);
 
 // Sync on startup
 syncRepositories();
