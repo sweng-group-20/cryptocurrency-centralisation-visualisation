@@ -97,7 +97,7 @@ router.get('/owner-control', async (_req, res, next) => {
         }
       });
     const data = [];
-    tempData.forEach((k, v) => {
+    tempData.forEach((v, k) => {
       const jsonObj = {};
       jsonObj.id = k;
       jsonObj.label = k;
