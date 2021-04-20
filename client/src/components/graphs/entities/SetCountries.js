@@ -25,8 +25,6 @@ class SetCountryData {
     const { features } = countries;
     for (i = 0; i < countries.features.length; i += 1) {
       for (j = 0; j < this.cryptoData.length; j += 1) {
-        console.log(`Country ID ${features[i].id}`);
-        console.log(`Crypto country ID ${this.cryptoData[j].id}`);
         if (countries.features[i].id === this.cryptoData[j].id) {
           features[i].properties.numNodes = this.cryptoData[j].value;
           features[i].properties.numNodesString = formatNumNodes(
@@ -37,7 +35,6 @@ class SetCountryData {
       }
     }
     return countries;
-    // console.log(countries.features);
   }
 }
 
