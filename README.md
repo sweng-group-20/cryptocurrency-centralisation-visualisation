@@ -1,8 +1,16 @@
 # cryptocurrency-centralisation-visualisation
 
-Visualizing centralization in cryptocurrencies
+![banner](.github/images/dashboard.gif)
+
+This project aims to design a consolidated GUI dashboard to visualize the current state of centralization in significant cryptocurrencies.
 
 ## Getting started
+
+### API Documentation
+
+![api-docs](.github/images/api-docs.gif)
+
+The documentation for the API created to fetch the data for the graphs can be found in the `/api-docs` route
 
 ### Running the website locally using docker
 
