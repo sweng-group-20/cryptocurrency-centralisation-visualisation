@@ -156,6 +156,47 @@ The local website is hosted on [`http://localhost:3000`](http://localhost:3000) 
 | ℹ️  | To setup the application layer graphs, you must have access to an instance a PostgreSQL database |
 | :-: | :----------------------------------------------------------------------------------------------- |
 
+## Technologies used
+
+1. docker v20.10.6
+2. yarn v1.22.5
+3. node.js v15.14.0
+4. postgresql v13.2.0
+5. nginx v1.19.2
+
+### Front-end
+
+1. leaflet v1.7.1
+2. nivo v0.31.0
+   1. @nivo/core v0.67.0
+   2. @nivo/geo v0.67.0
+   3. @nivo/line v0.67.0
+   4. @nivo/pie v0.67.0
+   5. @nivo/tooltip v0.67.0
+3. react v17.0.1
+   1. react-dom: v17.0.1
+   2. react-leaflet: v3.1.0
+   3. react-linkify: v1.0.0-alpha
+   4. react-router-dom: v5.2.0
+   5. react-scripts: 4.0.3
+4. prop-types v15.7.2
+
+### Back-end
+
+1. cheerio v1.0.0-rc.5
+2. cors v2.8.5
+3. express v4.17.1
+4. helmet v4.4.1
+5. morgan v1.10.0
+6. node-cron v3.0.0
+7. node-fetch v2.6.1
+8. swagger-ui-express v4.1.6
+   1. swagger-jsdoc v6.0.0
+   2. openapi-types v7.2.3
+9. p-limit: v3.1.0
+10. pg: v8.5.1
+11. pino: v6.11.2
+
 ## Authors
 
 1. Lexes Jan Mantiquilla ([@lexesjan](https://github.com/lexesjan))
