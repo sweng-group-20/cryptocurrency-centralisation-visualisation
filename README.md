@@ -120,6 +120,7 @@ You will need to have installed:
 
 1. Node.js
 2. Yarn
+3. PostgreSQL
 
 #### Running the website for development
 
@@ -131,7 +132,7 @@ You will need to have installed:
    ```
    cd cryptocurrency-centralisation-visualisation
    ```
-3. Ensure that the environment variables `CORS_ORIGIN_URL` and `API_HOST`. For the purposes of development they can be set to `http://localhost:3000` and `http://localhost:4000` respectively.
+3. Ensure that the environment variables `CORS_ORIGIN_URL` and `REACT_APP_API_HOST` are set. For the purposes of development they can be set to `http://localhost:3000` and `http://localhost:4000` respectively.
 4. Navigate into the server directory
    ```
    cd server
@@ -150,6 +151,7 @@ You will need to have installed:
    yarn install
    yarn start
    ```
+8. Change the `host`, `database`, and `password` object attributes in the `Pool` constructor. This file can be found in [`cryptocurrency-centralisation-visualisation/server/src/db/index.js`](server/src/db/index.js).
 
 The local website is hosted on [`http://localhost:3000`](http://localhost:3000) and the api will be hosted on [`http://localhost:4000`](http://localhost:4000)
 
