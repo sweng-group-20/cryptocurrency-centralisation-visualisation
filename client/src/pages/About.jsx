@@ -24,7 +24,7 @@ function About() {
           party which uses private keys to access all the funds of the users,
           and you could lose all of your deposit. Examples of centralized
           cryptocurrency exchanges include Binance, Coinbase and LocalBitcoins.
-          <br />A decentralized cryptocurrency exchange is similar to a
+          <br /> <br />A decentralized cryptocurrency exchange is similar to a
           centralized one, except it doesn’t involve a third party. This means
           all the control of the account remains with you. Decentralized
           platforms are more secure because there’s no possibility of multiple
