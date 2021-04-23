@@ -14,7 +14,9 @@ function Operational({ data, dataSource }) {
   return (
     <div className="OperationalGraph">
       <div className="section-top">
-        <h1 className="section-title">Operational Layer</h1>
+        <h1 className="section-title">
+          Operational Layer (Storage Constraint)
+        </h1>
         <button
           className="back-button"
           type="button"

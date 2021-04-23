@@ -14,7 +14,9 @@ function Application({ data, dataSource }) {
   return (
     <div className="ApplicationGraph">
       <div className="section-top">
-        <h1 className="section-title">Application Layer</h1>
+        <h1 className="section-title">
+          Application Layer (Reference Client Concentration)
+        </h1>
         <button
           className="back-button"
           type="button"

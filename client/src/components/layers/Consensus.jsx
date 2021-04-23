@@ -14,7 +14,9 @@ function Consensus({ data, dataSource }) {
   return (
     <div className="ConsensusGraph">
       <div className="section-top">
-        <h1 className="section-title">Consensus Layer</h1>
+        <h1 className="section-title">
+          Consensus Layer (Consensus Power Distribution)
+        </h1>
         <button
           className="back-button"
           type="button"

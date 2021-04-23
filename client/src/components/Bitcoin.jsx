@@ -2,7 +2,6 @@ import React from 'react';
 
 import CryptocurrencyData from './CryptocurrencyData';
 import useFetch from './hooks/useFetch';
-import './Bitcoin.css';
 import '../App.css';
 
 function Bitcoin() {

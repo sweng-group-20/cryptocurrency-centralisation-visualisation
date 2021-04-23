@@ -17,7 +17,9 @@ function Network({ data, dataSource }) {
   return (
     <div className="NetworkGraph">
       <div className="section-top">
-        <h1 className="section-title">Network Layer</h1>
+        <h1 className="section-title">
+          Network Layer (Geographical Distribution)
+        </h1>
         <button
           className="back-button"
           type="button"
