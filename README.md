@@ -151,7 +151,7 @@ You will need to have installed:
    yarn install
    yarn start
    ```
-8. Change the `host`, `database`, and `password` object attributes in the `Pool` constructor. This file can be found in `cryptocurrency-centralisation-visualisation/server/src/db/index.js`.
+8. Change the `host`, `database`, and `password` object attributes in the `Pool` constructor. This file can be found in [`cryptocurrency-centralisation-visualisation/server/src/db/index.js`](server/src/db/index.js).
 
 The local website is hosted on [`http://localhost:3000`](http://localhost:3000) and the api will be hosted on [`http://localhost:4000`](http://localhost:4000)
 
