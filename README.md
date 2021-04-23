@@ -205,3 +205,7 @@ The local website is hosted on [`http://localhost:3000`](http://localhost:3000) 
 4. Stephen Davis ([@SteDavis20](https://github.com/SteDavis20))
 5. Alex Robert Mahon ([@juuiko](https://github.com/juuiko))
 6. Leona Wolff ([@leonawolff](https://github.com/leonawolff))
+
+## Bibliography
+
+Sai, Ashish Rajendra, Jim Buckley, Brian Fitzgerald, and Andrew Le Gear. ["Taxonomy of centralization in public blockchain systems: A systematic literature review."](https://www.sciencedirect.com/science/article/pii/S0306457321000844) Information Processing & Management 58, no. 4 (2021): 102584.
