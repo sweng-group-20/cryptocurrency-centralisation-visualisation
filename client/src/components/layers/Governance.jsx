@@ -14,7 +14,9 @@ function Governance({ data, dataSource }) {
   return (
     <div className="GovernanceGraph">
       <div className="section-top">
-        <h1 className="section-title">Governance Layer</h1>
+        <h1 className="section-title">
+          Governance Layer (Improvement Protocol)
+        </h1>
         <button
           className="back-button"
           type="button"

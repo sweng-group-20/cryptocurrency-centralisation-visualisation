@@ -27,3 +27,8 @@
   opacity: 0.45;
   text-decoration: underline;
 }
+
+.foot > a {
+  color: inherit;
+  text-decoration: underline;
+}

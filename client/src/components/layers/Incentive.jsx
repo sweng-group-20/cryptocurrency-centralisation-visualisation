@@ -14,7 +14,9 @@ function Incentive({ data, dataSource }) {
   return (
     <div className="IncentiveGraph">
       <div className="section-top">
-        <h1 className="section-title">Incentive Layer</h1>
+        <h1 className="section-title">
+          Incentive Layer (Wealth Concentration)
+        </h1>
         <button
           className="back-button"
           type="button"

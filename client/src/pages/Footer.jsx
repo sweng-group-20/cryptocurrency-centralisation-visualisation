@@ -7,9 +7,13 @@ function Footer() {
     <section className="Footer">
       <div className="foot">
         Sai, Ashish Rajendra, Jim Buckley, Brian Fitzgerald, and Andrew Le Gear.
-        &quot;Taxonomy of centralization in public blockchain systems: A
-        systematic literature review.&quot;{' '}
-        <i>Information Processing &amp; Management</i> 58, no. 4 (2021): 102584.
+        &quot;
+        <a href="https://www.sciencedirect.com/science/article/pii/S0306457321000844">
+          Taxonomy of centralization in public blockchain systems: A systematic
+          literature review
+        </a>
+        .&quot; <i>Information Processing &amp; Management</i> 58, no. 4 (2021):
+        102584.
       </div>
       <div className="credits">
         <a href="https://github.com/lexesjan">Lexes Jan Mantiquilla</a>
