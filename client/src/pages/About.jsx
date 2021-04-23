@@ -31,9 +31,6 @@ function About() {
           users losing their funds due to a single cause (hacking the third
           party).
         </div>
-        {/* <div className="about-image-container">
-          <img className="about-image" src={Image} alt="" />
-        </div> */}
       </div>
     </section>
   );

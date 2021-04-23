@@ -1,0 +1,29 @@
+.Footer {
+  height: 10vh;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 10vh 4rem 0;
+  background-color: var(--myblack);
+  color: var(--mywhite);
+  opacity: 0.6;
+}
+
+.foot {
+  flex: 3;
+  padding: 0 1rem 0 0;
+  font-size: 0.6vw;
+  text-align: center;
+}
+
+.credits {
+  display: flex;
+  justify-content: space-around; 
+  padding: 2.5vh 0;
+}
+
+.credits > a {
+  color: var(--mywhite);
+  opacity: 0.45;
+  text-decoration: underline;
+}

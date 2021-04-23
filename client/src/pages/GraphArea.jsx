@@ -11,6 +11,7 @@ import {
 import Bitcoin from '../components/Bitcoin';
 import Ethereum from '../components/Ethereum';
 import CryptoNav from '../components/CryptoNav';
+import Foot from './Footer';
 
 function GraphArea() {
   return (
@@ -29,6 +30,7 @@ function GraphArea() {
           <Route path="/ethereum" component={Ethereum} />
         </Switch>
       </Router>
+      <Foot />
     </section>
   );
 }
