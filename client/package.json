@@ -1,6 +1,6 @@
 {
   "name": "cryptocurrency-centralisation-visualisation-client",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Front end for cryptocurrency centralisation visualisation web app",
   "repository": "https://github.com/sweng-group-20/cryptocurrency-centralisation-visualisation",
   "private": false,
